@@ -9,8 +9,8 @@ install:
   - cd ./ && npm install && cd ..
 
 script:
-  - cd ./ && npm test
-  - cd ./ && npm run build
+  - cd ./ && npm test && cd ..
+  - cd ./ && npm run build && cd ..
 deploy:
   provider: firebase
   token:
