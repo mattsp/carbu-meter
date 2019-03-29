@@ -1,19 +1,18 @@
 language: node_js
 node_js:
-- stable
+  - stable
 cache:
   directories:
-  - node_modules
+    - node_modules
 script:
-- npm test
-- npm run build
+  - npm test
+  - npm run build
 deploy:
   provider: firebase
+  token:
+    secure: '$firebase_token'
   skip_cleanup: true
-  github_token: "$github_token"
+  github_token: '$github_token'
   local_dir: build
   on:
     branch: master
-env:
-  global:
-    secure: OZOY3IyxAc8t2D81hdhGg7NduCFtnS4QM4Ln7x7IkfLEv3mt6GByxJPe4wnMvOxgP7NqdRsm9TQqrc1+F8RSNI2JcNabNZY6NAH7AVUX1qpMdW7PWp9AqBH87OXsN/NkIg1VjdobmLxUa5zQ/yswu4lgx+5GEkAUSI8dImHnz956Aq/o9XVku1X5NKDpt09R46mL8Z3+Jk/3+zN09Lokc/MLjKxHttrbQMZADoqB5mQckOZ9hgsF5z+HcXqgHS42jEikpqLx2Qk2UUhoXZp/kuwkfscos5kHs4nkDieiDH6D6q14xg/t1hhWUpk7figRCVL3ZEpJoMV8whLsvQyMtq/cQ61/tx7JAM+WP+NQoLB+AxuRJ1lEDKydmAhH2Wx16iIE99ERUDPSvZamVHxqQJTBXaSPuZ9ynZN3slnB088oWLlGu/dkiR0zDUWtSNB+pL0DikJEQgF5CJNBou+QRg1+LhUZI1OiUP5izjOy2ay1CbeE6q4MIiCbEdMSBwLHGvZe4NPAidDxofa4fFv+1xtKM05iEbxkJn+pNaR1NJCuYbpkmq4pAm0z7tLLBM//deqHorE7nXebGxJFNuU/eh9bQoWkXp+CBZM27d2Y/2W5CLk0BNLQYb3F4J+N+HGKGzlrrRGoIzPljOXNXiY2udNyzTauufScphQbVPj3At0=
