@@ -6,7 +6,7 @@ cache:
     - node_modules
 install:
   - cd ./functions && npm install && cd ..
-  - cd ./carbu-meter && npm install && cd ..
+  - cd ./ && npm install && cd ..
 
 script:
   - cd ./carbu-meter && npm test && cd ..
