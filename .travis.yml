@@ -4,19 +4,17 @@ node_js:
 cache:
   directories:
     - node_modules
-install:
-  - cd ./functions && npm install && cd ..
-  - cd ./ && npm install && cd ..
+
+before_script:
+  - npm install firebase-tools -g
 
 script:
-  - cd ./carbu-meter && npm test && cd ..
-  - cd ./carbu-meter && npm run build && cd ..
-deploy:
-  provider: firebase
-  token:
-    secure: '$firebase_token'
-  skip_cleanup: true
-  github_token: '$github_token'
-  local_dir: build
-  on:
-    branch: master
+  - npm test
+  - npm run build
+
+after_success:
+  - firebase deploy --token '$firebase_token'
+
+branches:
+  only:
+    - master
