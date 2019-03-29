@@ -13,7 +13,7 @@ script:
   - npm run build
 
 after_success:
-  - firebase deploy --token '$firebase_token'
+  - firebase deploy --token $firebase_token
 
 branches:
   only:
