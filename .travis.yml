@@ -6,15 +6,15 @@ cache:
     - node_modules
 install:
   - cd ./functions && npm install && cd ..
-  - cd ./ && npm install && cd ..
+  - cd ./carbu-meter && npm install && cd ..
 
 script:
-  - cd ./ && npm test && cd ..
-  - cd ./ && npm run build && cd ..
+  - cd ./carbu-meter && npm test && cd ..
+  - cd ./carbu-meter && npm run build && cd ..
 deploy:
   provider: firebase
   token:
-    secure: RzZAr/coiazUlZy/ed1bPAQmqAYJV2r+gKyl/P4EHnF+EJBOaD/wlu/lrZjlAy2/j0Bl5YGImnA1mH6qwLEDkByc2CvNSBz5/8VKCd5U/zpi3bTNF0nM0fRoKtZvt5yDSok9DSIcEr6DNm4aiJiAHWOKPSMFAg1ODz4t8WT4rLctKERj8CU5ElnUReHppaneRF8+Qo8K3HOd7Dd+jfD2AE4iiq/Tp9yE+UEjm8JIWeWgXUMXvbR1YCudBoTlG4GwItsRaH0UvMeHGV7dv3YeIrPhcAu651dl6Hn4Dj+rLKXSB7o5zvdljcWX47+x0sgZv1pJv4HLyqQ4/APXbFkL9i30K92CKdq7uXCSz3dUDqWBuPRY16fp4feLjUBKuYuRpZeiQvUGzUuOdqnG3JZEnK69JVTQ4z+o+iiq3sb7wcICgGkNZbAGUtqbi2cARslbq/U4ErLbbsE6hNNeaKfx51EolsLhAWS3BATn+WUxOATcmbLTL7AZbTdTZFAAABObz01Bja39hC89weRI5ndNXxaVszk6tn1uhQeJTV3R/4CxwSe+3xzwlcNLyDMj6k1bPUOngF89u6VoxI9g4u+T0q92EazyyblkhBRuYUe2ONLYp8NYjgDdIE8vgGnzPv2dROBvJiBycZRxmrCHB0Hjnd3KSYbWY5lJUZTsLqbZulw=
+    secure: '$firebase_token'
   skip_cleanup: true
   github_token: '$github_token'
   local_dir: build
