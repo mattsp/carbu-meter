@@ -3,14 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.0.0",
+    "@material-ui/icons": "^4.0.0",
+    "@material-ui/styles": "^4.0.2",
     "@types/jest": "^24.0.11",
     "@types/node": "^11.12.0",
     "@types/react": "^16.8.10",
     "@types/react-dom": "^16.8.3",
-    "antd": "^3.15.2",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-scripts": "2.1.8",
+    "typeface-roboto": "0.0.54",
     "typescript": "^3.3.4000"
   },
   "scripts": {
@@ -31,6 +34,9 @@
   "devDependencies": {
     "html-critical-webpack-plugin": "^2.1.0",
     "node-sass": "^4.11.0",
-    "react-app-rewired": "^2.1.1"
+    "react-app-rewired": "^2.1.1",
+    "tslint": "^5.15.0",
+    "tslint-config-prettier": "^1.18.0",
+    "workbox-webpack-plugin": "^4.2.0"
   }
 }
