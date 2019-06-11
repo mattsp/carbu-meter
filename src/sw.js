@@ -1,17 +1,17 @@
 workbox
     .precaching
     .precacheAndRoute(self.__precacheManifest || []);
-workbox.skipWaiting()
-workbox.clientsClaim()
+workbox.core.skipWaiting()
+workbox.core.clientsClaim()
 workbox
     .routing
-    .registerRoute(new RegExp('https:.*min\.(css|js)'), workbox.strategies.staleWhileRevalidate({cacheName: 'cache'}))
+    .registerRoute(new RegExp('https:.*min\.(css|js)'), new workbox.strategies.StaleWhileRevalidate({cacheName: 'cache'}))
 workbox
     .routing
-    .registerRoute('/manifest.json', workbox.strategies.staleWhileRevalidate({cacheName: 'cache'}))
+    .registerRoute('/manifest.json', new workbox.strategies.StaleWhileRevalidate({cacheName: 'cache'}))
 workbox
     .routing
-    .registerRoute('/favicon.ico', workbox.strategies.staleWhileRevalidate({cacheName: 'cache'}))
+    .registerRoute('/favicon.ico', new workbox.strategies.StaleWhileRevalidate({cacheName: 'cache'}))
 self.addEventListener('install', event => {
     console.log('install')
 })
