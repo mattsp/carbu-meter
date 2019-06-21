@@ -35,13 +35,14 @@ const Footer = ({ classes, history }: IProps) => {
       className={classes.stickToBottom}
       showLabels
     >
-      {routes.map((route)=>
-           <BottomNavigationAction
-           label={route.title}
-           icon={<route.icon/>}
-           value={route.path}
-         />
-        )}
+      {routes.map((route) =>
+        <BottomNavigationAction
+          key={route.id}
+          label={route.title}
+          icon={<route.icon />}
+          value={route.path}
+        />
+      )}
     </BottomNavigation>
   )
 }

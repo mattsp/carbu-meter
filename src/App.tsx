@@ -38,9 +38,9 @@ class App extends Component<any, any> {
             <Container maxWidth={false}>
               <Typography component="div" style={{ height: '100%' }}>
                 <Switch>
-                  {routes.map((route, i) =>
+                  {routes.map(route =>
                     <Route
-                      key={i}
+                      key={route.id}
                       {...route}
                     />)}
                 </Switch>

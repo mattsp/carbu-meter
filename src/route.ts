@@ -9,6 +9,7 @@ import RestoreIcon from '@material-ui/icons/Restore'
 import { ComponentType } from "react";
 
 export interface IRoute {
+    id:string
     component: () => JSX.Element
     exact?: boolean
     icon: ComponentType<SvgIconProps>
@@ -20,18 +21,21 @@ const routes: IRoute[] = [
         component: Trips,
         exact: true,
         icon: RestoreIcon,
+        id: 'trips',
         path: '/',
         title: 'Trips',
     },
     {
         component: Stats,
         icon: LocationOnIcon,
+        id: 'stats',
         path: '/stats',
         title: 'Stats',
     },
     {
         component: Settings,
         icon: FavoriteIcon,
+        id: 'settings',
         path: '/settings',
         title: 'Settings',
     },
