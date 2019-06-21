@@ -10,6 +10,7 @@ import { ThemeProvider, withStyles } from '@material-ui/styles'
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Footer from './components/Footer/Footer'
+import routes from './route';
 
 const theme = createMuiTheme({
   palette: {
@@ -37,20 +38,15 @@ class App extends Component<any, any> {
             <Container maxWidth={false}>
               <Typography component="div" style={{ height: '100%' }}>
                 <Switch>
-                  <Route
-                    exact
-                    path={['/', '/trips']}
-                    component={() => <div>Trips</div>}
-                  />
-                  <Route path="/stats" component={() => <div>Stats</div>} />
-                  <Route
-                    path="/settings"
-                    component={() => <div>Settings</div>}
-                  />
+                  {routes.map((route, i) =>
+                    <Route
+                      key={i}
+                      {...route}
+                    />)}
                 </Switch>
               </Typography>
             </Container>
-            <Footer />
+            <Footer routes={routes} />
           </Router>
         </ThemeProvider>
       </React.Fragment>
