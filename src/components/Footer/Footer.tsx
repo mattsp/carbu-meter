@@ -2,7 +2,7 @@ import { BottomNavigation, BottomNavigationAction } from '@material-ui/core'
 import { withStyles } from '@material-ui/styles'
 import React, { useState } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import routes, { IRoute } from '../../route';
+import routes, { IRoute } from '../../routes';
 const styles = {
   stickToBottom: {
     bottom: 0,

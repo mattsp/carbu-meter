@@ -9,13 +9,14 @@ import RestoreIcon from '@material-ui/icons/Restore'
 import { ComponentType } from "react";
 
 export interface IRoute {
-    id:string
+    id: string
     component: () => JSX.Element
     exact?: boolean
     icon: ComponentType<SvgIconProps>
     path: string
     title: string
 }
+
 const routes: IRoute[] = [
     {
         component: Trips,
@@ -41,5 +42,7 @@ const routes: IRoute[] = [
     },
 
 ]
+
+export const getRouteByPath = (path: string) => routes.filter(route => route.path === path).shift()
 
 export default routes
