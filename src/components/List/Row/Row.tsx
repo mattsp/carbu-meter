@@ -6,11 +6,14 @@ import { ListChildComponentProps } from 'react-window';
 export interface IProps extends ListChildComponentProps {
     loading?: boolean
 }
+
+const getRandomInt = (max: number) => Math.floor(Math.random() * Math.floor(max))
 const Row = (props: IProps) => {
     const { index, style } = props;
+    console.log(props.loading);
     return (
         <ListItem button style={style} key={index}>
-            {props.loading ? (<Skeleton />) : (<ListItemText primary={`Item ${index + 1}`} />)}
+            {props.loading ? (<Skeleton width={getRandomInt(20) *10 } />) : (<ListItemText primary={`Item ${index + 1}`} />)}
         </ListItem>
     );
 }

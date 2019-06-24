@@ -1,6 +1,6 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import React, { ComponentClass } from 'react';
-import { FixedSizeList, ListChildComponentProps } from 'react-window';
+import React from 'react';
+import { FixedSizeList } from 'react-window';
 import InfiniteLoader from "react-window-infinite-loader";
 import Row, { IProps as IPropsRow } from './Row/Row';
 
@@ -17,10 +17,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
     rowRenderer: (props: IPropsRow) => JSX.Element
+    itemCount: number
+    itemSize: number
+    height: number
+    width: number
 }
 
-const defaultProps: IProps = {
-    rowRenderer: (props: IPropsRow) => <Row {...props} />
+const defaultProps: any = {
+    rowRenderer: (props: IPropsRow) => <Row {...props} loading={itemStatusMap[props.index] === LOADED} />,
 }
 
 const LOADING = 1;
@@ -48,11 +52,17 @@ const VirtualizedList = (props: IProps) => {
         <div className={classes.root}>
             <InfiniteLoader
                 isItemLoaded={isItemLoaded}
-                itemCount={1000}
+                itemCount={props.itemCount}
                 loadMoreItems={loadMoreItems}
             >
-                {({ onItemsRendered, ref }: {onItemsRendered: any, ref: any}) => (
-                    <FixedSizeList onItemsRendered={onItemsRendered} ref={ref} height={400} width={360} itemSize={46} itemCount={200}>
+                {({ onItemsRendered, ref }: { onItemsRendered: any, ref: any }) => (
+                    <FixedSizeList
+                        onItemsRendered={onItemsRendered}
+                        ref={ref}
+                        height={props.height}
+                        width={props.width}
+                        itemSize={props.itemSize}
+                        itemCount={props.itemCount}>
                         {propsPrivate.rowRenderer}
                     </FixedSizeList>
                 )}
