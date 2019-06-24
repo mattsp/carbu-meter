@@ -1,5 +1,6 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
+import Measure, { BoundingRect } from 'react-measure'
 import { FixedSizeList } from 'react-window';
 import InfiniteLoader from "react-window-infinite-loader";
 import Row, { IProps as IPropsRow } from './Row/Row';
@@ -8,8 +9,7 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             backgroundColor: theme.palette.background.paper,
-            height: 400,
-            maxWidth: 360,
+            height: '100%',
             width: '100%',
         },
     }),
@@ -48,26 +48,36 @@ const loadMoreItems = (startIndex: number, stopIndex: number) => {
 const VirtualizedList = (props: IProps) => {
     const classes = useStyles();
     const propsPrivate: IProps = { ...defaultProps, ...props }
+    const [dimensions, setDimensions] = useState<BoundingRect | undefined>(undefined);
     return (
-        <div className={classes.root}>
-            <InfiniteLoader
-                isItemLoaded={isItemLoaded}
-                itemCount={props.itemCount}
-                loadMoreItems={loadMoreItems}
-            >
-                {({ onItemsRendered, ref }: { onItemsRendered: any, ref: any }) => (
-                    <FixedSizeList
-                        onItemsRendered={onItemsRendered}
-                        ref={ref}
-                        height={props.height}
-                        width={props.width}
-                        itemSize={props.itemSize}
-                        itemCount={props.itemCount}>
-                        {propsPrivate.rowRenderer}
-                    </FixedSizeList>
-                )}
-            </InfiniteLoader>
-        </div>
+        <Measure
+            bounds
+            onResize={contentRect => {
+                setDimensions(contentRect.bounds)
+            }}
+        >
+            {({ measureRef }) => (
+                <div ref={measureRef} className={classes.root}>
+                    <InfiniteLoader
+                        isItemLoaded={isItemLoaded}
+                        itemCount={props.itemCount}
+                        loadMoreItems={loadMoreItems}
+                    >
+                        {({ onItemsRendered, ref }: { onItemsRendered: any, ref: any }) => (
+                            <FixedSizeList
+                                onItemsRendered={onItemsRendered}
+                                ref={ref}
+                                height={dimensions ? dimensions.height : -1}
+                                width={dimensions ? dimensions.width : -1}
+                                itemSize={props.itemSize}
+                                itemCount={props.itemCount}>
+                                {propsPrivate.rowRenderer}
+                            </FixedSizeList>
+                        )}
+                    </InfiniteLoader>
+                </div>
+            )}
+        </Measure>
     );
 }
 
