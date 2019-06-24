@@ -3,9 +3,9 @@ import Stats from "./components/Stats/Stats";
 import Trips from "./components/Trips/Trips";
 
 import { SvgIconProps } from "@material-ui/core/SvgIcon";
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import LocationOnIcon from '@material-ui/icons/LocationOn'
-import RestoreIcon from '@material-ui/icons/Restore'
+import MapIcon from '@material-ui/icons/MapRounded'
+import SettingsIcon from '@material-ui/icons/Settings'
+import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import { ComponentType } from "react";
 
 export interface IRoute {
@@ -21,21 +21,21 @@ const routes: IRoute[] = [
     {
         component: Trips,
         exact: true,
-        icon: RestoreIcon,
+        icon: MapIcon,
         id: 'trips',
         path: '/',
         title: 'Trips',
     },
     {
         component: Stats,
-        icon: LocationOnIcon,
+        icon: TrendingUpIcon,
         id: 'stats',
         path: '/stats',
         title: 'Stats',
     },
     {
         component: Settings,
-        icon: FavoriteIcon,
+        icon: SettingsIcon,
         id: 'settings',
         path: '/settings',
         title: 'Settings',
