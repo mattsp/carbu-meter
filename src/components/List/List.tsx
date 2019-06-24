@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import React from 'react';
-import { FixedSizeList } from 'react-window';
-import Row, {IProps as IPropsRow} from './Row/Row';
+import React, { ComponentClass } from 'react';
+import { FixedSizeList, ListChildComponentProps } from 'react-window';
+import Row from './Row/Row';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -15,24 +15,24 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface IProps {
-    rowRenderer: (props:IPropsRow)=>React.ComponentClass<IPropsRow,any>
+    rowRenderer: (props: ListChildComponentProps) => JSX.Element
 }
 
-// const defaultProps: IProps = {
-//     rowRenderer: ()=>Row
-// }
+const defaultProps: IProps = {
+    rowRenderer: (props: ListChildComponentProps) => <Row {...props}/>
+}
 const  VirtualizedList = (props: IProps)=> {
     const classes = useStyles();
-    // const propsPrivate: IProps = { ...defaultProps, ...props }
+    const propsPrivate: IProps = { ...defaultProps, ...props }
     return (
         <div className={classes.root}>
             <FixedSizeList height={400} width={360} itemSize={46} itemCount={200}>
-                {props.rowRenderer}
+                {propsPrivate.rowRenderer}
             </FixedSizeList>
         </div>
     );
 }
 
-// VirtualizedList.defaultProps = defaultProps
+VirtualizedList.defaultProps = defaultProps
 
 export default VirtualizedList
