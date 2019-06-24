@@ -24,7 +24,7 @@ interface IProps {
 }
 
 const defaultProps: any = {
-    rowRenderer: (props: IPropsRow) => <Row {...props} loading={itemStatusMap[props.index] === LOADED} />,
+    rowRenderer: (props: IPropsRow) => <Row {...props} loading={itemStatusMap[props.index] === LOADING} />,
 }
 
 const LOADING = 1;
