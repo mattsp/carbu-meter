@@ -2,12 +2,10 @@ import { BottomNavigation, BottomNavigationAction } from '@material-ui/core'
 import { withStyles } from '@material-ui/styles'
 import React, { useState } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import routes, { IRoute } from '../../routes';
+import routes, { IRoute } from '../../routes'
 const styles = {
-  stickToBottom: {
-    bottom: 0,
-    position: 'fixed',
-    width: '100%',
+  root: {
+    marginTop: 'auto',
   },
 }
 interface IProps extends RouteComponentProps {
@@ -29,21 +27,23 @@ const Footer = ({ classes, history }: IProps) => {
     history.push(value)
   }
   return (
-    <BottomNavigation
-      value={navigation.path}
-      onChange={bottomNavigationChangeHandler}
-      className={classes.stickToBottom}
-      showLabels
-    >
-      {routes.map((route) =>
-        <BottomNavigationAction
-          key={route.id}
-          label={route.title}
-          icon={<route.icon />}
-          value={route.path}
-        />
-      )}
-    </BottomNavigation>
+    <footer>
+      <BottomNavigation
+        value={navigation.path}
+        onChange={bottomNavigationChangeHandler}
+        className={classes.root}
+        showLabels
+      >
+        {routes.map(route => (
+          <BottomNavigationAction
+            key={route.id}
+            label={route.title}
+            icon={<route.icon />}
+            value={route.path}
+          />
+        ))}
+      </BottomNavigation>
+    </footer>
   )
 }
 

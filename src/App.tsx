@@ -5,7 +5,7 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider, withStyles } from '@material-ui/styles'
 import React, { Component } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
-import Layout from './components/Layout/Layout';
+import Layout from './components/Layout/Layout'
 
 const theme = createMuiTheme({
   palette: {
@@ -14,16 +14,25 @@ const theme = createMuiTheme({
   },
 })
 
-const styles = {}
+const styles = {
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+  },
+}
 
 class App extends Component<any, any> {
   public render() {
+    const { classes } = this.props
     return (
       <React.Fragment>
         <CssBaseline />
         <ThemeProvider theme={theme}>
           <Router>
-            <Layout />
+            <div className={classes.root}>
+              <Layout />
+            </div>
           </Router>
         </ThemeProvider>
       </React.Fragment>
