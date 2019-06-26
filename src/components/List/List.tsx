@@ -8,11 +8,11 @@ import Row, { IProps as IPropsRow } from './Row/Row'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     list: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
       bottom: 0,
+      left: 0,
+      position: 'absolute',
       right: 0,
+      top: 0,
     },
     root: {
       backgroundColor: theme.palette.background.paper,

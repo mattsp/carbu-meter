@@ -3,19 +3,21 @@ import { withStyles } from '@material-ui/styles'
 import React, { useState } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import routes, { IRoute } from '../../routes'
-const styles = {
+
+const useStyles = makeStyles({
   root: {
     marginTop: 'auto',
   },
-}
+})
+
 interface IProps extends RouteComponentProps {
-  classes: any
   routes: IRoute[]
 }
 interface IState {
   path: string
 }
-const Footer = ({ classes, history }: IProps) => {
+const Footer = ({ history }: IProps) => {
+  const classes = useStyles();
   const [navigation, setNavigationPath] = useState<IState>({
     path: '/',
   })
