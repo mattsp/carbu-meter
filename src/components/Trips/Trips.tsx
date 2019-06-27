@@ -1,5 +1,14 @@
 import React from 'react'
-import List from '../List/List'
-const Trips = () => <List itemCount={1000} itemSize={30}/>
+import List, { IDataSourceItem } from '../List/List'
+
+interface ITrip extends IDataSourceItem {
+    creationDate: number
+    distance: number
+}
+
+interface IProps {
+    trips: Map<string, ITrip>
+}
+const Trips = ({trips}:IProps) => <List dataSource={trips} itemCount={1000} itemSize={46}/>
 
 export default Trips;

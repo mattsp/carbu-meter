@@ -21,8 +21,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 )
-
+export interface IDataSourceItem {
+  id:string
+}
 interface IProps {
+  dataSource: Map<string, IDataSourceItem>
   rowRenderer: (props: IPropsRow) => JSX.Element
   itemCount: number
   itemSize: number
