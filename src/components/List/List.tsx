@@ -25,7 +25,7 @@ export interface IDataSourceItem {
   id:string
 }
 interface IProps {
-  dataSource: Map<string, IDataSourceItem>
+  dataSource: Map<string, IDataSourceItem>,
   rowRenderer: (props: IPropsRow) => JSX.Element
   itemCount: number
   itemSize: number
@@ -86,6 +86,7 @@ const VirtualizedList = (props: IProps) => {
                 ref: any
               }) => (
                 <FixedSizeList
+                  itemData={props.dataSource}
                   onItemsRendered={onItemsRendered}
                   ref={ref}
                   height={dimensions ? dimensions.height : -1}

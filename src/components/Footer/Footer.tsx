@@ -1,4 +1,4 @@
-import { BottomNavigation, BottomNavigationAction } from '@material-ui/core'
+import { BottomNavigation, BottomNavigationAction, makeStyles } from '@material-ui/core'
 import { withStyles } from '@material-ui/styles'
 import React, { useState } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
@@ -49,4 +49,4 @@ const Footer = ({ history }: IProps) => {
   )
 }
 
-export default withStyles(styles as any)(withRouter(Footer))
+export default withRouter(Footer)
