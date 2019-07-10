@@ -22,22 +22,20 @@ const useStyles = makeStyles({
   },
 })
 
-class App extends Component<any, any> {
-  public render() {
-    const classes = useStyles();
-    return (
-      <React.Fragment>
-        <CssBaseline />
-        <ThemeProvider theme={theme}>
-          <Router>
-            <div className={classes.root}>
-              <Layout />
-            </div>
-          </Router>
-        </ThemeProvider>
-      </React.Fragment>
-    )
-  }
+const App = () => {
+  const classes = useStyles();
+  return (
+    <React.Fragment>
+      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <Router>
+          <div className={classes.root}>
+            <Layout />
+          </div>
+        </Router>
+      </ThemeProvider>
+    </React.Fragment>
+  )
 }
 
 export default App
