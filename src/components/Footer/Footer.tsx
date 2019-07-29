@@ -1,5 +1,4 @@
 import { BottomNavigation, BottomNavigationAction, makeStyles } from '@material-ui/core'
-import { withStyles } from '@material-ui/styles'
 import React, { useState } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import routes, { IRoute } from '../../routes'

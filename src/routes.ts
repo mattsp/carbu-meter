@@ -1,16 +1,16 @@
 import Settings from "./components/Settings/Settings";
 import Stats from "./components/Stats/Stats";
-import Trips from "./components/Trips/Trips";
 
 import { SvgIconProps } from "@material-ui/core/SvgIcon";
 import MapIcon from '@material-ui/icons/MapRounded'
 import SettingsIcon from '@material-ui/icons/Settings'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import { ComponentType } from "react";
+import TripsContainers from "./containers/TripsContainers";
 
 export interface IRoute {
     id: string
-    component: () => JSX.Element
+    component: any;
     exact?: boolean
     icon: ComponentType<SvgIconProps>
     path: string
@@ -19,7 +19,7 @@ export interface IRoute {
 
 const routes: IRoute[] = [
     {
-        component: Trips,
+        component: TripsContainers,
         exact: true,
         icon: MapIcon,
         id: 'trips',

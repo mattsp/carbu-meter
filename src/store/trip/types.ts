@@ -1,4 +1,5 @@
 export interface ITrip {
+    id: string
     creationDate: number
     distance: number
 }

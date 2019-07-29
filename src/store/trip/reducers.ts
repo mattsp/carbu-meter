@@ -1,4 +1,4 @@
-import { FETCH_TRIPS_REQUEST, FETCH_TRIPS_SUCCESS, ITrip, ITripState, TripsActionTypes, FETCH_TRIPS_FAILURE } from "./types";
+import { FETCH_TRIPS_FAILURE, FETCH_TRIPS_REQUEST, FETCH_TRIPS_SUCCESS, ITrip, ITripState, TripsActionTypes } from "./types";
 
 const initialState: ITripState = {
     isFetching: false,
