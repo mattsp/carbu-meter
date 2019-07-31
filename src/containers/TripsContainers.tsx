@@ -4,7 +4,8 @@ import { AppState } from '../store';
 import { fetchTrips } from '../store/trip/actions'
 
 const mapStateToProps =  (state: AppState) => ({
-    trips: state.trip.trips
+    totalTrips: state.trip.totalTrips,
+    trips: state.trip.trips,
 });
 
 const  mapDispatchToProps = {

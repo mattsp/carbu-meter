@@ -7,6 +7,7 @@ export interface ITrip {
 export interface ITripState  {
     trips: Map<string, ITrip>
     isFetching: boolean
+    totalTrips: number
 }
 
 export const FETCH_TRIPS_REQUEST = 'FETCH_TRIPS_REQUEST'
@@ -19,7 +20,7 @@ interface IFetchTripsRequestAction {
 
 interface IFetchTripsSuccessAction {
     type: typeof FETCH_TRIPS_SUCCESS
-    payload:  Map<string, ITrip>
+    payload:  {trips: ITrip[], totalTrips: number}
 }
 
 interface IFetchTripsFailureAction {

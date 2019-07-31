@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk'
 import { AppState } from '..'
-import { FETCH_TRIPS_FAILURE, FETCH_TRIPS_REQUEST, FETCH_TRIPS_SUCCESS, ITrip } from "./types"
+import { FETCH_TRIPS_FAILURE, FETCH_TRIPS_REQUEST, FETCH_TRIPS_SUCCESS, ITrip, TripsActionTypes } from "./types"
 
 export function fetchTripsRequest() {
     return {
@@ -9,9 +9,9 @@ export function fetchTripsRequest() {
     }
 }
 
-export function fetchTripsSuccess(trips: ITrip[]) {
+export function fetchTripsSuccess(trips: ITrip[], totalTrips=0):TripsActionTypes {
     return {
-        payload: trips,
+        payload: {trips, totalTrips},
         type: FETCH_TRIPS_SUCCESS,
     }
 }
