@@ -3,7 +3,8 @@ import { FETCH_TRIPS_FAILURE, FETCH_TRIPS_REQUEST, FETCH_TRIPS_SUCCESS, ITrip, I
 const initialState: ITripState = {
     isFetching: false,
     totalTrips: 0,
-    trips: new Map<string, ITrip>(),
+    // tslint:disable-next-line: no-object-literal-type-assertion
+    trips: {} as {[key: string] : ITrip},
 }
 
 export function tripReducer(
@@ -13,12 +14,12 @@ export function tripReducer(
         case FETCH_TRIPS_REQUEST:
             return { ...state, isFetching: true }
         case FETCH_TRIPS_SUCCESS:
-            const data = new Map([...Array.from(state.trips.entries()), ...action.payload.trips.map(trip => [trip.id, trip] as [string, ITrip])]);
             const test =  {
                 ...state,
                 isFetching: false,
                 totalTrips: 20,
-                trips: data,
+                // tslint:disable-next-line: no-object-literal-type-assertion
+                trips: {...state.trips, ...action.payload.trips.reduce((acc, val) => ({ ...acc, [val.id]: val }), {} as {[key: string] : ITrip})},
             }
             return test;
         case FETCH_TRIPS_FAILURE:

@@ -1,11 +1,13 @@
-export interface ITrip {
+import { IDataSourceItem } from "../../components/List/List";
+
+export interface ITrip extends IDataSourceItem {
     id: string
     creationDate: number
     distance: number
 }
 
 export interface ITripState  {
-    trips: Map<string, ITrip>
+    trips: {[key: string] : ITrip}
     isFetching: boolean
     totalTrips: number
 }

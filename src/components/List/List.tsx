@@ -25,7 +25,7 @@ export interface IDataSourceItem {
   id:string
 }
 interface IProps {
-  dataSource: Map<string, IDataSourceItem>,
+  dataSource: {[key: string] : IDataSourceItem},
   rowRenderer: (props: IPropsRow) => JSX.Element
   itemCount: number
   itemSize: number
