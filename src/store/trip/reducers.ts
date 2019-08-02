@@ -13,12 +13,14 @@ export function tripReducer(
         case FETCH_TRIPS_REQUEST:
             return { ...state, isFetching: true }
         case FETCH_TRIPS_SUCCESS:
-            return {
+            const data = new Map([...Array.from(state.trips.entries()), ...action.payload.trips.map(trip => [trip.id, trip] as [string, ITrip])]);
+            const test =  {
                 ...state,
                 isFetching: false,
-                totalTrips: action.payload.totalTrips,
-                trips: new Map([...Array.from(state.trips.entries()), ...action.payload.trips.map(trip => [trip.id, trip] as [string, ITrip])])
+                totalTrips: 20,
+                trips: data,
             }
+            return test;
         case FETCH_TRIPS_FAILURE:
             return { ...state, isFetching: false }
         default:
