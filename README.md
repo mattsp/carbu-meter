@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/mattsp/carbu-meter.svg?branch=master)](https://travis-ci.org/mattsp/carbu-meter)
+[![Build Status](https://travis-ci.com/mattsp/carbu-meter.svg?branch=master)](https://travis-ci.com/mattsp/carbu-meter)
 
 # Carbu Meter
 

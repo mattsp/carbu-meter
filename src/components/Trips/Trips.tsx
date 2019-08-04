@@ -8,7 +8,7 @@ interface IProps {
     fetchTrips: () => void
 }
 const Trips = ({ trips, totalTrips, fetchTrips }: IProps) => {
-    useEffect(() => { fetchTrips() }, [])
+    useEffect(() => { fetchTrips() }, [fetchTrips])
     return <List dataSource={trips} itemCount={totalTrips} itemSize={46} />
 }
 
