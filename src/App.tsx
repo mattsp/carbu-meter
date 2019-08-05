@@ -3,10 +3,11 @@ import green from '@material-ui/core/colors/green'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { makeStyles, ThemeProvider } from '@material-ui/styles'
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Layout from './components/Layout/Layout'
+import ModalContainer from './containers/ModalContainer';
 import { store } from './store';
 
 const theme = createMuiTheme({
@@ -33,7 +34,10 @@ const App = () => {
         <Provider store={store}>
           <Router>
             <div className={classes.root}>
-              <Layout />
+              <Suspense fallback={<div>Loading...</div>}>
+                <Layout />
+                <ModalContainer />
+              </Suspense>
             </div>
           </Router>
         </Provider>

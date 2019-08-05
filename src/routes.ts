@@ -1,12 +1,13 @@
-import Settings from "./components/Settings/Settings";
-import Stats from "./components/Stats/Stats";
+import { ComponentType, lazy } from 'react';
 
 import { SvgIconProps } from "@material-ui/core/SvgIcon";
 import MapIcon from '@material-ui/icons/MapRounded'
 import SettingsIcon from '@material-ui/icons/Settings'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
-import { ComponentType } from "react";
-import TripsContainers from "./containers/TripsContainers";
+
+const TripsContainer = lazy(() => import('./containers/TripsContainer'));
+const Settings = lazy(() => import('./components/Settings/Settings'));
+const Stats = lazy(() => import('./components/Stats/Stats'));
 
 export interface IRoute {
     id: string
@@ -19,7 +20,7 @@ export interface IRoute {
 
 const routes: IRoute[] = [
     {
-        component: TripsContainers,
+        component: TripsContainer,
         exact: true,
         icon: MapIcon,
         id: 'trips',

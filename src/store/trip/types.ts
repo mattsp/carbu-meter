@@ -1,13 +1,12 @@
 import { IDataSourceItem } from "../../components/List/List";
 
 export interface ITrip extends IDataSourceItem {
-    id: string
     creationDate: number
     distance: number
 }
 
-export interface ITripState  {
-    trips: {[key: string] : ITrip}
+export interface ITripState {
+    trips: { [key: string]: ITrip }
     isFetching: boolean
     totalTrips: number
 }
@@ -22,7 +21,7 @@ interface IFetchTripsRequestAction {
 
 interface IFetchTripsSuccessAction {
     type: typeof FETCH_TRIPS_SUCCESS
-    payload:  {trips: ITrip[], totalTrips: number}
+    payload: { trips: ITrip[], totalTrips: number }
 }
 
 interface IFetchTripsFailureAction {
@@ -31,4 +30,23 @@ interface IFetchTripsFailureAction {
     error: true
 }
 
-export type TripsActionTypes = IFetchTripsRequestAction | IFetchTripsSuccessAction | IFetchTripsFailureAction
+export const ADD_TRIP_REQUEST = 'ADD_TRIP_REQUEST'
+export const ADD_TRIP_SUCCESS = 'ADD_TRIP_SUCCESS'
+export const ADD_TRIP_FAILURE = 'ADD_TRIP_FAILURE'
+
+interface IAddTripRequestAction {
+    type: typeof ADD_TRIP_REQUEST
+}
+
+interface IAddTripSuccessAction {
+    type: typeof ADD_TRIP_SUCCESS
+    payload: { trips: ITrip }
+}
+
+interface IAddTripFailureAction {
+    type: typeof ADD_TRIP_FAILURE
+    payload: Error
+    error: true
+}
+
+export type TripsActionTypes = IFetchTripsRequestAction | IFetchTripsSuccessAction | IFetchTripsFailureAction | IAddTripRequestAction | IAddTripSuccessAction | IAddTripFailureAction
