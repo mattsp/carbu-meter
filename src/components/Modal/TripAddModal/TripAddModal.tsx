@@ -27,7 +27,7 @@ const TripAddModal = (({ modal, open, addTrip, closeModal }: IProps) => {
     const closeHandler = () => {
         const updatedModal = { ...modal, data: values }
         addTrip(updatedModal.data as ITrip)
-        // closeModal(updatedModal)
+        closeModal(updatedModal)
     }
 
     const handleChange = (name: keyof ITrip) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +65,7 @@ const TripAddModal = (({ modal, open, addTrip, closeModal }: IProps) => {
                     label="Distance"
                     type="number"
                     required
-                    error={!values.distance || Number(values.distance) < 0}
+                    error={Number(values.distance) < 0}
                     onChange={handleChange('distance')}
                     fullWidth
                 />
