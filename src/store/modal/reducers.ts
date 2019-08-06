@@ -1,7 +1,7 @@
 import { CLOSE_MODAL, IModalState, ModalActionTypes, OPEN_MODAL } from "./types";
 
 const initialState: IModalState = {
-    modal: undefined,
+    modal: {id: ''},
     open: false
 }
 

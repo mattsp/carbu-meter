@@ -5,7 +5,7 @@ export interface IModal {
 }
 
 export interface IModalState {
-    modal?: IModal
+    modal: IModal
     open: boolean
 }
 

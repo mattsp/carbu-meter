@@ -2,7 +2,7 @@ import React, { lazy } from 'react'
 import { IModal } from '../../store/modal/types';
 
 export interface IProps {
-    modal?: IModal,
+    modal: IModal,
     open: boolean,
     closeModal: (modal: IModal) => void,
     openModal: (modal: IModal) => void
