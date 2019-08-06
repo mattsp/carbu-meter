@@ -1,7 +1,7 @@
 import Fab from '@material-ui/core/Fab'
 import { makeStyles, Theme } from '@material-ui/core/styles'
 import AddIcon from '@material-ui/icons/Add'
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useMemo } from 'react'
 import { IModal } from '../../store/modal/types';
 import { ITrip } from '../../store/trip/types'
 import List from '../List/List'
@@ -31,9 +31,10 @@ const Trips = ({ trips, totalTrips, fetchTrips, openModal }: IProps) => {
     const AddTripClickHandler = ()=>{
         openModal({id: 'TripAddModal'})
     }
+    const data = useMemo(()=> Object.values(trips) as any as {[key: string]: ITrip}, [trips]) 
     return (
         <Fragment>
-            <List dataSource={trips} itemCount={totalTrips} itemSize={46} />
+            <List dataSource={data} itemCount={totalTrips} itemSize={46} />
             <Fab color="primary" aria-label="add" className={classes.addButton} onClick={AddTripClickHandler}>
                 <AddIcon />
             </Fab>

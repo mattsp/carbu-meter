@@ -7,7 +7,7 @@ export interface ITrip extends IDataSourceItem {
 
 export interface ITripState {
     trips: { [key: string]: ITrip }
-    isFetching: boolean
+    isLoading: boolean
     totalTrips: number
 }
 
@@ -40,7 +40,7 @@ interface IAddTripRequestAction {
 
 interface IAddTripSuccessAction {
     type: typeof ADD_TRIP_SUCCESS
-    payload: { trips: ITrip }
+    payload: { trip: ITrip }
 }
 
 interface IAddTripFailureAction {

@@ -13,19 +13,21 @@ import React, { useState } from 'react';
 import { ITrip } from '../../../store/trip/types';
 import { IProps as IModalProps } from '../Modal';
 
-const TripAddModal = (({ modal, open, closeModal }: IModalProps) => {
+interface IProps extends IModalProps {
+    addTrip: (trip: ITrip) => void
+}
+const TripAddModal = (({ modal, open, addTrip, closeModal }: IProps) => {
 
     const [values, setValues] = useState<ITrip>({
-        creationDate: new Date(modal.data.creationDate - new Date(modal.data.creationDate).getTimezoneOffset() * 60000).getTime() || Date.now(),
-        distance: modal.data.distance || 0,
-        id: modal.data.id,
+        creationDate: modal.data ? new Date(modal.data.creationDate - new Date(modal.data.creationDate).getTimezoneOffset() * 60000).getTime() : Date.now(),
+        distance: modal.data ? modal.data.distance : 0,
+        id: modal.data ? modal.data.id : 0,
     });
 
     const closeHandler = () => {
-        if (modal) {
-            const updatedModal = { ...modal, data: values }
-            closeModal(updatedModal)
-        }
+        const updatedModal = { ...modal, data: values }
+        addTrip(updatedModal.data as ITrip)
+        // closeModal(updatedModal)
     }
 
     const handleChange = (name: keyof ITrip) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +48,6 @@ const TripAddModal = (({ modal, open, closeModal }: IModalProps) => {
                     <KeyboardDatePicker
                         autoFocus
                         margin="dense"
-                        format="mm/dd/yyyy"
                         id="mui-pickers-date"
                         label="Date picker"
                         value={new Date(values.creationDate)}

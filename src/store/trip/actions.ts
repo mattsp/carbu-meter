@@ -31,7 +31,7 @@ export const fetchTrips = (): ThunkAction<void, AppState, null, Action<any>> => 
 
         .then((querySnapshot: any) => {
             const data = querySnapshot.docs.map((doc: any) => ({ ...doc.data(), id: doc.id }));
-            dispatch(fetchTripsSuccess(data))
+            dispatch(fetchTripsSuccess(data, data.length))
         }).catch(error => {
             dispatch(fetchTripsFailure(error))
         });
@@ -57,13 +57,12 @@ function addTripFailure(error: Error) {
     }
 }
 
-export const addTrip = (trip: ITrip) => (): ThunkAction<void, AppState, null, Action<any>> => async (dispatch: any) => {
+export const addTrip = (trip: ITrip): ThunkAction<void, AppState, null, Action<any>> => async (dispatch: any) => {
     dispatch(addTripRequest())
     db.collection("trips")
         .add(trip)
         .then((querySnapshot: any) => {
-            const data = querySnapshot.docs.map((doc: any) => ({ ...doc.data(), id: doc.id }));
-            dispatch(addTripSuccess(data))
+            dispatch(addTripSuccess({...trip, id: querySnapshot.id}))
         }).catch(error => {
             dispatch(addTripFailure(error))
         })

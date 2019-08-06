@@ -11,8 +11,8 @@ export interface IProps extends ListChildComponentProps {
 
 const getRandomInt = (max: number) => Math.floor(Math.random() * Math.floor(max))
 const Row = (props: IProps) => {
-    const { style, data } = props;
-    const item = data as IDataSourceItem;
+    const { style, data, index } = props;
+    const item = data[index] as IDataSourceItem;
     return (
         <ListItem button style={style} key={item.id}>
             {props.loading ? (<Skeleton width={getRandomInt(20) *10 } />) : (<ListItemText primary={item.id} />)}
