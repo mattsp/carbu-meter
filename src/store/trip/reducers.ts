@@ -24,7 +24,7 @@ export function tripReducer(
         case ADD_TRIP_REQUEST:
             return { ...state, isLoading: true }
         case ADD_TRIP_SUCCESS:
-            return { ...state, trips: { ...state.trips, [action.payload.trip.id]: action.payload.trip } }
+            return { ...state, trips: { [action.payload.id]: action.payload, ...state.trips }, totalTrips: ++state.totalTrips, isLoading: false}
         case ADD_TRIP_FAILURE:
             return { ...state, isLoading: false }
         default:

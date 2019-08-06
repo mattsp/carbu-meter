@@ -7,15 +7,17 @@ import { IDataSourceItem } from '../List';
 export interface IProps extends ListChildComponentProps {
     loading?: boolean
     onClick?: () => {}
+    contentRenderer?: (item:IDataSourceItem) => JSX.Element
 }
 
 const getRandomInt = (max: number) => Math.floor(Math.random() * Math.floor(max))
+
 const Row = (props: IProps) => {
     const { style, data, index } = props;
     const item = data[index] as IDataSourceItem;
     return (
         <ListItem button style={style} key={item.id}>
-            {props.loading ? (<Skeleton width={getRandomInt(20) *10 } />) : (<ListItemText primary={item.id} />)}
+            {props.loading ? (<Skeleton width={getRandomInt(20) * 10} />) : props.contentRenderer ? props.contentRenderer(item) : <ListItemText primary={item.id}/>}
         </ListItem>
     );
 }

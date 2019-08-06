@@ -1,6 +1,7 @@
-import { IDataSourceItem } from "../../components/List/List";
 
-export interface ITrip extends IDataSourceItem {
+
+export interface ITrip {
+    id: string
     creationDate: number
     distance: number
 }
@@ -40,7 +41,7 @@ interface IAddTripRequestAction {
 
 interface IAddTripSuccessAction {
     type: typeof ADD_TRIP_SUCCESS
-    payload: { trip: ITrip }
+    payload: ITrip 
 }
 
 interface IAddTripFailureAction {
