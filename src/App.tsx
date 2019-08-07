@@ -6,6 +6,7 @@ import { makeStyles, ThemeProvider } from '@material-ui/styles'
 import React, { Suspense } from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import Layout from './components/Layout/Layout'
 import ModalContainer from './containers/ModalContainer';
 import { store } from './store';
@@ -34,10 +35,12 @@ const App = () => {
         <Provider store={store}>
           <Router>
             <div className={classes.root}>
-              <Suspense fallback={<div>Loading...</div>}>
-                <Layout />
-                <ModalContainer />
-              </Suspense>
+              <ErrorBoundary>
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Layout />
+                  <ModalContainer />
+                </Suspense>
+              </ErrorBoundary>
             </div>
           </Router>
         </Provider>
