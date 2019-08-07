@@ -12,6 +12,7 @@ interface IProps {
     trips: { [key: string]: ITrip }
     totalTrips: number
     fetchTrips: () => void
+    deleteTrip: (id:string) => void
     addTrip: (trip: ITrip) => void
     openModal: (modal: IModal) => void
 }
@@ -24,7 +25,7 @@ const useStyles = makeStyles<Theme>(theme => ({
     },
 }))
 
-const Trips = ({ trips, totalTrips, fetchTrips, openModal }: IProps) => {
+const Trips = ({ trips, totalTrips, fetchTrips, deleteTrip, openModal }: IProps) => {
     useEffect(() => {
         fetchTrips()
     }, [fetchTrips])
@@ -34,7 +35,7 @@ const Trips = ({ trips, totalTrips, fetchTrips, openModal }: IProps) => {
         openModal({id: 'TripAddModal'})
     }
     const data = useMemo(()=> Object.values(trips) as any as {[key: string]: ITrip}, [trips]) 
-    const tripRowRenderer = (props:IPropsRow) => <TripRow {...props}/>
+    const tripRowRenderer = (props:IPropsRow) => <TripRow {...props} deleteItem={deleteTrip}/>
 
     return (
         <Fragment>

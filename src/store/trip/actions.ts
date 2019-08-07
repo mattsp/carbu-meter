@@ -2,7 +2,11 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk'
 import { AppState } from '..'
 import { db } from '../../firebase';
-import { ADD_TRIP_FAILURE, ADD_TRIP_REQUEST, ADD_TRIP_SUCCESS, FETCH_TRIPS_FAILURE, FETCH_TRIPS_REQUEST, FETCH_TRIPS_SUCCESS, ITrip, TripsActionTypes } from "./types"
+import {
+    ADD_TRIP_FAILURE, ADD_TRIP_REQUEST, ADD_TRIP_SUCCESS,
+    DELETE_TRIP_FAILURE, DELETE_TRIP_REQUEST, DELETE_TRIP_SUCCESS, FETCH_TRIPS_FAILURE, FETCH_TRIPS_REQUEST,
+    FETCH_TRIPS_SUCCESS, ITrip, TripsActionTypes
+} from "./types"
 
 function fetchTripsRequest() {
     return {
@@ -43,7 +47,7 @@ function addTripRequest() {
     }
 }
 
-function addTripSuccess(trip:ITrip) {
+function addTripSuccess(trip: ITrip) {
     return {
         payload: trip,
         type: ADD_TRIP_SUCCESS,
@@ -62,8 +66,40 @@ export const addTrip = (trip: ITrip): ThunkAction<void, AppState, null, Action<a
     db.collection("trips")
         .add(trip)
         .then((querySnapshot: any) => {
-            dispatch(addTripSuccess({...trip, id: querySnapshot.id}))
+            dispatch(addTripSuccess({ ...trip, id: querySnapshot.id }))
         }).catch(error => {
             dispatch(addTripFailure(error))
+        })
+}
+
+function deleteTripRequest() {
+    return {
+        type: DELETE_TRIP_REQUEST
+    }
+}
+
+function deleteTripSuccess(id: string) {
+    return {
+        payload: id,
+        type: DELETE_TRIP_SUCCESS,
+    }
+}
+
+function deleteTripFailure(error: Error) {
+    return {
+        payload: error,
+        type: DELETE_TRIP_FAILURE,
+    }
+}
+
+export const deleteTrip = (id: string): ThunkAction<void, AppState, null, Action<any>> => async (dispatch: any) => {
+    dispatch(deleteTripRequest())
+    db.collection("trips")
+        .doc(id)
+        .delete()
+        .then(() => {
+            dispatch(deleteTripSuccess(id))
+        }).catch(error => {
+            dispatch(deleteTripFailure(error))
         })
 }

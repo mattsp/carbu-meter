@@ -16,7 +16,7 @@ const Row = (props: IProps) => {
     const { style, data, index } = props;
     const item = data[index] as IDataSourceItem;
     return (
-        <ListItem button style={style} key={item.id}>
+        <ListItem ContainerProps={{ style }} ContainerComponent="div" key={item.id}>
             {props.loading ? (<Skeleton width={getRandomInt(20) * 10} />) : props.contentRenderer ? props.contentRenderer(item) : <ListItemText primary={item.id}/>}
         </ListItem>
     );

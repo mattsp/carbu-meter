@@ -10,6 +10,7 @@ import {
     MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import React, { useState } from 'react';
+import { localToUtc, utcToLocale } from "../../../helper/date-helper";
 import { ITrip } from '../../../store/trip/types';
 import { IProps as IModalProps } from '../Modal';
 
@@ -19,7 +20,7 @@ interface IProps extends IModalProps {
 const TripAddModal = (({ modal, open, addTrip, closeModal }: IProps) => {
 
     const [values, setValues] = useState<ITrip>({
-        creationDate: modal.data ? new Date(modal.data.creationDate - new Date(modal.data.creationDate).getTimezoneOffset() * 60000).getTime() : Date.now(),
+        creationDate: modal.data ? utcToLocale(modal.data.creationDate).getTime() : Date.now(),
         distance: modal.data ? modal.data.distance : 0,
         id: modal.data ? modal.data.id : 0,
     });
@@ -36,7 +37,7 @@ const TripAddModal = (({ modal, open, addTrip, closeModal }: IProps) => {
 
     const handleDateChange = (date: Date | null) => {
         if (date) {
-            setValues({ ...values, 'creationDate': new Date(date.toUTCString()).getTime() });
+            setValues({ ...values, 'creationDate': localToUtc(date.getTime()).getTime() });
         }
     }
 
