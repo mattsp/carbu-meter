@@ -9,6 +9,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import Layout from './components/Layout/Layout'
 import ModalContainer from './containers/ModalContainer';
+import NotificationContainer from './containers/NotificationContainer';
 import { store } from './store';
 
 const theme = createMuiTheme({
@@ -39,6 +40,7 @@ const App = () => {
                 <Suspense fallback={<div>Loading...</div>}>
                   <Layout />
                   <ModalContainer />
+                  <NotificationContainer />
                 </Suspense>
               </ErrorBoundary>
             </div>
