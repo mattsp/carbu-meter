@@ -3,6 +3,7 @@ import green from '@material-ui/core/colors/green'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { makeStyles, ThemeProvider } from '@material-ui/styles'
+import { SnackbarProvider } from 'notistack';
 import React, { Suspense } from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
@@ -11,7 +12,6 @@ import Layout from './components/Layout/Layout'
 import ModalContainer from './containers/ModalContainer';
 import NotificationContainer from './containers/NotificationContainer';
 import { store } from './store';
-
 const theme = createMuiTheme({
   palette: {
     primary: cyan,
@@ -40,7 +40,9 @@ const App = () => {
                 <Suspense fallback={<div>Loading...</div>}>
                   <Layout />
                   <ModalContainer />
-                  <NotificationContainer />
+                  <SnackbarProvider>
+                    <NotificationContainer />
+                  </SnackbarProvider>
                 </Suspense>
               </ErrorBoundary>
             </div>

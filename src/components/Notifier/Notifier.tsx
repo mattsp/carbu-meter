@@ -60,6 +60,10 @@ class Notifier extends React.Component<IProps> {
 
     }
 
+    public render() {
+        return null
+    }
+
 }
 
 export default Notifier
