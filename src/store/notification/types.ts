@@ -12,6 +12,7 @@ export interface INotificationState {
 
 export const ADD_NOTIFICATION = 'ADD_NOTIFICATION'
 export const REMOVE_NOTIFICATION = 'REMOVE_NOTIFICATION'
+export const CLOSE_NOTIFICATION  = 'CLOSE_NOTIFICATION'
 
 interface IAddNotificationAction {
     type: typeof ADD_NOTIFICATION
@@ -23,4 +24,9 @@ interface IRemoveNotificationAction {
     payload: string
 }
 
-export type NotificationActionTypes = IAddNotificationAction | IRemoveNotificationAction
+interface ICloseNotificationAction {
+    type: typeof CLOSE_NOTIFICATION
+    payload: {id: string, dismissAll: boolean}
+}
+
+export type NotificationActionTypes = IAddNotificationAction | IRemoveNotificationAction | ICloseNotificationAction
