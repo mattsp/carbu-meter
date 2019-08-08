@@ -14,7 +14,7 @@ export function removeNotification(id: string) {
     }
 }
 
-export function closeNotification(id: string) {
+export function closeNotification(id: string | null) {
     return {
         payload: {id, dismissAll: !id},
         type: CLOSE_NOTIFICATION

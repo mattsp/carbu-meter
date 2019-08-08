@@ -25,8 +25,7 @@ export function notificationReducer(
         }
         case CLOSE_NOTIFICATION: {
             const notifications = Object.keys(state.notifications).reduce((object, key) => {
-
-                (action.payload.dismissAll || object[key].id === action.payload.id) ?
+                (action.payload.dismissAll || state.notifications[key].id === action.payload.id) ?
                     object[key] = { ...state.notifications[key], dismissed: true }
                     :
                     object[key] = { ...state.notifications[key] }

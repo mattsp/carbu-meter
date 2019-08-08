@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import { withSnackbar, WithSnackbarProps } from 'notistack';
 import React, { SyntheticEvent } from 'react'
 import { INotification } from '../../store/notification/types';
@@ -6,6 +7,7 @@ interface IProps extends WithSnackbarProps {
     notifications: { [key: string]: INotification }
     addNotification: (notification: INotification)=>void
     removeNotification: (id: string)=>void
+    closeNotification:(id:string)=>void
 }
 
 class Notifier extends React.Component<IProps> {
@@ -48,6 +50,9 @@ class Notifier extends React.Component<IProps> {
             }
             this.props.enqueueSnackbar(notification.message, {
                 ...notification.options,
+                action: (id:string) => (
+                    <Button onClick={() => this.props.closeNotification(id)}>dissmiss me</Button>
+                ),
                 onClose: (event: SyntheticEvent<any, Event>, reason: string, id:string) => {
                     if (notification.options.onClose) {
                         (notification.options as any).onClose(event, reason, id);
