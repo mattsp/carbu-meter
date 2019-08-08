@@ -9,23 +9,31 @@ import {
     KeyboardDatePicker,
     MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { localToUtc, utcToLocale } from "../../../helper/date-helper";
+import { loadDateFnsLocale } from "../../../i18n/i18n";
 import { ITrip } from '../../../store/trip/types';
 import { IProps as IModalProps } from '../Modal';
-
+  
 interface IProps extends IModalProps {
     addTrip: (trip: ITrip) => void
     editTrip: (trip: ITrip) => void
 }
-const TripAddModal = (({ modal, open, addTrip, editTrip, closeModal }: IProps) => {
-
+const TripAddModal =  (({ modal, open, addTrip, editTrip, closeModal }: IProps) => {
     const [values, setValues] = useState<ITrip>({
         creationDate: modal.data ? utcToLocale(modal.data.creationDate).getTime() : Date.now(),
         distance: modal.data ? modal.data.distance : 0,
         id: modal.data ? modal.data.id : 0,
     });
 
+    const [localeDateFns, setLocale] = useState(null)
+
+    useLayoutEffect(()=>{
+        loadDateFnsLocale().then((locale:any)=>{
+            setLocale(locale)
+        })
+
+    }, [])
     const closeHandler = (reason: 'cancel' | 'save') => {
         if (reason === 'save') {
             const updatedModal = { ...modal, data: values }
@@ -50,14 +58,16 @@ const TripAddModal = (({ modal, open, addTrip, editTrip, closeModal }: IProps) =
         }
     }
 
+
     return (<Dialog open={open} onClose={closeHandler} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">New Trips</DialogTitle>
         <DialogContent>
             <form noValidate autoComplete="off">
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={localeDateFns}>
                     <KeyboardDatePicker
                         autoFocus
                         margin="dense"
+                        format="E dd MMM yyyy"
                         id="mui-pickers-date"
                         label="Date picker"
                         value={new Date(values.creationDate)}
