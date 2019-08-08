@@ -30,8 +30,8 @@ const TripAddModal = (({ modal, open, addTrip, closeModal }: IProps) => {
             const updatedModal = { ...modal, data: values }
             addTrip(updatedModal.data as ITrip)
             closeModal(updatedModal)
-        } else if(reason === 'cancel') {
-            closeModal(modal)  
+        } else if (reason === 'cancel') {
+            closeModal(modal)
         }
     }
 
@@ -77,10 +77,10 @@ const TripAddModal = (({ modal, open, addTrip, closeModal }: IProps) => {
             </form>
         </DialogContent>
         <DialogActions>
-            <Button onClick={()=> {closeHandler('cancel')}} color="primary">
+            <Button onClick={() => { closeHandler('cancel') }} color="primary">
                 Cancel
         </Button>
-            <Button onClick={()=> {closeHandler('save')}} color="primary">
+            <Button onClick={() => { closeHandler('save') }} color="primary">
                 Save
         </Button>
         </DialogActions>
