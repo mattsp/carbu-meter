@@ -1,8 +1,8 @@
 {
     "trip": "voyage",
     "trip_plural": "voyages",
-    "stat": "stat",
-    "stat_plural": "stats",
+    "stat": "statistique",
+    "stat_plural": "statistiques",
     "setting": "paramètre",
     "setting_plural": "paramètres"
 }
