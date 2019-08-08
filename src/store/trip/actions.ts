@@ -68,7 +68,7 @@ export const addTrip = (trip: ITrip): ThunkAction<void, AppState, null, Action<a
         .add(trip)
         .then((querySnapshot: any) => {
             dispatch(addTripSuccess({ ...trip, id: querySnapshot.id }))
-            const noficationId = String(new Date().getTime() + Math.random())
+            const noficationId = (new Date().getTime() + Math.random()).toString()
             dispatch(addNotification({
                 id:  noficationId,
                 message: 'Successfully trip added.',
@@ -79,7 +79,7 @@ export const addTrip = (trip: ITrip): ThunkAction<void, AppState, null, Action<a
             }))
         }).catch(error => {
             dispatch(addTripFailure(error))
-            const noficationId = String(new Date().getTime() + Math.random())
+            const noficationId = (new Date().getTime() + Math.random()).toString()
             dispatch(addNotification({
                 id:  noficationId,
                 message: 'Failed to adding trip.',
@@ -118,7 +118,7 @@ export const deleteTrip = (id: string): ThunkAction<void, AppState, null, Action
         .delete()
         .then(() => {
             dispatch(deleteTripSuccess(id))
-            const noficationId = String(new Date().getTime() + Math.random())
+            const noficationId = (new Date().getTime() + Math.random()).toString()
             dispatch(addNotification({
                 id:  noficationId,
                 message: 'Successfully trip Deleted.',
@@ -129,7 +129,7 @@ export const deleteTrip = (id: string): ThunkAction<void, AppState, null, Action
             }))
         }).catch(error => {
             dispatch(deleteTripFailure(error))
-            const noficationId = String(new Date().getTime() + Math.random())
+            const noficationId = (new Date().getTime() + Math.random()).toString()
             dispatch(addNotification({
                 id:  noficationId,
                 message: 'Failed to deleting trip.',
