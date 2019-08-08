@@ -3,7 +3,7 @@ import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied'
 import { withStyles } from '@material-ui/styles'
-import React, { Component, ErrorInfo } from 'react'
+import React, { Component } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 interface IState {
     hasError: boolean

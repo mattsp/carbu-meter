@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import 'typeface-roboto'
 import App from './App'
+import './i18n/i18n'
 import './index.scss'
 import * as serviceWorker from './serviceWorker'
 

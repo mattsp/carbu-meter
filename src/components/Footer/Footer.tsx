@@ -1,5 +1,6 @@
 import { BottomNavigation, BottomNavigationAction, makeStyles } from '@material-ui/core'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next';
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import routes, { IRoute } from '../../routes'
 
@@ -27,6 +28,7 @@ const Footer = ({ history }: IProps) => {
     setNavigationPath({ path: value })
     history.push(value)
   }
+  const { t } = useTranslation();
   return (
     <footer>
       <BottomNavigation
@@ -38,7 +40,7 @@ const Footer = ({ history }: IProps) => {
         {routes.map(route => (
           <BottomNavigationAction
             key={route.id}
-            label={route.title}
+            label={t(route.title, {count: 2})}
             icon={<route.icon />}
             value={route.path}
           />

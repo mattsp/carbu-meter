@@ -25,21 +25,21 @@ const routes: IRoute[] = [
         icon: MapIcon,
         id: 'trips',
         path: '/',
-        title: 'Trips',
+        title: 'trip',
     },
     {
         component: Stats,
         icon: TrendingUpIcon,
         id: 'stats',
         path: '/stats',
-        title: 'Stats',
+        title: 'stat',
     },
     {
         component: Settings,
         icon: SettingsIcon,
         id: 'settings',
         path: '/settings',
-        title: 'Settings',
+        title: 'setting',
     },
 
 ]
