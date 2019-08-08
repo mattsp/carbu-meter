@@ -1,4 +1,4 @@
-import { ADD_TRIP_FAILURE, ADD_TRIP_REQUEST, ADD_TRIP_SUCCESS, DELETE_TRIP_FAILURE, DELETE_TRIP_REQUEST, DELETE_TRIP_SUCCESS, FETCH_TRIPS_FAILURE, FETCH_TRIPS_REQUEST, FETCH_TRIPS_SUCCESS, ITrip, ITripState, TripsActionTypes } from "./types";
+import { ADD_TRIP_FAILURE, ADD_TRIP_REQUEST, ADD_TRIP_SUCCESS, DELETE_TRIP_FAILURE, DELETE_TRIP_REQUEST, DELETE_TRIP_SUCCESS, EDIT_TRIP_FAILURE, EDIT_TRIP_REQUEST, EDIT_TRIP_SUCCESS, FETCH_TRIPS_FAILURE, FETCH_TRIPS_REQUEST, FETCH_TRIPS_SUCCESS, ITrip, ITripState, TripsActionTypes } from "./types";
 
 const initialState: ITripState = {
     isLoading: false,
@@ -26,6 +26,12 @@ export function tripReducer(
         case ADD_TRIP_SUCCESS:
             return { ...state, trips: { [action.payload.id]: action.payload, ...state.trips }, totalTrips: ++state.totalTrips, isLoading: false }
         case ADD_TRIP_FAILURE:
+            return { ...state, isLoading: false }
+        case EDIT_TRIP_REQUEST:
+            return { ...state, isLoading: true }
+        case EDIT_TRIP_SUCCESS:
+            return { ...state, trips: { ...state.trips, [action.payload.id]: action.payload }, isLoading: false }
+        case EDIT_TRIP_FAILURE:
             return { ...state, isLoading: false }
         case DELETE_TRIP_REQUEST:
             return { ...state, isLoading: true }

@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Modal from '../components/Modal/Modal';
 import { AppState } from '../store';
 import { closeModal, openModal } from '../store/modal/actions'
-import { addTrip } from '../store/trip/actions'
+import { addTrip, editTrip } from '../store/trip/actions'
 
 const mapStateToProps =  (state: AppState) => ({
     modal: state.modal.modal,
@@ -12,6 +12,7 @@ const mapStateToProps =  (state: AppState) => ({
 const  mapDispatchToProps = {
     addTrip,
     closeModal,
+    editTrip,
     openModal,
 };
 

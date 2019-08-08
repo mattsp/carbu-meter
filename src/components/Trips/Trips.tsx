@@ -5,15 +5,16 @@ import React, { Fragment, useEffect, useMemo } from 'react'
 import { IModal } from '../../store/modal/types';
 import { ITrip } from '../../store/trip/types'
 import List from '../List/List'
-import {IProps as IPropsRow} from '../List/Row/Row'
+import { IProps as IPropsRow } from '../List/Row/Row'
 import TripRow from './TripRow/TripRow'
 
 interface IProps {
     trips: { [key: string]: ITrip }
     totalTrips: number
     fetchTrips: () => void
-    deleteTrip: (id:string) => void
+    deleteTrip: (id: string) => void
     addTrip: (trip: ITrip) => void
+    editTrip: (trip: ITrip) => void
     openModal: (modal: IModal) => void
 }
 
@@ -30,17 +31,20 @@ const Trips = ({ trips, totalTrips, fetchTrips, deleteTrip, openModal }: IProps)
         fetchTrips()
     }, [fetchTrips])
     const classes = useStyles();
-    
-    const AddTripClickHandler = ()=>{
-        openModal({id: 'TripAddModal'})
+
+    const addTripClickHandler = () => {
+        openModal({ id: 'TripAddModal' })
     }
-    const data = useMemo(()=> Object.values(trips) as any as {[key: string]: ITrip}, [trips]) 
-    const tripRowRenderer = (props:IPropsRow) => <TripRow {...props} deleteItem={deleteTrip}/>
+    const editTripClickHandler = (id: string) => {
+        openModal({ id: 'TripAddModal', data: trips[id] })
+    }
+    const data = useMemo(() => Object.values(trips) as any as { [key: string]: ITrip }, [trips])
+    const tripRowRenderer = (props: IPropsRow) => <TripRow {...props} editItem={editTripClickHandler} deleteItem={deleteTrip} />
 
     return (
         <Fragment>
             <List dataSource={data} itemCount={totalTrips} itemSize={46} rowRenderer={tripRowRenderer} />
-            <Fab color="primary" aria-label="add" className={classes.addButton} onClick={AddTripClickHandler}>
+            <Fab color="primary" aria-label="add" className={classes.addButton} onClick={addTripClickHandler}>
                 <AddIcon />
             </Fab>
         </Fragment>

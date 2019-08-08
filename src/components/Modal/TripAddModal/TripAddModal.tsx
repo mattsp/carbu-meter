@@ -16,8 +16,9 @@ import { IProps as IModalProps } from '../Modal';
 
 interface IProps extends IModalProps {
     addTrip: (trip: ITrip) => void
+    editTrip: (trip: ITrip) => void
 }
-const TripAddModal = (({ modal, open, addTrip, closeModal }: IProps) => {
+const TripAddModal = (({ modal, open, addTrip, editTrip, closeModal }: IProps) => {
 
     const [values, setValues] = useState<ITrip>({
         creationDate: modal.data ? utcToLocale(modal.data.creationDate).getTime() : Date.now(),
@@ -28,7 +29,11 @@ const TripAddModal = (({ modal, open, addTrip, closeModal }: IProps) => {
     const closeHandler = (reason: 'cancel' | 'save') => {
         if (reason === 'save') {
             const updatedModal = { ...modal, data: values }
-            addTrip(updatedModal.data as ITrip)
+            if (updatedModal.id) {
+                editTrip(updatedModal.data as ITrip)
+            } else {
+                addTrip(updatedModal.data as ITrip)
+            }
             closeModal(updatedModal)
         } else if (reason === 'cancel') {
             closeModal(modal)
@@ -68,6 +73,7 @@ const TripAddModal = (({ modal, open, addTrip, closeModal }: IProps) => {
                     margin="dense"
                     id="distance"
                     label="Distance"
+                    value={values.distance}
                     type="number"
                     required
                     error={Number(values.distance) < 0}
