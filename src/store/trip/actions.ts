@@ -2,6 +2,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk'
 import { AppState } from '..'
 import { db } from '../../firebase';
+import { addNotification } from '../notification/actions';
 import {
     ADD_TRIP_FAILURE, ADD_TRIP_REQUEST, ADD_TRIP_SUCCESS,
     DELETE_TRIP_FAILURE, DELETE_TRIP_REQUEST, DELETE_TRIP_SUCCESS, FETCH_TRIPS_FAILURE, FETCH_TRIPS_REQUEST,
@@ -67,8 +68,26 @@ export const addTrip = (trip: ITrip): ThunkAction<void, AppState, null, Action<a
         .add(trip)
         .then((querySnapshot: any) => {
             dispatch(addTripSuccess({ ...trip, id: querySnapshot.id }))
+            const noficationId = String(new Date().getTime() + Math.random())
+            dispatch(addNotification({
+                id:  noficationId,
+                message: 'Successfully trip added.',
+                options: {
+                    key: noficationId,
+                    variant: 'success',
+                },
+            }))
         }).catch(error => {
             dispatch(addTripFailure(error))
+            const noficationId = String(new Date().getTime() + Math.random())
+            dispatch(addNotification({
+                id:  noficationId,
+                message: 'Failed to adding trip.',
+                options: {
+                    key: noficationId,
+                    variant: 'error',
+                },
+            }))
         })
 }
 
@@ -99,7 +118,25 @@ export const deleteTrip = (id: string): ThunkAction<void, AppState, null, Action
         .delete()
         .then(() => {
             dispatch(deleteTripSuccess(id))
+            const noficationId = String(new Date().getTime() + Math.random())
+            dispatch(addNotification({
+                id:  noficationId,
+                message: 'Successfully trip Deleted.',
+                options: {
+                    key: noficationId,
+                    variant: 'success',
+                },
+            }))
         }).catch(error => {
             dispatch(deleteTripFailure(error))
+            const noficationId = String(new Date().getTime() + Math.random())
+            dispatch(addNotification({
+                id:  noficationId,
+                message: 'Failed to deleting trip.',
+                options: {
+                    key: noficationId,
+                    variant: 'error',
+                },
+            }))
         })
 }

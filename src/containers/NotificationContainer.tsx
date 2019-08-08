@@ -13,4 +13,4 @@ const  mapDispatchToProps = {
     removeNotification,
 };
 
-export default withSnackbar(connect(mapStateToProps, mapDispatchToProps)(Notifier));
+export default connect(mapStateToProps, mapDispatchToProps)(withSnackbar<any>(Notifier));

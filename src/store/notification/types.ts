@@ -1,9 +1,11 @@
-import { SnackbarProps } from "@material-ui/core/Snackbar";
+import { OptionsObject } from "notistack";
+import { SyntheticEvent } from "react";
 
 export interface INotification {
     id: string
-    dismissed:boolean
-    options: SnackbarProps
+    message: string
+    dismissed?:boolean
+    options: OptionsObject
 }
 
 export interface INotificationState {

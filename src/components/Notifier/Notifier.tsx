@@ -1,4 +1,4 @@
-import { WithSnackbarProps } from 'notistack';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
 import React, { SyntheticEvent } from 'react'
 import { INotification } from '../../store/notification/types';
 
@@ -21,21 +21,20 @@ class Notifier extends React.Component<IProps> {
         this.displayed = {...this.displayed, [id]: id};
     };
 
-    public shouldComponentUpdate({ notifications:  newSnacks }: IProps){
-        const notificationsKey = Object.keys(newSnacks);
-        if (!notificationsKey.length){
+    public shouldComponentUpdate({ notifications:  newNotifications }: IProps){
+        const newNotificationsKey = Object.keys(newNotifications);
+        if (!newNotificationsKey.length){
             return false
         }
-        const { notifications: currentSnacks } = this.props;
+        const { notifications: currentNotifications } = this.props;
         let notExists = false;
-        for (const [key] of Object.entries(newSnacks)) {
-            const newNotification = newSnacks[key]
-            if (newNotification.dismissed) {
-                this.props.closeSnackbar(newNotification.id)
-                this.props.removeNotification(newNotification.id)
+        for (const [key, notification] of Object.entries(newNotifications)) {
+            if (notification.dismissed) {
+                this.props.closeSnackbar(key)
+                this.props.removeNotification(key)
             }
             if (notExists) { continue; }
-            notExists = notExists || !currentSnacks[key];
+            notExists = notExists || !Object.values(currentNotifications).filter(({id}) => notification.id === id).length
           }
           return notExists;
     }
@@ -43,18 +42,22 @@ class Notifier extends React.Component<IProps> {
     public componentDidUpdate() {
         const { notifications } = this.props; 
         for (const [key, value] of Object.entries(notifications)) {
+            console.log(key);
             if (this.displayed[key]) {
+                console.log('exit')
                 return 
             }
-            this.props.enqueueSnackbar(value.options.message, {
+            this.props.enqueueSnackbar(value.message, {
                 ...value.options,
-                onClose: (event: SyntheticEvent<any, Event>, reason: string) => {
+                onClose: (event: SyntheticEvent<any, Event>, reason: string, id:string) => {
                     if (value.options.onClose) {
-                        value.options.onClose(event, reason);
+                        console.log(`onClose${id}`);
+                        (value.options as any).onClose(event, reason, id);
                     }
-                    this.props.removeNotification(key)
+                    console.log(`remove${id}`);
+                    this.props.removeNotification(id)
                 }
-            })
+            } as any)
             this.storeDisplayed(key)
         }
 
@@ -66,4 +69,4 @@ class Notifier extends React.Component<IProps> {
 
 }
 
-export default Notifier
+export default withSnackbar(Notifier)
