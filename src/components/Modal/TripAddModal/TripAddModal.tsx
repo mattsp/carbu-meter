@@ -10,6 +10,7 @@ import {
     MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import React, { useLayoutEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { localToUtc, utcToLocale } from "../../../helper/date-helper";
 import { loadDateFnsLocale } from "../../../i18n/i18n";
 import { ITrip } from '../../../store/trip/types';
@@ -58,7 +59,7 @@ const TripAddModal =  (({ modal, open, addTrip, editTrip, closeModal }: IProps) 
         }
     }
 
-
+    const { t } = useTranslation();
     return (<Dialog open={open} onClose={closeHandler} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">New Trips</DialogTitle>
         <DialogContent>
@@ -69,7 +70,7 @@ const TripAddModal =  (({ modal, open, addTrip, editTrip, closeModal }: IProps) 
                         margin="dense"
                         format="E dd MMM yyyy"
                         id="mui-pickers-date"
-                        label="Date picker"
+                        label={t('day')}
                         value={new Date(values.creationDate)}
                         onChange={handleDateChange}
                         required
@@ -82,7 +83,7 @@ const TripAddModal =  (({ modal, open, addTrip, editTrip, closeModal }: IProps) 
                 <TextField
                     margin="dense"
                     id="distance"
-                    label="Distance"
+                    label={t('distance')}
                     value={values.distance}
                     type="number"
                     required
@@ -94,10 +95,10 @@ const TripAddModal =  (({ modal, open, addTrip, editTrip, closeModal }: IProps) 
         </DialogContent>
         <DialogActions>
             <Button onClick={() => { closeHandler('cancel') }} color="primary">
-                Cancel
+                {t('cancel')}
         </Button>
             <Button onClick={() => { closeHandler('save') }} color="primary">
-                Save
+            {t('save')}
         </Button>
         </DialogActions>
     </Dialog>);

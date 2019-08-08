@@ -4,5 +4,9 @@
     "stat": "stat",
     "stat_plural": "stats",
     "setting": "setting",
-    "setting_plural": "settings"
+    "setting_plural": "settings",
+    "distance": "distance",
+    "day": "day",
+    "cancel": "cancel",
+    "save": "save"
 }

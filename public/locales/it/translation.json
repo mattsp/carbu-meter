@@ -4,5 +4,9 @@
     "stat": "statisticha",
     "stat_plural": "statistiche",
     "setting": "impostazione",
-    "setting_plural": "impostazioni"
+    "setting_plural": "impostazioni",
+    "day": "giorno",
+    "distance": "distanza",
+    "cancel": "cancela",
+    "save": "salva"
 }
