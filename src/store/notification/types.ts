@@ -1,5 +1,4 @@
 import { OptionsObject } from "notistack";
-import { SyntheticEvent } from "react";
 
 export interface INotification {
     id: string

@@ -25,10 +25,14 @@ const TripAddModal = (({ modal, open, addTrip, closeModal }: IProps) => {
         id: modal.data ? modal.data.id : 0,
     });
 
-    const closeHandler = () => {
-        const updatedModal = { ...modal, data: values }
-        addTrip(updatedModal.data as ITrip)
-        closeModal(updatedModal)
+    const closeHandler = (reason: 'cancel' | 'save') => {
+        if (reason === 'save') {
+            const updatedModal = { ...modal, data: values }
+            addTrip(updatedModal.data as ITrip)
+            closeModal(updatedModal)
+        } else if(reason === 'cancel') {
+            closeModal(modal)  
+        }
     }
 
     const handleChange = (name: keyof ITrip) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,10 +77,10 @@ const TripAddModal = (({ modal, open, addTrip, closeModal }: IProps) => {
             </form>
         </DialogContent>
         <DialogActions>
-            <Button onClick={closeHandler} color="primary">
+            <Button onClick={()=> {closeHandler('cancel')}} color="primary">
                 Cancel
         </Button>
-            <Button onClick={closeHandler} color="primary">
+            <Button onClick={()=> {closeHandler('save')}} color="primary">
                 Save
         </Button>
         </DialogActions>
