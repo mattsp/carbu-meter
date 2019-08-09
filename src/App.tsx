@@ -3,7 +3,6 @@ import green from '@material-ui/core/colors/green'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { makeStyles, ThemeProvider } from '@material-ui/styles'
-import i18next from 'i18next';
 import { SnackbarProvider } from 'notistack';
 import React, { Suspense } from 'react'
 import { Provider } from 'react-redux'
@@ -13,7 +12,6 @@ import Layout from './components/Layout/Layout'
 import ModalContainer from './containers/ModalContainer';
 import NotificationContainer from './containers/NotificationContainer';
 import { store } from './store';
-import { SET_CURRENT_LANGUAGE } from './store/locale/types';
 
 const theme = createMuiTheme({
   palette: {
