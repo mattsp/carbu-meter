@@ -4,20 +4,16 @@ import Backend from 'i18next-xhr-backend';
 import { initReactI18next } from "react-i18next";
 import { store } from "../store";
 import { SET_CURRENT_LANGUAGE } from "../store/locale/types";
-
 i18n
   .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    debug: true,
+    debug: false,
     fallbackLng: "en",
     load: 'languageOnly',
-    react: {
-      wait:true
-    },
     interpolation: {
-      escapeValue: false
+      escapeValue: false,
     },
   })
   

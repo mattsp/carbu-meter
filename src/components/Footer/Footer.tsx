@@ -8,6 +8,9 @@ const useStyles = makeStyles({
   root: {
     marginTop: 'auto',
   },
+  title: {
+    textTransform: 'capitalize',
+  },
 })
 
 interface IProps extends RouteComponentProps {
@@ -39,8 +42,9 @@ const Footer = ({ history }: IProps) => {
       >
         {routes.map(route => (
           <BottomNavigationAction
+            className={classes.title}
             key={route.id}
-            label={t(route.title, {count: 2})}
+            label={t(route.title, { count: 2 })}
             icon={<route.icon />}
             value={route.path}
           />
