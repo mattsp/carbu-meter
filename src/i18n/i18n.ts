@@ -2,6 +2,8 @@ import i18n from "i18next"
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-xhr-backend';
 import { initReactI18next } from "react-i18next";
+import { store } from "../store";
+import { SET_CURRENT_LANGUAGE } from "../store/locale/types";
 
 i18n
   .use(Backend)
@@ -18,6 +20,10 @@ i18n
       escapeValue: false
     },
   })
+  
+i18n.on('languageChanged', (lng)=> {
+    store.dispatch({type: SET_CURRENT_LANGUAGE, payload: lng})
+})
 
 const supportedDateFnsLanguages = {
   af: async () => import("date-fns/locale/af/index.js"),
