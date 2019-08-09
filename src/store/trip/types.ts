@@ -47,7 +47,7 @@ interface IAddTripSuccessAction {
 interface IAddTripFailureAction {
     type: typeof ADD_TRIP_FAILURE
     payload: Error
-    error: true
+    error: boolean
 }
 
 export const EDIT_TRIP_REQUEST = 'EDIT_TRIP_REQUEST'
@@ -66,7 +66,7 @@ interface IEditTripSuccessAction {
 interface IEditTripFailureAction {
     type: typeof EDIT_TRIP_FAILURE
     payload: Error
-    error: true
+    error: boolean
 }
 
 export const DELETE_TRIP_REQUEST = 'DELETE_TRIP_REQUEST'
@@ -85,7 +85,7 @@ interface IDeleteTripSuccessAction {
 interface IDeleteTripFailureAction {
     type: typeof DELETE_TRIP_FAILURE
     payload: Error
-    error: true
+    error: boolean
 }
 
 export type TripsActionTypes = IFetchTripsRequestAction | IFetchTripsSuccessAction | IFetchTripsFailureAction |

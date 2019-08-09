@@ -11,6 +11,9 @@ i18n
     debug: true,
     fallbackLng: "en",
     load: 'languageOnly',
+    react: {
+      wait:true
+    },
     interpolation: {
       escapeValue: false
     },
@@ -47,5 +50,5 @@ const supportedDateFnsLanguages = {
   zhCN: async () => import("date-fns/locale/zh-CN/index.js")
 } as any;
 
-export const loadDateFnsLocale = async () => supportedDateFnsLanguages[i18n.language]()
+export const loadDateFnsLocale = async (language:string) => supportedDateFnsLanguages[language]()
 export default i18n;

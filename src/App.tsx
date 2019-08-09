@@ -12,6 +12,8 @@ import Layout from './components/Layout/Layout'
 import ModalContainer from './containers/ModalContainer';
 import NotificationContainer from './containers/NotificationContainer';
 import { store } from './store';
+import i18next from 'i18next';
+import { SET_CURRENT_LANGUAGE } from './store/locale/types';
 
 const theme = createMuiTheme({
   palette: {
@@ -27,7 +29,9 @@ const useStyles = makeStyles({
     minHeight: '100vh',
   },
 })
-
+i18next.on('languageChanged', (lng)=> {
+  store.dispatch({type: SET_CURRENT_LANGUAGE, payload: lng})
+})
 const App = () => {
   const classes = useStyles();
   return (

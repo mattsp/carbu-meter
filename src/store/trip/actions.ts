@@ -24,6 +24,7 @@ function fetchTripsSuccess(trips: ITrip[], totalTrips = 0): TripsActionTypes {
 
 function fetchTripsFailure(error: Error) {
     return {
+        error: true,
         payload: error,
         type: FETCH_TRIPS_FAILURE,
     }
@@ -57,6 +58,7 @@ function addTripSuccess(trip: ITrip) {
 
 function addTripFailure(error: Error) {
     return {
+        error: true,
         payload: error,
         type: ADD_TRIP_FAILURE,
     }
@@ -106,6 +108,7 @@ function editTripSuccess(trip: ITrip) {
 
 function editTripFailure(error: Error) {
     return {
+        error: true,
         payload: error,
         type: EDIT_TRIP_FAILURE,
     }
@@ -156,6 +159,7 @@ function deleteTripSuccess(id: string) {
 
 function deleteTripFailure(error: Error) {
     return {
+        error: true,
         payload: error,
         type: DELETE_TRIP_FAILURE,
     }

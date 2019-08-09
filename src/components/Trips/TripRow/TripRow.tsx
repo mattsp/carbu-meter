@@ -4,28 +4,19 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import React, { Fragment, useLayoutEffect, useState } from 'react'
+import React, { Fragment, } from 'react'
 import { utcToLocale } from '../../../helper/date-helper';
-import { loadDateFnsLocale } from '../../../i18n/i18n';
 import { ITrip } from '../../../store/trip/types';
 import { IDataSourceItem } from '../../List/List';
 import Row, { IProps as IRowProps } from '../../List/Row/Row';
 
 interface IProps extends IRowProps {
+    language: any,
     deleteItem: (id: string) => void
     editItem: (id: string) => void
 }
 const TripRow = (props: IProps) => {
-
-    const [dateFns, setDateFns] = useState<DateFnsUtils>(new DateFnsUtils())
-    useLayoutEffect(()=>{
-        loadDateFnsLocale().then((locale:any)=>{
-            dateFns.locale = locale
-            setDateFns(dateFns)
-        })
-
-    }, [dateFns])
-    const creationDate = (item: ITrip) => dateFns.format(utcToLocale(item.creationDate), 'E dd MMM yyyy');
+    const creationDate = (item: ITrip) =>  new DateFnsUtils({locale: props.language}).format(utcToLocale(item.creationDate), 'E dd MMM yyyy')
     const deleteClickHandler = (id: string) => {
         props.deleteItem(id);
     }

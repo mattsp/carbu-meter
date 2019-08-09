@@ -9,32 +9,29 @@ import {
     KeyboardDatePicker,
     MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { localToUtc, utcToLocale } from "../../../helper/date-helper";
-import { loadDateFnsLocale } from "../../../i18n/i18n";
 import { ITrip } from '../../../store/trip/types';
 import { IProps as IModalProps } from '../Modal';
   
 interface IProps extends IModalProps {
+    currentLanguage: string,
+    dateFnsLanguages: { [key: string]: any }
+    fetchFnsLanguages: (language: string) => void
     addTrip: (trip: ITrip) => void
     editTrip: (trip: ITrip) => void
 }
-const TripAddModal =  (({ modal, open, addTrip, editTrip, closeModal }: IProps) => {
+const TripAddModal =  (({ modal, open, currentLanguage, dateFnsLanguages, fetchFnsLanguages, addTrip, editTrip, closeModal }: IProps) => {
     const [values, setValues] = useState<ITrip>({
         creationDate: modal.data ? utcToLocale(modal.data.creationDate).getTime() : Date.now(),
         distance: modal.data ? modal.data.distance : 0,
         id: modal.data ? modal.data.id : 0,
     });
 
-    const [localeDateFns, setLocale] = useState(null)
-
-    useLayoutEffect(()=>{
-        loadDateFnsLocale().then((locale:any)=>{
-            setLocale(locale)
-        })
-
-    }, [])
+    useEffect(()=>{
+        fetchFnsLanguages(currentLanguage)
+    }, [currentLanguage, fetchFnsLanguages])
     const closeHandler = (reason: 'cancel' | 'save') => {
         if (reason === 'save') {
             const updatedModal = { ...modal, data: values }
@@ -64,7 +61,7 @@ const TripAddModal =  (({ modal, open, addTrip, editTrip, closeModal }: IProps) 
         <DialogTitle id="form-dialog-title">New Trips</DialogTitle>
         <DialogContent>
             <form noValidate autoComplete="off">
-                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={localeDateFns}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={dateFnsLanguages[currentLanguage]}>
                     <KeyboardDatePicker
                         autoFocus
                         margin="dense"

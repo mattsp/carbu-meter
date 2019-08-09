@@ -3,20 +3,24 @@ import { IModal } from '../../store/modal/types';
 import { ITrip } from '../../store/trip/types';
 
 export interface IProps {
+    dateFnsLanguages: { [key: string]: any }
     modal: IModal,
     open: boolean,
     addTrip: (trip: ITrip) => void
     closeModal: (modal: IModal) => void,
+    fetchFnsLanguages: (language: string) => void
     openModal: (modal: IModal) => void
 
 }
 const modalComponentMap = new Map()
-const Modal = ({ modal, ...rest }: IProps) => {
+const Modal =  ({ modal, ...rest }: IProps) => {
     if (modal.id) {
-        const ModalComponent = modalComponentMap.has(modal.id) ?
-            modalComponentMap.get(modal.id) :
-            lazy(() => import(`./${modal.id}/${modal.id}`));
-        return (<ModalComponent modal={modal} {...rest} />)
+        let ModalComponent =  modalComponentMap.get(modal.id)
+        if (!ModalComponent) {
+            ModalComponent = lazy(() => import(`./${modal.id}/${modal.id}`));
+            modalComponentMap.set(modal.id,ModalComponent)
+        }
+        return ( <ModalComponent modal={modal} {...rest} />)
     }
     return null;
 }

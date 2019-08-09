@@ -9,6 +9,8 @@ import { IProps as IPropsRow } from '../List/Row/Row'
 import TripRow from './TripRow/TripRow'
 
 interface IProps {
+    currentLanguage: string,
+    dateFnsLanguages: { [key: string]: any }
     trips: { [key: string]: ITrip }
     totalTrips: number
     fetchTrips: () => void
@@ -16,6 +18,7 @@ interface IProps {
     addTrip: (trip: ITrip) => void
     editTrip: (trip: ITrip) => void
     openModal: (modal: IModal) => void
+    fetchFnsLanguages: (language: string) => void
 }
 
 const useStyles = makeStyles<Theme>(theme => ({
@@ -26,10 +29,11 @@ const useStyles = makeStyles<Theme>(theme => ({
     },
 }))
 
-const Trips = ({ trips, totalTrips, fetchTrips, deleteTrip, openModal }: IProps) => {
+const Trips = ({ currentLanguage, dateFnsLanguages, trips, totalTrips, fetchTrips, fetchFnsLanguages, deleteTrip, openModal }: IProps) => {
     useEffect(() => {
+        fetchFnsLanguages(currentLanguage)
         fetchTrips()
-    }, [fetchTrips])
+    }, [currentLanguage, fetchFnsLanguages, fetchTrips])
     const classes = useStyles();
 
     const addTripClickHandler = () => {
@@ -39,7 +43,7 @@ const Trips = ({ trips, totalTrips, fetchTrips, deleteTrip, openModal }: IProps)
         openModal({ id: 'TripAddModal', data: trips[id] })
     }
     const data = useMemo(() => Object.values(trips) as any as { [key: string]: ITrip }, [trips])
-    const tripRowRenderer = (props: IPropsRow) => <TripRow {...props} editItem={editTripClickHandler} deleteItem={deleteTrip} />
+    const tripRowRenderer = (props: IPropsRow) => <TripRow {...props} language={dateFnsLanguages[currentLanguage]} editItem={editTripClickHandler} deleteItem={deleteTrip} />
 
     return (
         <Fragment>
