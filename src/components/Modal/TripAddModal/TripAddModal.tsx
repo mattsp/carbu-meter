@@ -35,7 +35,7 @@ const TripAddModal =  (({ modal, open, currentLanguage, dateFnsLanguages, fetchF
     const closeHandler = (reason: 'cancel' | 'save') => {
         if (reason === 'save') {
             const updatedModal = { ...modal, data: values }
-            if (updatedModal.id) {
+            if (values.id) {
                 editTrip(updatedModal.data as ITrip)
             } else {
                 addTrip(updatedModal.data as ITrip)

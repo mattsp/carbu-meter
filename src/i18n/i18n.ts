@@ -35,6 +35,8 @@ const supportedDateFnsLanguages = {
   es: async () => import("date-fns/locale/es/index.js"),
   et: async () => import("date-fns/locale/et/index.js"),
   fr: async () => import("date-fns/locale/fr/index.js"),
+  frBE: async () => import("date-fns/locale/fr/index.js"),
+  frFR: async () => import("date-fns/locale/fr/index.js"),
   gl: async () => import("date-fns/locale/gl/index.js"),
   he: async () => import("date-fns/locale/he/index.js"),
   hu: async () => import("date-fns/locale/hu/index.js"),
@@ -52,5 +54,5 @@ const supportedDateFnsLanguages = {
   zhCN: async () => import("date-fns/locale/zh-CN/index.js")
 } as any;
 
-export const loadDateFnsLocale = async (language:string) => supportedDateFnsLanguages[language]()
+export const loadDateFnsLocale = async (language:string) => supportedDateFnsLanguages[language.replace('-', '')]()
 export default i18n;
