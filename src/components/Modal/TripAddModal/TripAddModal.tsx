@@ -1,4 +1,5 @@
 import DateFnsUtils from "@date-io/date-fns";
+import { makeStyles } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -15,6 +16,11 @@ import { localToUtc, utcToLocale } from "../../../helper/date-helper";
 import { ITrip } from '../../../store/trip/types';
 import { IProps as IModalProps } from '../Modal';
   
+const useStyles = makeStyles({
+    title: {
+      textTransform: 'capitalize',
+    },
+  })
 interface IProps extends IModalProps {
     currentLanguage: string,
     dateFnsLanguages: { [key: string]: any }
@@ -24,17 +30,24 @@ interface IProps extends IModalProps {
 }
 const TripAddModal =  (({ modal, open, currentLanguage, dateFnsLanguages, fetchFnsLanguages, addTrip, editTrip, closeModal }: IProps) => {
     const [values, setValues] = useState<ITrip>({
-        creationDate: modal.data ? utcToLocale(modal.data.creationDate).getTime() : Date.now(),
-        distance: modal.data ? modal.data.distance : 0,
-        id: modal.data ? modal.data.id : 0,
+        creationDate: Date.now(),
+        distance:  0,
+        id: '',
     });
 
     useEffect(()=>{
         fetchFnsLanguages(currentLanguage)
-    }, [currentLanguage, fetchFnsLanguages])
+        if (modal.data) {
+            setValues({
+                creationDate: utcToLocale(modal.data.creationDate).getTime(),
+                distance: modal.data.distance,
+                id: modal.data.id,
+            })
+        }
+    }, [currentLanguage, fetchFnsLanguages, modal])
     const closeHandler = (reason: 'cancel' | 'save') => {
         if (reason === 'save') {
-            const updatedModal = { ...modal, data: values }
+            const updatedModal = { ...modal, data: values}
             if (values.id) {
                 editTrip(updatedModal.data as ITrip)
             } else {
@@ -56,9 +69,10 @@ const TripAddModal =  (({ modal, open, currentLanguage, dateFnsLanguages, fetchF
         }
     }
 
+    const classes = useStyles();
     const { t } = useTranslation();
     return (<Dialog open={open} onClose={closeHandler} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">New Trips</DialogTitle>
+        <DialogTitle className={classes.title} id="form-dialog-title">{t('newTrip')}</DialogTitle>
         <DialogContent>
             <form noValidate autoComplete="off">
                 <MuiPickersUtilsProvider utils={DateFnsUtils} locale={dateFnsLanguages[currentLanguage]}>

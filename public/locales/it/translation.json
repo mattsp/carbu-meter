@@ -1,6 +1,8 @@
 {
     "trip": "viaggio",
     "trip_plural": "viaggi",
+    "new": "nuovo",
+    "newTrip": "$t(new) $t(trip)",
     "stat": "statisticha",
     "stat_plural": "statistiche",
     "setting": "impostazione",
