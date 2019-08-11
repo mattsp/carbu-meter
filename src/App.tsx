@@ -12,6 +12,7 @@ import Layout from './components/Layout/Layout'
 import ModalContainer from './containers/ModalContainer';
 import NotificationContainer from './containers/NotificationContainer';
 import { store } from './store';
+import Loader from './components/Loader/Loader';
 
 const theme = createMuiTheme({
   palette: {
@@ -37,7 +38,7 @@ const App = () => {
           <Router>
             <div className={classes.root}>
               <ErrorBoundary>
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<Loader/>}>
                   <Layout />
                   <ModalContainer />
                   <SnackbarProvider>
