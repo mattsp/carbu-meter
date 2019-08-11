@@ -9,7 +9,7 @@ const useStyles = makeStyles({
     flexGrow: 1,
   },
 })
-const Loader = ({variant = undefined}: IProps) => {
+const Loader = ({variant}: IProps) => {
   const classes = useStyles()
 
   return (

@@ -10,6 +10,7 @@ const mapStateToProps =  (state: AppState) => ({
     dateFnsLanguages: state.locale.dateFnsLanguages,
     totalTrips: state.trip.totalTrips,
     trips: state.trip.trips,
+    loading: state.trip.isLoading
 });
 
 const  mapDispatchToProps = {
