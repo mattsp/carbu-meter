@@ -8,6 +8,7 @@ import { addTrip, editTrip } from '../store/trip/actions'
 const mapStateToProps =  (state: AppState) => ({
     currentLanguage: state.locale.currentLanguage,
     dateFnsLanguages: state.locale.dateFnsLanguages,
+    loading: state.locale.isLoading,
     modal: state.modal.modal,
     open: state.modal.open
 });
