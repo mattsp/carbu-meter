@@ -58,6 +58,12 @@ const TripAddModal = ({
         distance: modal.data.distance,
         id: modal.data.id,
       })
+    } else {
+      setValues({
+        creationDate: Date.now(),
+        distance: 0,
+        id: '',
+      })
     }
   }, [currentLanguage, fetchFnsLanguages, modal])
   const closeHandler = (reason: 'cancel' | 'save') => {

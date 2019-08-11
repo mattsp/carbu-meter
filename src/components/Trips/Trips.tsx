@@ -52,7 +52,7 @@ const Trips = ({
     openModal({ id: 'TripAddModal' })
   }
   const editTripClickHandler = (id: string) => {
-    openModal({ id: 'TripAddModal', data: trips[id] })
+    openModal({ id: 'TripAddModal', data: {...trips[id]} })
   }
   const data = useMemo(
     () => (Object.values(trips) as any) as { [key: string]: ITrip },
