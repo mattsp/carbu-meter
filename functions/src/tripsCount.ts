@@ -1,28 +1,48 @@
-import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
+import * as functions from 'firebase-functions'
+admin.initializeApp(functions.config().firebase);
 
-admin.initializeApp({
-    apiKey: "AIzaSyCluZSPEzUu_DXDMUoLKPteCadeDI7AArg",
-    authDomain: "carbu-meter.firebaseapp.com",
-    databaseURL: "https://carbu-meter.firebaseio.com",
-    projectId: "carbu-meter",
-    storageBucket: "carbu-meter.appspot.com",
-    messagingSenderId: "596291489486",
-    appId: "1:596291489486:web:0bee780f38cbf791"
-})
+const tripsRef = functions.firestore.document('trips/{tripId}')
+const counterRef = functions.firestore.document('counters/trips')
+export const incrementTripsCounter = tripsRef.onCreate(event => {
+  const counterRef = event.data.ref.firestore.doc('counters/trips')
 
-const database = admin.firestore()
+  counterRef.get()
+  .then(documentSnapshot => {
+    const currentCount = documentSnapshot.exists ? documentSnapshot.data().count : 0
 
-export const tripsCount = functions.firestore
-  .document('trips/{tripId}')
-  .onWrite(() => {
-    const tripsRef = database.collection('trips')
-
-    return database.runTransaction(transaction => {
-      return transaction.get(tripsRef).then(tripsQuery => {
-        return transaction.update(tripsRef, {
-          tripsCount: tripsQuery.size,
-        })
-      })
+    counterRef.set({
+      count: Number(currentCount) + 1
+    })
+    .then(() => {
+      console.log('Trips counter increased!')
     })
   })
+})
+
+export const decrementTripsCounter = tripsRef.onDelete(event => {
+  const counterRef = event.data.ref.firestore.doc('counters/trips')
+
+  counterRef.get()
+  .then(documentSnapshot => {
+    const currentCount = documentSnapshot.exists ? documentSnapshot.data().count : 0
+
+    counterRef.set({
+      count: Number(currentCount) - 1
+    })
+    .then(() => {
+      console.log('Trips counter decreased!')
+    })
+  })
+})
+
+export const recountIncomesCount = counterRef.onDelete(event => {
+  const incomesRef = event.data.ref.firestore.collection('trips')
+
+  return incomesRef.get()
+    .then(querySnapshot => {
+      counterRef.set({
+        count: querySnapshot.docs.length
+      })
+    })
+})
