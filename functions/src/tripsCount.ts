@@ -38,10 +38,10 @@ export const decrementTripsCounter = tripsDocRef.onDelete((event:any) => {
 
 export const recountIncomesCount = counterDocRef.onDelete((event:any) => {
   const incomesRef = event.data.ref.firestore.collection('trips')
-
+  const counterRef = event.data.ref.firestore.doc('counters/trips')
   return incomesRef.get()
     .then((querySnapshot:any) => {
-      counterDocRef.set({
+      counterRef.set({
         count: querySnapshot.docs.length
       })
     })
