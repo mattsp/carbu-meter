@@ -19,7 +19,7 @@ export const incrementTripsCounter = tripsDocRef.onCreate((event: DocumentSnapsh
 
     return counterRef
       .set({
-        count: Number(currentCount) + 1,
+        count: Number(currentCount) + (event.data() as any).distance,
       })
       .then(() => {
         console.log('Trips counter increased!')
@@ -37,7 +37,7 @@ export const decrementTripsCounter = tripsDocRef.onDelete((event: DocumentSnapsh
 
     return counterRef
       .set({
-        count: Number(currentCount) - 1,
+        count: Number(currentCount) - (event.data() as any).distance,
       })
       .then(() => {
         console.log('Trips counter decreased!')
