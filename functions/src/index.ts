@@ -13,7 +13,7 @@ admin.initializeApp(functions.config().firebase)
 const tripsDocRef = functions.firestore.document('trips/{tripId}')
 const counterDocRef = functions.firestore.document('counters/trips')
 export const incrementTripsCounter = tripsDocRef.onCreate((event: any) => {
-  const counterRef = event.data.ref.firestore.doc('counters/trips')
+  const counterRef = event.ref.firestore.doc('counters/trips')
 
   counterRef.get().then((documentSnapshot: any) => {
     const currentCount = documentSnapshot.exists
@@ -31,7 +31,7 @@ export const incrementTripsCounter = tripsDocRef.onCreate((event: any) => {
 })
 
 export const decrementTripsCounter = tripsDocRef.onDelete((event: any) => {
-  const counterRef = event.data.ref.firestore.doc('counters/trips')
+  const counterRef = event.ref.firestore.doc('counters/trips')
 
   counterRef.get().then((documentSnapshot: any) => {
     const currentCount = documentSnapshot.exists
@@ -49,9 +49,9 @@ export const decrementTripsCounter = tripsDocRef.onDelete((event: any) => {
 })
 
 export const recountIncomesCount = counterDocRef.onDelete((event: any) => {
-  const incomesRef = event.data.ref.firestore.collection('trips')
-  const counterRef = event.data.ref.firestore.doc('counters/trips')
-  return incomesRef.get().then((querySnapshot: any) => {
+  const tripsRef = event.ref.firestore.collection('trips')
+  const counterRef = event.ref.firestore.doc('counters/trips')
+  return tripsRef.get().then((querySnapshot: any) => {
     counterRef.set({
       count: querySnapshot.docs.length,
     })
