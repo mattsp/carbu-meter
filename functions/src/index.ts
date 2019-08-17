@@ -8,7 +8,7 @@ admin.initializeApp(functions.config().firebase)
 const tripsDocRef = functions.firestore.document('trips/{tripId}')
 
 export const incrementTripsDistance = tripsDocRef.onCreate((event: DocumentSnapshot) => {
-  const tripsDistanceRef = event.ref.firestore.doc('counters/tripsDistance')
+  const tripsDistanceRef = event.ref.firestore.doc('stats/tripsDistance')
 
   return tripsDistanceRef.get().then((documentSnapshot: DocumentSnapshot) => {
     const currentCount = documentSnapshot.exists
@@ -28,7 +28,7 @@ export const incrementTripsDistance = tripsDocRef.onCreate((event: DocumentSnaps
 })
 
 export const decrementTripsDistance = tripsDocRef.onDelete((event: DocumentSnapshot) => {
-  const tripsDistanceRef = event.ref.firestore.doc('counters/tripsDistance')
+  const tripsDistanceRef = event.ref.firestore.doc('stats/tripsDistance')
 
   return tripsDistanceRef.get().then((documentSnapshot: DocumentSnapshot) => {
     const currentCount = documentSnapshot.exists
