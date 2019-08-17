@@ -7,7 +7,7 @@ admin.initializeApp(functions.config().firebase)
 
 const tripsDocRef = functions.firestore.document('trips/{tripId}')
 
-export const incrementTripsCounter = tripsDocRef.onCreate((event: DocumentSnapshot) => {
+export const incrementTripsDistance = tripsDocRef.onCreate((event: DocumentSnapshot) => {
   const tripsDistanceRef = event.ref.firestore.doc('counters/tripsDistance')
 
   return tripsDistanceRef.get().then((documentSnapshot: any) => {
@@ -27,7 +27,7 @@ export const incrementTripsCounter = tripsDocRef.onCreate((event: DocumentSnapsh
   })
 })
 
-export const decrementTripsCounter = tripsDocRef.onDelete((event: DocumentSnapshot) => {
+export const decrementTripsDistance = tripsDocRef.onDelete((event: DocumentSnapshot) => {
   const tripsDistanceRef = event.ref.firestore.doc('counters/tripsDistance')
 
   return tripsDistanceRef.get().then((documentSnapshot: any) => {
