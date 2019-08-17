@@ -66,8 +66,9 @@ function addTripFailure(error: Error) {
 
 export const addTrip = (trip: ITrip): ThunkAction<void, AppState, null, Action<any>> => async (dispatch: any) => {
     dispatch(addTripRequest())
+    const {id, ...doc} = trip;
     db.collection("trips")
-        .add(trip)
+        .add(doc)
         .then((querySnapshot: any) => {
             dispatch(addTripSuccess({ ...trip, id: querySnapshot.id }))
             const noficationId = (new Date().getTime() + Math.random()).toString()
@@ -116,9 +117,10 @@ function editTripFailure(error: Error) {
 
 export const editTrip = (trip: ITrip): ThunkAction<void, AppState, null, Action<any>> => async (dispatch: any) => {
     dispatch(editTripRequest())
+    const {id, ...doc} = trip;
     db.collection("trips")
         .doc(trip.id)
-        .set(trip)
+        .set(doc)
         .then((querySnapshot: any) => {
             dispatch(editTripSuccess({ ...trip }))
             const noficationId = (new Date().getTime() + Math.random()).toString()

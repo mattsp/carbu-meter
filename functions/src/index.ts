@@ -10,11 +10,11 @@ const tripsDocRef = functions.firestore.document('trips/{tripId}')
 export const incrementTripsDistance = tripsDocRef.onCreate((event: DocumentSnapshot) => {
   const tripsDistanceRef = event.ref.firestore.doc('counters/tripsDistance')
 
-  return tripsDistanceRef.get().then((documentSnapshot: any) => {
+  return tripsDistanceRef.get().then((documentSnapshot: DocumentSnapshot) => {
     const currentCount = documentSnapshot.exists
-      ? documentSnapshot.data().count
+      ? documentSnapshot.data()!.count
       : 0
-
+    console.log(`currentCount: ${currentCount}`)
     console.log(`Trips distance ${(event.data() as any).distance}`)
     return tripsDistanceRef
       .set({
@@ -30,11 +30,11 @@ export const incrementTripsDistance = tripsDocRef.onCreate((event: DocumentSnaps
 export const decrementTripsDistance = tripsDocRef.onDelete((event: DocumentSnapshot) => {
   const tripsDistanceRef = event.ref.firestore.doc('counters/tripsDistance')
 
-  return tripsDistanceRef.get().then((documentSnapshot: any) => {
+  return tripsDistanceRef.get().then((documentSnapshot: DocumentSnapshot) => {
     const currentCount = documentSnapshot.exists
-      ? documentSnapshot.data().count
+      ? documentSnapshot.data()!.count
       : 0
-
+      console.log(`currentCount: ${currentCount}`)
       console.log(`Trips distance ${(event.data() as any).distance}`)
     return tripsDistanceRef
       .set({

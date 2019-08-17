@@ -83,7 +83,7 @@ const TripAddModal = ({
   const handleChange = (name: keyof ITrip) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setValues({ ...values, [name]: event.target.value })
+    setValues({ ...values, [name]: name === 'distance' ?  Number(event.target.value) : event.target.value })
   }
 
   const handleDateChange = (date: Date | null) => {
