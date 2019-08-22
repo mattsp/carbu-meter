@@ -6,8 +6,8 @@ import { IModal } from '../../store/modal/types'
 import { ITrip } from '../../store/trip/types'
 import List from '../List/List'
 import { IProps as IPropsRow } from '../List/Row/Row'
-import TripRow from './TripRow/TripRow'
 import Loader from '../Loader/Loader'
+import TripRow from './TripRow/TripRow'
 
 interface IProps {
   loading: boolean

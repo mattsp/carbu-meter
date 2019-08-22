@@ -1,6 +1,7 @@
 {
     "trip": "voyage",
     "trip_plural": "voyages",
+    "totalTripsDistance": "distance total parcourue",
     "new": "nouveau",
     "newTrip": "$t(new) $t(trip)",
     "stat": "statistique",

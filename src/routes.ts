@@ -7,7 +7,7 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 
 const TripsContainer = lazy(() => import('./containers/TripsContainer'));
 const Settings = lazy(() => import('./components/Settings/Settings'));
-const Stats = lazy(() => import('./components/Stats/Stats'));
+const StatsContainer = lazy(() => import('./containers/StatsContainer'));
 
 export interface IRoute {
     id: string
@@ -28,7 +28,7 @@ const routes: IRoute[] = [
         title: 'trip',
     },
     {
-        component: Stats,
+        component: StatsContainer,
         icon: TrendingUpIcon,
         id: 'stats',
         path: '/stats',

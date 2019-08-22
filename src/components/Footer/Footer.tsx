@@ -1,5 +1,5 @@
 import { BottomNavigation, BottomNavigationAction, makeStyles } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState} from 'react'
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import routes, { IRoute } from '../../routes'
@@ -24,6 +24,9 @@ const Footer = ({ history }: IProps) => {
   const [navigation, setNavigationPath] = useState<IState>({
     path: '/',
   })
+  useEffect(()=>{
+    setNavigationPath({ path: history.location.pathname })
+  }, [history.location.pathname])
   const bottomNavigationChangeHandler = (
     event: React.ChangeEvent<{}>,
     value: string
