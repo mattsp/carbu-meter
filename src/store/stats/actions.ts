@@ -7,6 +7,7 @@ import {
   FETCH_TOTAL_TRIPS_DISTANCE_REQUEST,
   FETCH_TOTAL_TRIPS_DISTANCE_SUCCESS,
   StatsActionTypes,
+  UPDATE_TOTAL_TRIPS_DISTANCE,
 } from './types'
 
 function fetchTotalTripsDistanceRequest() {
@@ -35,15 +36,37 @@ export const fetchTotalTripsDistance = (): ThunkAction<
   AppState,
   null,
   Action<any>
-> => async (dispatch: any) => {
+> => async (dispatch: any, getState: () => AppState) => {
   dispatch(fetchTotalTripsDistanceRequest())
-  db.doc('stats/tripsDistance')
-    .get()
-    .then((documentSnapshot: any) => {
-      const data = documentSnapshot.data().count
-      dispatch(fetchTotalTripsDistanceSuccess(data))
-    })
-    .catch(error => {
-      dispatch(fetchTotalTripsDistanceFailure(error))
-    })
+  const totalTripsDistance = getState().stats.totalTripsDistance
+  if (totalTripsDistance === undefined) {
+    db.doc('stats/tripsDistance')
+      .get()
+      .then((documentSnapshot: any) => {
+        const data = documentSnapshot.data().count
+        dispatch(fetchTotalTripsDistanceSuccess(data))
+      })
+      .catch(error => {
+        dispatch(fetchTotalTripsDistanceFailure(error))
+      })
+  }
+  dispatch(fetchTotalTripsDistanceSuccess(totalTripsDistance!))
+}
+
+export function updateTotalTripsDistance(
+  previousTripsDistance: number,
+  newTripsDistance: number
+) {
+  return (dispatch: any, getState: () => AppState) => {
+    const totalTripsDistance = getState().stats.totalTripsDistance || 0
+    dispatch(
+      (() => {
+        return {
+          payload:
+            totalTripsDistance - previousTripsDistance + newTripsDistance,
+          type: UPDATE_TOTAL_TRIPS_DISTANCE,
+        }
+      })()
+    )
+  }
 }

@@ -15,7 +15,7 @@ const useStyles = makeStyles<Theme>(theme => ({
 
 const Stats = ({ totalTripsDistance, fetchTotalTripsDistance }: IProps) => {
   useEffect(() => {
-    fetchTotalTripsDistance()
+      fetchTotalTripsDistance()
   }, [fetchTotalTripsDistance])
   const classes = useStyles()
   const { t } = useTranslation()

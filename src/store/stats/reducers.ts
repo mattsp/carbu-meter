@@ -4,6 +4,7 @@ import {
   FETCH_TOTAL_TRIPS_DISTANCE_SUCCESS,
   IStatsState,
   StatsActionTypes,
+  UPDATE_TOTAL_TRIPS_DISTANCE,
 } from './types'
 
 const initialState: IStatsState = {
@@ -26,6 +27,12 @@ export function statsReducer(
       }
     case FETCH_TOTAL_TRIPS_DISTANCE_FAILURE:
       return { ...state, isLoading: false }
+    case UPDATE_TOTAL_TRIPS_DISTANCE: {
+      return {
+        ...state,
+        totalTripsDistance: action.payload,
+      }
+    }
     default:
       return state
   }

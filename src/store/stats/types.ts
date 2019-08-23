@@ -25,7 +25,15 @@ interface IFetchTotalTripsDistanceFailureAction {
   error: true
 }
 
+export const UPDATE_TOTAL_TRIPS_DISTANCE = 'UPDATE_TOTAL_TRIPS_DISTANCE'
+
+interface IUpdateTotalTripsDistanceAction {
+  type: typeof UPDATE_TOTAL_TRIPS_DISTANCE
+  payload: number
+}
+
 export type StatsActionTypes =
   | IFetchTotalTripsDistanceRequestAction
   | IFetchTotalTripsDistanceSuccessAction
   | IFetchTotalTripsDistanceFailureAction
+  | IUpdateTotalTripsDistanceAction

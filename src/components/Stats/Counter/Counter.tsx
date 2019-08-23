@@ -21,7 +21,7 @@ const Counter = ({ caption, value }: IProps) => {
   return (
     <Paper className={classes.root} elevation={2}>
       {caption && <Typography className={classes.caption} variant="caption">{caption}</Typography>}
-      {!value ? (
+      {value === undefined ? (
         <Loader />
       ) : (
         <CountUp end={value} delay={0}>
