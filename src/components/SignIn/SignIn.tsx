@@ -80,8 +80,6 @@ const SignIn = ({ history }: IProps) => {
 
   const classes = useStyles()
 
-  console.log(values);
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

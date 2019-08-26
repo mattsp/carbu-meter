@@ -94,7 +94,7 @@ export const addTrip = (
     .add(doc)
     .then((querySnapshot: any) => {
       dispatch(addTripSuccess({ ...trip, id: querySnapshot.id }))
-      dispatch(updateTotalTripsDistance(0, trip.distance))
+      dispatch(updateTotalTripsDistance(0, trip.distance!))
       const noficationId = (new Date().getTime() + Math.random()).toString()
       dispatch(
         addNotification({
@@ -155,7 +155,7 @@ export const editTrip = (
     .set(doc)
     .then((querySnapshot: any) => {
       dispatch(editTripSuccess({ ...trip }))
-      dispatch(updateTotalTripsDistance(previousTrip.distance, trip.distance))
+      dispatch(updateTotalTripsDistance(previousTrip.distance!, trip.distance!))
       const noficationId = (new Date().getTime() + Math.random()).toString()
       dispatch(
         addNotification({
@@ -215,7 +215,7 @@ export const deleteTrip = (
     .delete()
     .then(() => {
       dispatch(deleteTripSuccess(id))
-      dispatch(updateTotalTripsDistance(previousTrip.distance, 0))
+      dispatch(updateTotalTripsDistance(previousTrip.distance!, 0))
       const noficationId = (new Date().getTime() + Math.random()).toString()
       dispatch(
         addNotification({

@@ -1,5 +1,5 @@
 import DateFnsUtils from '@date-io/date-fns'
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles'
 import { makeStyles } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
@@ -17,7 +17,7 @@ import { localToUtc, utcToLocale } from '../../../helper/date-helper'
 import { ITrip } from '../../../store/trip/types'
 import { IProps as IModalProps } from '../Modal'
 import Slide from '@material-ui/core/Slide'
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 const useStyles = makeStyles({
   title: {
@@ -46,9 +46,12 @@ const TripAddModal = ({
 }: IProps) => {
   const [values, setValues] = useState<ITrip>({
     creationDate: Date.now(),
-    distance: 0,
+    distance: undefined,
     id: '',
   })
+
+  const [distanceError, setDistanceError] = useState(false)
+  const [dateError, setDateError] = useState(false)
 
   useEffect(() => {
     fetchFnsLanguages(currentLanguage)
@@ -61,20 +64,29 @@ const TripAddModal = ({
     } else {
       setValues({
         creationDate: Date.now(),
-        distance: 0,
+        distance: undefined,
         id: '',
       })
     }
   }, [currentLanguage, fetchFnsLanguages, modal])
   const closeHandler = (reason: 'cancel' | 'save') => {
-    if (reason === 'save') {
-      const updatedModal = { ...modal, data: values }
-      if (values.id) {
-        editTrip(updatedModal.data as ITrip)
-      } else {
-        addTrip(updatedModal.data as ITrip)
+    if (reason === 'save' && !distanceError) {
+      if (!values.distance) {
+        setDistanceError(true)
       }
-      closeModal(updatedModal)
+      if (!values.creationDate) {
+        setDateError(true) 
+      }
+      if (!dateError && ! distanceError) {
+        const newValues = { ...values, distance: Number(values.distance) }
+        const updatedModal = { ...modal, data: newValues }
+        if (values.id) {
+          editTrip(updatedModal.data as ITrip)
+        } else {
+          addTrip(updatedModal.data as ITrip)
+        }
+        closeModal(updatedModal)
+      }
     } else if (reason === 'cancel') {
       closeModal(modal)
     }
@@ -83,7 +95,12 @@ const TripAddModal = ({
   const handleChange = (name: keyof ITrip) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setValues({ ...values, [name]: name === 'distance' ?  Number(event.target.value) : event.target.value })
+    if (name === 'distance' && !event.target.value) {
+      setDistanceError(true)
+    } else {
+      setDistanceError(false);
+    }
+    setValues({ ...values, [name]: event.target.value })
   }
 
   const handleDateChange = (date: Date | null) => {
@@ -97,8 +114,8 @@ const TripAddModal = ({
 
   const classes = useStyles()
   const { t } = useTranslation()
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const theme = useTheme()
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   return (
     <Dialog
       fullScreen={fullScreen}
@@ -117,12 +134,15 @@ const TripAddModal = ({
             locale={dateFnsLanguages[currentLanguage]}
           >
             <KeyboardDatePicker
+              onBlur={()=>{if (!values.creationDate)}}
+              allowKeyboardControl={false}
               autoFocus
               margin="dense"
-              format="E dd MMM yyyy"
-              id="mui-pickers-date"
+              format="MM/dd/yyyy"
+              id="creationDate"
               label={t('day')}
               value={new Date(values.creationDate)}
+              error={dateError}
               onChange={handleDateChange}
               required
               fullWidth
@@ -138,7 +158,7 @@ const TripAddModal = ({
             value={values.distance}
             type="number"
             required
-            error={Number(values.distance) < 0}
+            error={Number(values.distance) < 0 || distanceError}
             onChange={handleChange('distance')}
             fullWidth
           />
