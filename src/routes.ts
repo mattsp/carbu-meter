@@ -15,7 +15,7 @@ export interface IRoute {
     component: any;
     exact?: boolean
     icon: ComponentType<SvgIconProps>
-    path: string | array
+    path: string | string[]
     title: string
     showHeader: boolean
     showFooter: boolean

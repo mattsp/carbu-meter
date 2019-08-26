@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -57,13 +57,30 @@ const useStyles = makeStyles<Theme>(theme => ({
 
 interface IProps extends RouteComponentProps {}
 
-const SignIn = ({history}: IProps) => {
-  
-  const onClickSubmitHandler = () =>{
+interface ICredential {
+  email?: string
+  password?: string
+}
+
+const SignIn = ({ history }: IProps) => {
+  const [values, setValues] = useState<ICredential>({
+    email: undefined,
+    password: undefined,
+  })
+
+  const handleChange = (name: keyof ICredential) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setValues({ ...values, [name]: event.target.value })
+  }
+
+  const onClickSubmitHandler = () => {
     history.push('/trips')
   }
-  
+
   const classes = useStyles()
+
+  console.log(values);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -86,6 +103,7 @@ const SignIn = ({history}: IProps) => {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={handleChange('email')}
           />
           <TextField
             variant="outlined"
@@ -97,6 +115,7 @@ const SignIn = ({history}: IProps) => {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleChange('password')}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
