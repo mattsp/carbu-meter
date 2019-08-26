@@ -18,6 +18,7 @@ import { ITrip } from '../../../store/trip/types'
 import { IProps as IModalProps } from '../Modal'
 import Slide from '@material-ui/core/Slide'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { isValid } from 'date-fns';
 
 const useStyles = makeStyles({
   title: {
@@ -75,9 +76,9 @@ const TripAddModal = ({
         setDistanceError(true)
       }
       if (!values.creationDate) {
-        setDateError(true) 
+        setDateError(true)
       }
-      if (!dateError && ! distanceError) {
+      if (!dateError && !distanceError) {
         const newValues = { ...values, distance: Number(values.distance) }
         const updatedModal = { ...modal, data: newValues }
         if (values.id) {
@@ -98,13 +99,14 @@ const TripAddModal = ({
     if (name === 'distance' && !event.target.value) {
       setDistanceError(true)
     } else {
-      setDistanceError(false);
+      setDistanceError(false)
     }
     setValues({ ...values, [name]: event.target.value })
   }
 
   const handleDateChange = (date: Date | null) => {
     if (date) {
+      setDateError(!isValid(date))
       setValues({
         ...values,
         creationDate: localToUtc(date.getTime()).getTime(),
@@ -134,7 +136,13 @@ const TripAddModal = ({
             locale={dateFnsLanguages[currentLanguage]}
           >
             <KeyboardDatePicker
-              onBlur={()=>{if (!values.creationDate)}}
+              onBlur={() => {
+                if (!values.creationDate) {
+                  setDateError(true)
+                }else{
+                  setDateError(false)
+                }
+              }}
               allowKeyboardControl={false}
               autoFocus
               margin="dense"
