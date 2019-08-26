@@ -4,6 +4,7 @@ import { SvgIconProps } from "@material-ui/core/SvgIcon";
 import MapIcon from '@material-ui/icons/MapRounded'
 import SettingsIcon from '@material-ui/icons/Settings'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
+import SignIn from './components/SignIn/SignIn';
 
 const TripsContainer = lazy(() => import('./containers/TripsContainer'));
 const Settings = lazy(() => import('./components/Settings/Settings'));
@@ -14,18 +15,34 @@ export interface IRoute {
     component: any;
     exact?: boolean
     icon: ComponentType<SvgIconProps>
-    path: string
+    path: string | array
     title: string
+    showHeader: boolean
+    showFooter: boolean
+    includeIntoFooter: boolean
 }
 
 const routes: IRoute[] = [
     {
-        component: TripsContainer,
+        component: SignIn,
         exact: true,
         icon: MapIcon,
+        id: 'signIn',
+        path: ['/', '/singnIn'],
+        showHeader: false,
+        showFooter: false,
+        includeIntoFooter: false,
+        title: 'signIn',
+    },
+    {
+        component: TripsContainer,
+        icon: MapIcon,
         id: 'trips',
-        path: '/',
+        path: '/trips',
         title: 'trip',
+        showHeader: true,
+        showFooter: true,
+        includeIntoFooter: true,
     },
     {
         component: StatsContainer,
@@ -33,6 +50,9 @@ const routes: IRoute[] = [
         id: 'stats',
         path: '/stats',
         title: 'stat',
+        showHeader: true,
+        showFooter: true,
+        includeIntoFooter: true,
     },
     {
         component: Settings,
@@ -40,6 +60,9 @@ const routes: IRoute[] = [
         id: 'settings',
         path: '/settings',
         title: 'setting',
+        showHeader: true,
+        showFooter: true,
+        includeIntoFooter: true,
     },
 
 ]

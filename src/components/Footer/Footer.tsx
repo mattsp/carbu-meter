@@ -1,6 +1,10 @@
-import { BottomNavigation, BottomNavigationAction, makeStyles } from '@material-ui/core'
-import React, { useEffect, useState} from 'react'
-import { useTranslation } from 'react-i18next';
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  makeStyles,
+} from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import routes, { IRoute } from '../../routes'
 
@@ -20,11 +24,11 @@ interface IState {
   path: string
 }
 const Footer = ({ history }: IProps) => {
-  const classes = useStyles();
+  const classes = useStyles()
   const [navigation, setNavigationPath] = useState<IState>({
     path: '/',
   })
-  useEffect(()=>{
+  useEffect(() => {
     setNavigationPath({ path: history.location.pathname })
   }, [history.location.pathname])
   const bottomNavigationChangeHandler = (
@@ -34,7 +38,7 @@ const Footer = ({ history }: IProps) => {
     setNavigationPath({ path: value })
     history.push(value)
   }
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   return (
     <footer>
       <BottomNavigation
@@ -43,15 +47,17 @@ const Footer = ({ history }: IProps) => {
         className={classes.root}
         showLabels
       >
-        {routes.map(route => (
-          <BottomNavigationAction
-            className={classes.title}
-            key={route.id}
-            label={t(route.title, { count: 2 })}
-            icon={<route.icon />}
-            value={route.path}
-          />
-        ))}
+        {routes
+          .filter(route => route.includeIntoFooter === true)
+          .map(route => (
+            <BottomNavigationAction
+              className={classes.title}
+              key={route.id}
+              label={t(route.title, { count: 2 })}
+              icon={<route.icon />}
+              value={route.path}
+            />
+          ))}
       </BottomNavigation>
     </footer>
   )

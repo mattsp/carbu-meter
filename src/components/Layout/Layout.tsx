@@ -34,7 +34,7 @@ const Layout = ({ location, classes = {} }: IProps) => {
   const title = activeRoute ? activeRoute.title : ''
   return (
     <Fragment>
-      <Header title={title} />
+      {activeRoute && activeRoute.showHeader === true && <Header title={title} />}
       <Container className={classes.content} maxWidth={false}>
         <Typography className={classes.absoluteItem} component="div">
           <Switch>
@@ -44,7 +44,7 @@ const Layout = ({ location, classes = {} }: IProps) => {
           </Switch>
         </Typography>
       </Container>
-      <Footer routes={routes} />
+      {activeRoute && activeRoute.showFooter === true && <Footer routes={routes} />}
     </Fragment>
   )
 }
