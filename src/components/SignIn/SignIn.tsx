@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, Theme } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { RouteComponentProps, withRouter, NavLink } from 'react-router-dom'
 
 const Copyright = () => {
   return (
@@ -136,7 +136,14 @@ const SignIn = ({ history }: IProps) => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link
+                component={({ className }) => (
+                  <NavLink className={className} to="/signUp" title="signUp">
+                    {"Don't have an account? Sign Up"}
+                  </NavLink>
+                )}
+                variant="body2"
+              >
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

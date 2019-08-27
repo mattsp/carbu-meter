@@ -5,6 +5,7 @@ import MapIcon from '@material-ui/icons/MapRounded'
 import SettingsIcon from '@material-ui/icons/Settings'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import SignIn from './components/SignIn/SignIn';
+import SignUp from './components/SignUp/SignUp';
 
 const TripsContainer = lazy(() => import('./containers/TripsContainer'));
 const Settings = lazy(() => import('./components/Settings/Settings'));
@@ -25,7 +26,6 @@ export interface IRoute {
 const routes: IRoute[] = [
     {
         component: SignIn,
-        exact: true,
         icon: MapIcon,
         id: 'signIn',
         path: ['/', '/singnIn'],
@@ -33,6 +33,16 @@ const routes: IRoute[] = [
         showFooter: false,
         includeIntoFooter: false,
         title: 'signIn',
+    },
+    {
+        component: SignUp,
+        icon: MapIcon,
+        id: 'signUp',
+        path: '/signUp',
+        showHeader: false,
+        showFooter: false,
+        includeIntoFooter: false,
+        title: 'signUp',
     },
     {
         component: TripsContainer,

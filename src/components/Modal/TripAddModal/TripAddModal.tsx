@@ -18,7 +18,7 @@ import { ITrip } from '../../../store/trip/types'
 import { IProps as IModalProps } from '../Modal'
 import Slide from '@material-ui/core/Slide'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { isValid } from 'date-fns';
+import { isValid } from 'date-fns'
 
 const useStyles = makeStyles({
   title: {
@@ -114,6 +114,14 @@ const TripAddModal = ({
     }
   }
 
+  const handleOnBlurDate = () => {
+    if (!values.creationDate) {
+      setDateError(true)
+    } else {
+      setDateError(false)
+    }
+  }
+
   const classes = useStyles()
   const { t } = useTranslation()
   const theme = useTheme()
@@ -136,13 +144,7 @@ const TripAddModal = ({
             locale={dateFnsLanguages[currentLanguage]}
           >
             <KeyboardDatePicker
-              onBlur={() => {
-                if (!values.creationDate) {
-                  setDateError(true)
-                }else{
-                  setDateError(false)
-                }
-              }}
+              onBlur={handleOnBlurDate}
               allowKeyboardControl={false}
               autoFocus
               margin="dense"
