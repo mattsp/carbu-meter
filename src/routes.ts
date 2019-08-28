@@ -26,9 +26,10 @@ export interface IRoute {
 const routes: IRoute[] = [
     {
         component: SignIn,
+        exact: true,
         icon: MapIcon,
         id: 'signIn',
-        path: ['/', '/singnIn'],
+        path: ['/', '/signIn'],
         showHeader: false,
         showFooter: false,
         includeIntoFooter: false,

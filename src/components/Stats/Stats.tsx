@@ -20,7 +20,7 @@ const Stats = ({ totalTripsDistance, fetchTotalTripsDistance }: IProps) => {
   const classes = useStyles()
   const { t } = useTranslation()
   return (
-    <Container component="main" maxWidth="xs" className={classes.root}>
+    <Container className={classes.root}>
       <Counter caption={t('totalTripsDistance')} value={totalTripsDistance} />
     </Container>
   )

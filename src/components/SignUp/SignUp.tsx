@@ -1,19 +1,19 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import React from 'react'
+import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import Link from '@material-ui/core/Link'
+import Grid from '@material-ui/core/Grid'
+import Box from '@material-ui/core/Box'
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import Typography from '@material-ui/core/Typography'
+import { makeStyles, Theme } from '@material-ui/core/styles'
+import Container from '@material-ui/core/Container'
+import { NavLink } from 'react-router-dom'
 
-const Copyright = ()=> {
+const Copyright = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
@@ -26,7 +26,7 @@ const Copyright = ()=> {
         Material-UI.
       </Link>
     </Typography>
-  );
+  )
 }
 
 const useStyles = makeStyles<Theme>(theme => ({
@@ -52,14 +52,13 @@ const useStyles = makeStyles<Theme>(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-}));
+}))
 
-const SignUp = ()=> {
-  const classes = useStyles();
+const SignUp = () => {
+  const classes = useStyles()
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
+    <Container maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -133,9 +132,14 @@ const SignUp = ()=> {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
+              <Link
+                component={({ className }) => (
+                  <NavLink className={className} to="/signIn" title="signUp">
+                    Already have an account? Sign in
+                  </NavLink>
+                )}
+                variant="body2"
+              ></Link>
             </Grid>
           </Grid>
         </form>
@@ -144,7 +148,7 @@ const SignUp = ()=> {
         <Copyright />
       </Box>
     </Container>
-  );
+  )
 }
 
 export default SignUp

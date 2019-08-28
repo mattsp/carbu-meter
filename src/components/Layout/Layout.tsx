@@ -35,7 +35,7 @@ const Layout = ({ location, classes = {} }: IProps) => {
   return (
     <Fragment>
       {activeRoute && activeRoute.showHeader === true && <Header title={title} />}
-      <Container className={classes.content} maxWidth={false}>
+      <Container component="main" maxWidth={false} className={classes.content} >
         <Typography className={classes.absoluteItem} component="div">
           <Switch>
             {routes.map(route => (
