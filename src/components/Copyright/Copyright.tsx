@@ -4,6 +4,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { makeStyles } from '@material-ui/styles'
 import { Theme } from '@material-ui/core'
+import { capitalize } from '../../helper/string-helper'
 const useStyles = makeStyles<Theme>({
   capitalizeText: {
     textTransform: 'capitalize',
@@ -13,13 +14,8 @@ const Copyright = () => {
   const { t } = useTranslation()
   const classes = useStyles()
   return (
-    <Typography
-      className={classes.capitalizeText}
-      variant="body2"
-      color="textSecondary"
-      align="center"
-    >
-      {`${t('copyright')} © `}
+    <Typography variant="body2" color="textSecondary" align="center">
+      {capitalize(`${t('copyright')} © `)}
       <Link
         className={classes.capitalizeText}
         color="inherit"
@@ -27,8 +23,8 @@ const Copyright = () => {
       >
         Your Website
       </Link>{' '}
-      {new Date().getFullYear()}
-      {`. ${t('builtWith')} `}
+      {new Date().getFullYear()}.
+      {' '}{capitalize(`${t('builtWith')} `)}
       <Link color="inherit" href="https://material-ui.com/">
         Material-UI.
       </Link>

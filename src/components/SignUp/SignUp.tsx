@@ -14,6 +14,7 @@ import Container from '@material-ui/core/Container'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Copyright from '../Copyright/Copyright'
+import { capitalize } from '../../helper/string-helper'
 
 const useStyles = makeStyles<Theme>(theme => ({
   '@global': {
@@ -71,7 +72,7 @@ const SignUp = () => {
                 required
                 fullWidth
                 id="firstName"
-                label={`${t('first')} ${t('name')}`}
+                label={`${t('firstName')}`}
                 autoFocus
               />
             </Grid>
@@ -82,7 +83,7 @@ const SignUp = () => {
                 required
                 fullWidth
                 id="lastName"
-                label={`${t('last')} ${t('name')}`}
+                label={`${t('lastName')}`}
                 name="lastName"
                 autoComplete="lname"
               />
@@ -101,12 +102,11 @@ const SignUp = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                className={classes.capitalizeText}
                 variant="outlined"
                 required
                 fullWidth
                 name="password"
-                label={t('password')}
+                label={capitalize(t('password'))}
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -114,9 +114,8 @@ const SignUp = () => {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                className={classes.capitalizeText}
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label={`${t('extraEmails')} .`}
+                label={`${capitalize(t('extraEmails'))} .`}
               />
             </Grid>
           </Grid>
@@ -132,10 +131,10 @@ const SignUp = () => {
           <Grid container justify="flex-end">
             <Grid item>
               <Link
-                className={classes.capitalizeText}
                 component={({ className }) => (
                   <NavLink className={className} to="/signIn" title="signUp">
-                    {t('alreadyAccount')}? {t('signIn')}
+                    {capitalize(`${t('alreadyAccount')}?`)}{' '}
+                    {capitalize(`${t('signIn')}`)}
                   </NavLink>
                 )}
                 variant="body2"

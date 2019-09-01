@@ -14,6 +14,7 @@ import { RouteComponentProps, withRouter, NavLink } from 'react-router-dom'
 import { Container } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import Copyright from '../Copyright/Copyright'
+import { capitalize } from '../../helper/string-helper'
 
 const useStyles = makeStyles<Theme>(theme => ({
   '@global': {
@@ -126,16 +127,16 @@ const SignIn = ({ history }: IProps) => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link className={classes.capitalizeText} href="#" variant="body2">
-                {t('forgotPassword')}?
+              <Link href="#" variant="body2">
+                {capitalize(t('forgotPassword'))}?
               </Link>
             </Grid>
             <Grid item>
               <Link
-                className={classes.capitalizeText}
                 component={({ className }) => (
                   <NavLink className={className} to="/signUp" title="signUp">
-                    {t('alreadyAccount')}? {t('signUp')}
+                    {capitalize(`${t('alreadyAccount')}?`)}{' '}
+                    {capitalize(`${t('signUp')}`)}
                   </NavLink>
                 )}
                 variant="body2"

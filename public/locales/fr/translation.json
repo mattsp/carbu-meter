@@ -11,5 +11,18 @@
     "distance": "distance",
     "day": "jour",
     "cancel": "annuler",
-    "save": "enregistrer"
+    "save": "enregistrer",
+    "copyright": "droits d'auteur",
+    "builtWith": "construire avec",
+    "firstName": "nom",
+    "lastName": "prénom",
+    "email": "email",
+    "address": "adresse",
+    "password": "mot de passe",
+    "extraEmails": "je souhaite recevoir de l'inspiration, des promotions marketing et des mises à jour par e-mail",
+    "signUp": "s'inscrire",
+    "signIn": "se connecter",
+    "alreadyAccount": "vous avez déjà un compte",
+    "rememberMe": "souviens-toi de moi",
+    "forgotPassword": "mot de passe oublié"
 }
