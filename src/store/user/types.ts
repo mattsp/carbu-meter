@@ -1,6 +1,7 @@
-import { User } from 'firebase'
+
 
 export interface IUser {
+  userName?: string
   email: string
   password: string
   firstName?: string
@@ -9,7 +10,7 @@ export interface IUser {
 }
 
 export interface IUserState {
-  userCredential?: firebase.auth.UserCredential
+  user?: IUser
   isLoading: boolean
 }
 
@@ -23,7 +24,7 @@ interface ICreateUserRequestAction {
 
 interface ICreateUserSuccessAction {
   type: typeof CREATE_USER_SUCCESS
-  payload: firebase.auth.UserCredential
+  payload: IUser
 }
 
 interface ICreateUserFailureAction {
@@ -42,7 +43,7 @@ interface ISignInUserRequestAction {
 
 interface ISignInUserSuccessAction {
   type: typeof SIGN_IN_USER_SUCCESS
-  payload: firebase.auth.UserCredential
+  payload: IUser
 }
 
 interface ISignInUserFailureAction {

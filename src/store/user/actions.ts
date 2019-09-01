@@ -17,10 +17,10 @@ function createUserRequest() {
 }
 
 function createUserSuccess(
-  credential: firebase.auth.UserCredential
+  user: IUser
 ): UserActionTypes {
   return {
-    payload: credential,
+    payload: user,
     type: CREATE_USER_SUCCESS,
   }
 }
@@ -52,8 +52,8 @@ export const createUser = (
     .auth()
     .createUserWithEmailAndPassword(user.email, user.password)
     .then((data: firebase.auth.UserCredential) => {
-      return writeUserData(data!.user!.uid, user).then(() => {
-        dispatch(createUserSuccess(data))
+      return writeUserData(data!.user!.uid, user).then((doc:any) => {
+        dispatch(createUserSuccess(doc.data() as IUser))
       })
     })
     .catch((error: Error) => {

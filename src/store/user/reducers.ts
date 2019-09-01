@@ -11,10 +11,10 @@ import {
 
 const initialState: IUserState = {
   isLoading: false,
-  userCredential: undefined,
+  user: undefined,
 }
 
-export function statsReducer(
+export function userReducer(
   state = initialState,
   action: UserActionTypes
 ): IUserState {
@@ -25,7 +25,7 @@ export function statsReducer(
       return {
         ...state,
         isLoading: false,
-        userCredential: action.payload,
+        user: action.payload,
       }
     case CREATE_USER_FAILURE:
       return { ...state, isLoading: false }
@@ -36,7 +36,7 @@ export function statsReducer(
       return {
         ...state,
         isLoading: false,
-        userCredential: action.payload,
+        user: action.payload,
       }
     case SIGN_IN_USER_FAILURE:
       return { ...state, isLoading: false }

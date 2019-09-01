@@ -6,6 +6,7 @@ import { modalReducer } from './modal/reducers';
 import { notificationReducer } from './notification/reducers'
 import { statsReducer } from './stats/reducers';
 import { tripReducer } from './trip/reducers'
+import { userReducer } from './user/reducers';
 
 const rootReducer = combineReducers({
   locale: localeReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   notification: notificationReducer,
   stats: statsReducer,
   trip: tripReducer,
+  user: userReducer
 })
 
 export type AppState = ReturnType<typeof rootReducer>
