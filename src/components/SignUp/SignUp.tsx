@@ -12,22 +12,8 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles, Theme } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import { NavLink } from 'react-router-dom'
-
-const Copyright = () => {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'. Built with '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Material-UI.
-      </Link>
-    </Typography>
-  )
-}
+import { useTranslation } from 'react-i18next'
+import Copyright from '../Copyright/Copyright'
 
 const useStyles = makeStyles<Theme>(theme => ({
   '@global': {
@@ -49,66 +35,78 @@ const useStyles = makeStyles<Theme>(theme => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
+  capitalizeText: {
+    textTransform: 'capitalize',
+  },
   submit: {
+    textTransform: 'capitalize',
     margin: theme.spacing(3, 0, 2),
   },
 }))
 
 const SignUp = () => {
   const classes = useStyles()
-
+  const { t } = useTranslation()
   return (
     <Container maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
+        <Typography
+          className={classes.capitalizeText}
+          component="h1"
+          variant="h5"
+        >
+          {t('signUp')}
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                className={classes.capitalizeText}
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
                 required
                 fullWidth
                 id="firstName"
-                label="First Name"
+                label={`${t('first')} ${t('name')}`}
                 autoFocus
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                className={classes.capitalizeText}
                 variant="outlined"
                 required
                 fullWidth
                 id="lastName"
-                label="Last Name"
+                label={`${t('last')} ${t('name')}`}
                 name="lastName"
                 autoComplete="lname"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                className={classes.capitalizeText}
                 variant="outlined"
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label={`${t('email')} ${t('address')}`}
                 name="email"
                 autoComplete="email"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                className={classes.capitalizeText}
                 variant="outlined"
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label={t('password')}
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -116,8 +114,9 @@ const SignUp = () => {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
+                className={classes.capitalizeText}
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                label={`${t('extraEmails')} .`}
               />
             </Grid>
           </Grid>
@@ -128,14 +127,15 @@ const SignUp = () => {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            {t('signUp')}
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
               <Link
+                className={classes.capitalizeText}
                 component={({ className }) => (
                   <NavLink className={className} to="/signIn" title="signUp">
-                    Already have an account? Sign in
+                    {t('alreadyAccount')}? {t('signIn')}
                   </NavLink>
                 )}
                 variant="body2"

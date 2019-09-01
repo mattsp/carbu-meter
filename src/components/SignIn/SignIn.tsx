@@ -11,23 +11,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, Theme } from '@material-ui/core/styles'
 import { RouteComponentProps, withRouter, NavLink } from 'react-router-dom'
-import { Container } from '@material-ui/core';
-
-const Copyright = () => {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'. Built with '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Material-UI.
-      </Link>
-    </Typography>
-  )
-}
+import { Container } from '@material-ui/core'
+import { useTranslation } from 'react-i18next'
+import Copyright from '../Copyright/Copyright'
 
 const useStyles = makeStyles<Theme>(theme => ({
   '@global': {
@@ -49,7 +35,11 @@ const useStyles = makeStyles<Theme>(theme => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
+  capitalizeText: {
+    textTransform: 'capitalize',
+  },
   submit: {
+    textTransform: 'capitalize',
     margin: theme.spacing(3, 0, 2),
   },
 }))
@@ -78,44 +68,51 @@ const SignIn = ({ history }: IProps) => {
   }
 
   const classes = useStyles()
-
+  const { t } = useTranslation()
   return (
     <Container maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
+        <Typography
+          className={classes.capitalizeText}
+          component="h1"
+          variant="h5"
+        >
+          {t('signIn')}
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
+            className={classes.capitalizeText}
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label={`${t('email')} ${t('address')}`}
             name="email"
             autoComplete="email"
             autoFocus
             onChange={handleChange('email')}
           />
           <TextField
+            className={classes.capitalizeText}
             variant="outlined"
             margin="normal"
             required
             fullWidth
             name="password"
-            label="Password"
+            label={t('password')}
             type="password"
             id="password"
             autoComplete="current-password"
             onChange={handleChange('password')}
           />
           <FormControlLabel
+            className={classes.capitalizeText}
             control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            label={t('rememberMe')}
           />
           <Button
             type="button"
@@ -125,19 +122,20 @@ const SignIn = ({ history }: IProps) => {
             className={classes.submit}
             onClick={onClickSubmitHandler}
           >
-            Sign In
+            {t('signIn')}
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
+              <Link className={classes.capitalizeText} href="#" variant="body2">
+                {t('forgotPassword')}?
               </Link>
             </Grid>
             <Grid item>
               <Link
+                className={classes.capitalizeText}
                 component={({ className }) => (
                   <NavLink className={className} to="/signUp" title="signUp">
-                    Don't have an account? Sign Up
+                    {t('alreadyAccount')}? {t('signUp')}
                   </NavLink>
                 )}
                 variant="body2"
