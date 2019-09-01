@@ -15,6 +15,7 @@ import { Container } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import Copyright from '../Copyright/Copyright'
 import { capitalize } from '../../helper/string-helper'
+import { IUser } from '../../store/user/types';
 
 const useStyles = makeStyles<Theme>(theme => ({
   '@global': {
@@ -47,18 +48,13 @@ const useStyles = makeStyles<Theme>(theme => ({
 
 interface IProps extends RouteComponentProps {}
 
-interface ICredential {
-  email?: string
-  password?: string
-}
-
 const SignIn = ({ history }: IProps) => {
-  const [values, setValues] = useState<ICredential>({
-    email: undefined,
-    password: undefined,
+  const [values, setValues] = useState<IUser>({
+    email: '',
+    password: '',
   })
 
-  const handleChange = (name: keyof ICredential) => (
+  const handleChange = (name: keyof IUser) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setValues({ ...values, [name]: event.target.value })
@@ -98,22 +94,20 @@ const SignIn = ({ history }: IProps) => {
             onChange={handleChange('email')}
           />
           <TextField
-            className={classes.capitalizeText}
             variant="outlined"
             margin="normal"
             required
             fullWidth
             name="password"
-            label={t('password')}
+            label={capitalize(t('password'))}
             type="password"
             id="password"
             autoComplete="current-password"
             onChange={handleChange('password')}
           />
           <FormControlLabel
-            className={classes.capitalizeText}
             control={<Checkbox value="remember" color="primary" />}
-            label={t('rememberMe')}
+            label={capitalize(t('rememberMe'))}
           />
           <Button
             type="button"

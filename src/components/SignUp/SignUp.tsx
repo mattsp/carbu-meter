@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
@@ -15,6 +15,7 @@ import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Copyright from '../Copyright/Copyright'
 import { capitalize } from '../../helper/string-helper'
+import { IUser } from '../../store/user/types'
 
 const useStyles = makeStyles<Theme>(theme => ({
   '@global': {
@@ -46,6 +47,17 @@ const useStyles = makeStyles<Theme>(theme => ({
 }))
 
 const SignUp = () => {
+  const [values, setValues] = useState<IUser>({
+    email: '',
+    password: '',
+  })
+
+  const handleChange = (name: keyof IUser) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setValues({ ...values, [name]: event.target.value })
+  }
+
   const classes = useStyles()
   const { t } = useTranslation()
   return (
@@ -74,6 +86,7 @@ const SignUp = () => {
                 id="firstName"
                 label={`${t('firstName')}`}
                 autoFocus
+                onChange={handleChange('firstName')}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -86,6 +99,7 @@ const SignUp = () => {
                 label={`${t('lastName')}`}
                 name="lastName"
                 autoComplete="lname"
+                onChange={handleChange('lastName')}
               />
             </Grid>
             <Grid item xs={12}>
@@ -98,6 +112,7 @@ const SignUp = () => {
                 label={`${t('email')} ${t('address')}`}
                 name="email"
                 autoComplete="email"
+                onChange={handleChange('email')}
               />
             </Grid>
             <Grid item xs={12}>
@@ -110,6 +125,7 @@ const SignUp = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleChange('password')}
               />
             </Grid>
             <Grid item xs={12}>
