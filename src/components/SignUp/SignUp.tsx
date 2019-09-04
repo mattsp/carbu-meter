@@ -46,7 +46,11 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-const SignUp = () => {
+interface IProps {
+  createUser: (user: IUser) => void
+}
+
+const SignUp = ({ createUser }: IProps) => {
   const [values, setValues] = useState<IUser>({
     email: '',
     password: '',
@@ -56,6 +60,10 @@ const SignUp = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setValues({ ...values, [name]: event.target.value })
+  }
+
+  const handleSubmit = () => {
+    createUser(values as IUser)
   }
 
   const classes = useStyles()
@@ -136,11 +144,12 @@ const SignUp = () => {
             </Grid>
           </Grid>
           <Button
-            type="submit"
+            type="button"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             {t('signUp')}
           </Button>

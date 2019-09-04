@@ -6,7 +6,6 @@ export interface IUser {
   password: string
   firstName?: string
   lastName?: string
-  address?:string
 }
 
 export interface IUserState {

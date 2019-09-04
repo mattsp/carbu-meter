@@ -2,6 +2,8 @@ import { Action } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import { AppState } from '..'
 import firebase from 'firebase/app'
+import { db } from '../../firebase'
+import 'firebase/auth'
 import {
   CREATE_USER_REQUEST,
   IUser,
@@ -33,16 +35,14 @@ function createUserFailure(error: Error) {
   }
 }
 
-const writeUserData = (userId: string, user: IUser) =>
-  firebase
-    .database()
-    .ref('users/' + userId)
-    .set({
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      address: user.address,
-    })
+const writeUserData = (userId: string, user: IUser) => {
+  return db.collection('users').doc(userId)
+      .set({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+      })
+}
 
 export const createUser = (
   user: IUser
@@ -54,6 +54,8 @@ export const createUser = (
     .then((data: firebase.auth.UserCredential) => {
       return writeUserData(data!.user!.uid, user).then((doc:any) => {
         dispatch(createUserSuccess(doc.data() as IUser))
+      }).catch((error)=> {
+        dispatch(createUserFailure(error))
       })
     })
     .catch((error: Error) => {
