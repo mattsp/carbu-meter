@@ -24,5 +24,10 @@
     "signIn": "registrati",
     "alreadyAccount": "hai già un account",
     "rememberMe": "ricordati di me",
-    "forgotPassword": "ha dimenticato la password"
+    "forgotPassword": "ha dimenticato la password",
+    "auth": {
+        "invalid-email": "$t(address) $t(email) non valido",
+        "wrong-password": "$t(password) sbagliato",
+        "user-not-found": "utente non trovato"
+    }
 }

@@ -11,7 +11,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, Theme } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import { NavLink } from 'react-router-dom'
+import { RouteComponentProps, withRouter, NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Copyright from '../Copyright/Copyright'
 import { capitalize } from '../../helper/string-helper'
@@ -46,11 +46,11 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-interface IProps {
-  createUser: (user: IUser) => void
+interface IProps extends RouteComponentProps {
+  createUser: (user: IUser) => Promise<void>
 }
 
-const SignUp = ({ createUser }: IProps) => {
+const SignUp = ({ createUser, history }: IProps) => {
   const [values, setValues] = useState<IUser>({
     email: '',
     password: '',
@@ -63,7 +63,9 @@ const SignUp = ({ createUser }: IProps) => {
   }
 
   const handleSubmit = () => {
-    createUser(values as IUser)
+    createUser(values as IUser).then(()=>{
+      history.push('signIn')
+    })
   }
 
   const classes = useStyles()
@@ -175,4 +177,4 @@ const SignUp = ({ createUser }: IProps) => {
   )
 }
 
-export default SignUp
+export default withRouter(SignUp)

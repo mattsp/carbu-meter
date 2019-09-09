@@ -46,13 +46,18 @@ const useStyles = makeStyles<Theme>(theme => ({
   },
 }))
 
-interface IProps extends RouteComponentProps {}
+interface IProps extends RouteComponentProps {
+  singInUser: (user: IUser) => Promise<void>
+}
 
-const SignIn = ({ history }: IProps) => {
+const SignIn = ({ singInUser, history }: IProps) => {
   const [values, setValues] = useState<IUser>({
     email: '',
     password: '',
   })
+
+  const [emailError, setEmailError] = useState({error: false, errorMsg: ''})
+  const [passwordError, setPasswordError] = useState({error: false, errorMsg: ''})
 
   const handleChange = (name: keyof IUser) => (
     event: React.ChangeEvent<HTMLInputElement>
@@ -60,12 +65,26 @@ const SignIn = ({ history }: IProps) => {
     setValues({ ...values, [name]: event.target.value })
   }
 
+  const { t } = useTranslation()
+
   const onClickSubmitHandler = () => {
-    history.push('/trips')
+    singInUser(values as IUser).then(()=>{
+      history.push('/trips')
+    }).catch((error: firebase.auth.Error)=>{
+      if (error.code.indexOf('auth/invalid-email') >= 0 || error.code.indexOf('auth/user-not-found') >=0) {
+        setEmailError({error: true, errorMsg: t(error.code.replace('/','.'))})
+      } else {
+        setEmailError({error: false, errorMsg: ''})
+      }
+      if (error.code.indexOf('auth/wrong-password')>= 0) {
+        setPasswordError({error: true, errorMsg: t(error.code.replace('/','.'))})
+      }else {
+        setPasswordError({error: false, errorMsg: ''})
+      }
+    })
   }
 
   const classes = useStyles()
-  const { t } = useTranslation()
   return (
     <Container maxWidth="xs">
       <div className={classes.paper}>
@@ -92,6 +111,8 @@ const SignIn = ({ history }: IProps) => {
             autoComplete="email"
             autoFocus
             onChange={handleChange('email')}
+            error={emailError.error}
+            helperText={emailError.errorMsg}
           />
           <TextField
             variant="outlined"
@@ -104,6 +125,8 @@ const SignIn = ({ history }: IProps) => {
             id="password"
             autoComplete="current-password"
             onChange={handleChange('password')}
+            error={passwordError.error}
+            helperText={passwordError.errorMsg}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

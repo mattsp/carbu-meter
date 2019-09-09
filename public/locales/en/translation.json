@@ -24,5 +24,10 @@
     "signIn": "sign In",
     "alreadyAccount": "already have an account",
     "rememberMe": "remember me",
-    "forgotPassword": "forgot password"
+    "forgotPassword": "forgot password",
+    "auth": {
+        "invalid-email": "invalid $t(address) $t(email)",
+        "wrong-password": "wrong $t(password)",
+        "user-not-found": "user not found"
+    }
 }

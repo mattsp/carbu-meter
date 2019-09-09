@@ -53,6 +53,6 @@ const supportedDateFnsLanguages = {
   vi: async () => import("date-fns/locale/vi/index.js"),
   zhCN: async () => import("date-fns/locale/zh-CN/index.js")
 } as any;
-
-export const loadDateFnsLocale = async (language:string) => supportedDateFnsLanguages[language.replace('-', '')]()
+export const normalizeLanguage = (language:string) => language.split('-')[0]
+export const loadDateFnsLocale = async (language:string) => supportedDateFnsLanguages[normalizeLanguage(language)]()
 export default i18n;
