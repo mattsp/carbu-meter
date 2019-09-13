@@ -46,12 +46,13 @@ export const fetchTrips = (): ThunkAction<
   AppState,
   null,
   Action<any>
-> => async (dispatch: any) => {
+> => async (dispatch: any, getState: ()=>AppState) => {
   dispatch(fetchTripsRequest())
+  const userId = getState().user!.user!.id;
   db.collection('trips')
+    .where('userRef', '==', userId)
     .orderBy('creationDate', 'desc')
     .get()
-
     .then((querySnapshot: any) => {
       const data = querySnapshot.docs.map((doc: any) => ({
         ...doc.data(),
@@ -89,7 +90,8 @@ export const addTrip = (
   trip: ITrip
 ): ThunkAction<void, AppState, null, Action<any>> => async (dispatch: any, getState: ()=>AppState) => {
   dispatch(addTripRequest())
-  const { id, ...doc } = trip
+  const userId = getState().user!.user!.id;
+  const { id, ...doc } = {...trip, userRef: userId}
   db.collection('trips')
     .add(doc)
     .then((querySnapshot: any) => {

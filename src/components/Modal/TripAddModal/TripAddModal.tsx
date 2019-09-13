@@ -49,6 +49,7 @@ const TripAddModal = ({
     creationDate: Date.now(),
     distance: undefined,
     id: '',
+    userRef: undefined,
   })
 
   const [distanceError, setDistanceError] = useState(false)

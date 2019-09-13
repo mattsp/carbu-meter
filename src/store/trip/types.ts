@@ -4,6 +4,7 @@ export interface ITrip {
     id: string
     creationDate: number
     distance?: number
+    userRef?: string
 }
 
 export interface ITripState {
