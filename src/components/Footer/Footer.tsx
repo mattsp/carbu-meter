@@ -53,8 +53,8 @@ const Footer = ({ history }: IProps) => {
             <BottomNavigationAction
               className={classes.title}
               key={route.id}
-              label={t(route.title, { count: 2 })}
-              icon={<route.icon />}
+              label={route.title ? t(route.title, { count: 2 }) : ''}
+              icon={route.icon ? <route.icon /> : undefined}
               value={route.path}
             />
           ))}

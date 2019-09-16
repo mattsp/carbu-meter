@@ -12,16 +12,16 @@ const useStyles = makeStyles({
   })
 
 interface IProps {
-    title: string
+    title?: string
 }
 const Header = ({ title }: IProps) => {
     const { t } = useTranslation()
     const classes = useStyles();
     return <AppBar position="sticky">
         <Toolbar>
-            <Typography className={classes.title} variant="h6" color="inherit">
+            {title && <Typography className={classes.title} variant="h6" color="inherit">
                 {t(title, { count: 2})}
-            </Typography>
+            </Typography>}
         </Toolbar>
     </AppBar>
 }

@@ -14,21 +14,31 @@ export interface IRoute {
     id: string
     component: any;
     exact?: boolean
-    icon: ComponentType<SvgIconProps>
+    icon?: ComponentType<SvgIconProps>
     path: string | string[]
-    title: string
+    title?: string
     showHeader: boolean
     showFooter: boolean
     includeIntoFooter: boolean
+    private?: boolean
 }
 
 const routes: IRoute[] = [
     {
-        component: SignInContainer,
+        component: TripsContainer,
         exact: true,
+        id: 'private',
+        path: '/',
+        showHeader: false,
+        showFooter: false,
+        includeIntoFooter: false,
+        private: true
+    },
+    {
+        component: SignInContainer,
         icon: MapIcon,
         id: 'signIn',
-        path: ['/', '/signIn'],
+        path: '/signIn',
         showHeader: false,
         showFooter: false,
         includeIntoFooter: false,
@@ -53,6 +63,7 @@ const routes: IRoute[] = [
         showHeader: true,
         showFooter: true,
         includeIntoFooter: true,
+        private: true
     },
     {
         component: StatsContainer,
@@ -63,6 +74,7 @@ const routes: IRoute[] = [
         showHeader: true,
         showFooter: true,
         includeIntoFooter: true,
+        private: true
     },
     {
         component: Settings,
@@ -73,6 +85,7 @@ const routes: IRoute[] = [
         showHeader: true,
         showFooter: true,
         includeIntoFooter: true,
+        private: true
     },
 
 ]

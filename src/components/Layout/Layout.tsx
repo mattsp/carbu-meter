@@ -12,6 +12,7 @@ import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
 import { withStyles } from '@material-ui/styles'
 import { StyledComponentProps } from '@material-ui/core'
+import PrivateRoute from '../PriavteRoute/PrivateRoute'
 
 interface IProps extends RouteComponentProps, StyledComponentProps {}
 
@@ -39,7 +40,7 @@ const Layout = ({ location, classes = {} }: IProps) => {
         <Typography className={classes.absoluteItem} component="div">
           <Switch>
             {routes.map(route => (
-              <Route key={route.id} {...route} />
+              route.private ? <PrivateRoute key={route.id} authenticated={false}  {...route} /> : <Route key={route.id} {...route} />
             ))}
           </Switch>
         </Typography>
