@@ -38,17 +38,29 @@ const Layout = ({ location, user, classes = {} }: IProps) => {
   const title = activeRoute ? activeRoute.title : ''
   return (
     <Fragment>
-      {activeRoute && activeRoute.showHeader === true && <Header title={title} />}
-      <Container component="main" maxWidth={false} className={classes.content} >
+      {activeRoute && activeRoute.showHeader === true && (
+        <Header title={title} />
+      )}
+      <Container component="main" maxWidth={false} className={classes.content}>
         <Typography className={classes.absoluteItem} component="div">
           <Switch>
-            {routes.map(route => (
-              route.private ? <PrivateRoute key={route.id} authenticated={!!user}  {...route} /> : <Route key={route.id} {...route} />
-            ))}
+            {routes.map(route =>
+              route.private ? (
+                <PrivateRoute
+                  key={route.id}
+                  authenticated={!!user}
+                  {...route}
+                />
+              ) : (
+                <Route key={route.id} {...route} />
+              )
+            )}
           </Switch>
         </Typography>
       </Container>
-      {activeRoute && activeRoute.showFooter === true && <Footer routes={routes} />}
+      {activeRoute && activeRoute.showFooter === true && (
+        <Footer routes={routes} />
+      )}
     </Fragment>
   )
 }

@@ -90,11 +90,11 @@ const routes: IRoute[] = [
 ]
 
 export const getRouteByPath = (path: string) => {
-  const route = routes
-    .filter(route => route.path === path)
-    .shift()
-  if (route!.id === "private") {
-    return routes.filter(route => route.id !== 'private' && route.private === true).shift()
+  const route = routes.filter(route => route.path === path).shift()
+  if (route!.id === 'private') {
+    return routes
+      .filter(route => route.id !== 'private' && route.private === true)
+      .shift()
   } else {
     return route
   }
