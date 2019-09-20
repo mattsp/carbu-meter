@@ -13,8 +13,11 @@ import Header from '../Header/Header'
 import { withStyles } from '@material-ui/styles'
 import { StyledComponentProps } from '@material-ui/core'
 import PrivateRoute from '../PriavteRoute/PrivateRoute'
+import { IUser } from '../../store/user/types'
 
-interface IProps extends RouteComponentProps, StyledComponentProps {}
+interface IProps extends RouteComponentProps, StyledComponentProps {
+  user?: IUser
+}
 
 const styles = {
   absoluteItem: {
@@ -30,7 +33,7 @@ const styles = {
   },
 }
 
-const Layout = ({ location, classes = {} }: IProps) => {
+const Layout = ({ location, user, classes = {} }: IProps) => {
   const activeRoute = getRouteByPath(location.pathname)
   const title = activeRoute ? activeRoute.title : ''
   return (
@@ -40,7 +43,7 @@ const Layout = ({ location, classes = {} }: IProps) => {
         <Typography className={classes.absoluteItem} component="div">
           <Switch>
             {routes.map(route => (
-              route.private ? <PrivateRoute key={route.id} authenticated={false}  {...route} /> : <Route key={route.id} {...route} />
+              route.private ? <PrivateRoute key={route.id} authenticated={!!user}  {...route} /> : <Route key={route.id} {...route} />
             ))}
           </Switch>
         </Typography>

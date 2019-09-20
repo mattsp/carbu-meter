@@ -16,7 +16,7 @@ const PrivateRoute = ({
       {...rest}
       render={props =>
         authenticated === true ? (
-          <Component {...props} {...rest} />
+          rest.path === '/' ?  <Redirect to="/trips" /> : <Component {...props} {...rest} />
         ) : (
           <Redirect to="/signIn" />
         )

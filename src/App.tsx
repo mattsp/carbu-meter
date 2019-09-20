@@ -8,12 +8,12 @@ import React, { Suspense } from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
-import Layout from './components/Layout/Layout'
 import ModalContainer from './containers/ModalContainer'
 import NotificationContainer from './containers/NotificationContainer'
 import configureStore from './store';
 import Loader from './components/Loader/Loader'
 import { PersistGate } from 'redux-persist/integration/react'
+import LayoutContainer from './containers/LayoutContainer'
 
 const theme = createMuiTheme({
   palette: {
@@ -42,7 +42,7 @@ const App = () => {
               <div className={classes.root}>
                 <ErrorBoundary>
                   <Suspense fallback={<Loader />}>
-                    <Layout />
+                    <LayoutContainer />
                     <ModalContainer />
                     <SnackbarProvider>
                       <NotificationContainer />
