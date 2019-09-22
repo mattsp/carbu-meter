@@ -15,7 +15,7 @@ import { Container } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import Copyright from '../Copyright/Copyright'
 import { capitalize } from '../../helper/string-helper'
-import { IUser } from '../../store/user/types';
+import { IUser } from '../../store/user/types'
 
 const useStyles = makeStyles<Theme>(theme => ({
   '@global': {
@@ -47,17 +47,22 @@ const useStyles = makeStyles<Theme>(theme => ({
 }))
 
 interface IProps extends RouteComponentProps {
-  singInUser: (user: IUser) => Promise<void>
+  singInUser: (user: IUser, rememberMe:boolean ) => Promise<void>
 }
 
 const SignIn = ({ singInUser, history }: IProps) => {
+  let rememberMe: boolean = false
+
   const [values, setValues] = useState<IUser>({
     email: '',
     password: '',
   })
 
-  const [emailError, setEmailError] = useState({error: false, errorMsg: ''})
-  const [passwordError, setPasswordError] = useState({error: false, errorMsg: ''})
+  const [emailError, setEmailError] = useState({ error: false, errorMsg: '' })
+  const [passwordError, setPasswordError] = useState({
+    error: false,
+    errorMsg: '',
+  })
 
   const handleChange = (name: keyof IUser) => (
     event: React.ChangeEvent<HTMLInputElement>
@@ -65,23 +70,41 @@ const SignIn = ({ singInUser, history }: IProps) => {
     setValues({ ...values, [name]: event.target.value })
   }
 
+  const handleChangeRemember = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ) => {
+    rememberMe = checked
+  }
+
   const { t } = useTranslation()
 
   const onClickSubmitHandler = () => {
-    singInUser(values as IUser).then(()=>{
-      history.push('/trips')
-    }).catch((error: firebase.auth.Error)=>{
-      if (error.code.indexOf('auth/invalid-email') >= 0 || error.code.indexOf('auth/user-not-found') >=0) {
-        setEmailError({error: true, errorMsg: t(error.code.replace('/','.'))})
-      } else {
-        setEmailError({error: false, errorMsg: ''})
-      }
-      if (error.code.indexOf('auth/wrong-password')>= 0) {
-        setPasswordError({error: true, errorMsg: t(error.code.replace('/','.'))})
-      }else {
-        setPasswordError({error: false, errorMsg: ''})
-      }
-    })
+    singInUser(values as IUser, rememberMe)
+      .then(() => {
+        history.push('/trips')
+      })
+      .catch((error: firebase.auth.Error) => {
+        if (
+          error.code.indexOf('auth/invalid-email') >= 0 ||
+          error.code.indexOf('auth/user-not-found') >= 0
+        ) {
+          setEmailError({
+            error: true,
+            errorMsg: t(error.code.replace('/', '.')),
+          })
+        } else {
+          setEmailError({ error: false, errorMsg: '' })
+        }
+        if (error.code.indexOf('auth/wrong-password') >= 0) {
+          setPasswordError({
+            error: true,
+            errorMsg: t(error.code.replace('/', '.')),
+          })
+        } else {
+          setPasswordError({ error: false, errorMsg: '' })
+        }
+      })
   }
 
   const classes = useStyles()
@@ -129,7 +152,13 @@ const SignIn = ({ singInUser, history }: IProps) => {
             helperText={passwordError.errorMsg}
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={
+              <Checkbox
+                value="remember"
+                color="primary"
+                onChange={handleChangeRemember}
+              />
+            }
             label={capitalize(t('rememberMe'))}
           />
           <Button

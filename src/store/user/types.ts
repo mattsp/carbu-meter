@@ -10,7 +10,8 @@ export interface IUser {
 }
 
 export interface IUserState {
-  user?: IUser
+  user?: IUser,
+  rememberUser?: boolean,
   isLoading: boolean
 }
 

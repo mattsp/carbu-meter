@@ -1,6 +1,6 @@
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
-import React, { Fragment } from 'react'
+import React, { Fragment, useLayoutEffect } from 'react'
 import {
   Route,
   RouteComponentProps,
@@ -14,9 +14,12 @@ import { withStyles } from '@material-ui/styles'
 import { StyledComponentProps } from '@material-ui/core'
 import PrivateRoute from '../PriavteRoute/PrivateRoute'
 import { IUser } from '../../store/user/types'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 interface IProps extends RouteComponentProps, StyledComponentProps {
   user?: IUser
+  rememberUser?: boolean
 }
 
 const styles = {
@@ -33,9 +36,16 @@ const styles = {
   },
 }
 
-const Layout = ({ location, user, classes = {} }: IProps) => {
+const Layout = ({ location, user, rememberUser, classes = {} }: IProps) => {
   const activeRoute = getRouteByPath(location.pathname)
   const title = activeRoute ? activeRoute.title : ''
+  useLayoutEffect(()=>{
+    firebase.auth().onAuthStateChanged(authUser => {
+        authUser
+        ? localStorage.setItem('authUser', authUser.uid)
+        : localStorage.removeItem('authUser')
+    });
+  }, [])
   return (
     <Fragment>
       {activeRoute && activeRoute.showHeader === true && (
@@ -48,7 +58,7 @@ const Layout = ({ location, user, classes = {} }: IProps) => {
               route.private ? (
                 <PrivateRoute
                   key={route.id}
-                  authenticated={!!user}
+                  authenticated={!!user || !!(rememberUser && !!localStorage.getItem('authUser'))}
                   {...route}
                 />
               ) : (

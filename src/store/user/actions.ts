@@ -14,6 +14,7 @@ import {
   SIGN_IN_USER_SUCCESS,
   SIGN_IN_USER_FAILURE,
 } from './types'
+import { setRememberUserPreference } from '../preference/actions'
 
 function createUserRequest() {
   return {
@@ -79,7 +80,7 @@ function singInUserRequest() {
 }
 
 function singInUserSuccess(
-  user: IUser
+  user: IUser,
 ): UserActionTypes {
   return {
     payload: user,
@@ -96,7 +97,8 @@ function singInUserFailure(error: Error) {
 }
 
 export const singInUser = (
-  user: IUser
+  user: IUser,
+  rememberUser:boolean
 ): ThunkAction<Promise<any>, AppState, null, Action<any>> => async (dispatch: any) => {
   dispatch(singInUserRequest())
   return firebase
@@ -105,6 +107,7 @@ export const singInUser = (
     .then((data: firebase.auth.UserCredential) => {
       return getUserData(data!.user!.uid).then((doc) => {
         dispatch(singInUserSuccess(doc.data() as IUser))
+        dispatch(setRememberUserPreference(rememberUser))
       }).catch((error)=> {
         dispatch(singInUserFailure(error))
         throw error

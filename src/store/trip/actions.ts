@@ -46,9 +46,9 @@ export const fetchTrips = (): ThunkAction<
   AppState,
   null,
   Action<any>
-> => async (dispatch: any, getState: ()=>AppState) => {
+> => async (dispatch: any) => {
   dispatch(fetchTripsRequest())
-  const userId = getState().user!.user!.id;
+  const userId = localStorage.getItem('authUser')
   db.collection('trips')
     .where('userRef', '==', userId)
     .orderBy('creationDate', 'desc')
@@ -88,9 +88,9 @@ function addTripFailure(error: Error) {
 
 export const addTrip = (
   trip: ITrip
-): ThunkAction<void, AppState, null, Action<any>> => async (dispatch: any, getState: ()=>AppState) => {
+): ThunkAction<void, AppState, null, Action<any>> => async (dispatch: any) => {
   dispatch(addTripRequest())
-  const userId = getState().user!.user!.id;
+  const userId = localStorage.getItem('authUser')
   const { id, ...doc } = {...trip, userRef: userId}
   db.collection('trips')
     .add(doc)

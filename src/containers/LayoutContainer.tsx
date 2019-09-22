@@ -4,6 +4,7 @@ import Layout from '../components/Layout/Layout'
 
 const mapStateToProps = (state: AppState) => ({
   user: state.user.user,
+  rememberUser: state.preference.rememberUser,
 })
 
 
