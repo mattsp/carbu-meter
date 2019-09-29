@@ -1,7 +1,6 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import { DocumentSnapshot } from 'firebase-functions/lib/providers/firestore'
-import { QuerySnapshot } from '@google-cloud/firestore'
 
 admin.initializeApp(functions.config().firebase)
 
