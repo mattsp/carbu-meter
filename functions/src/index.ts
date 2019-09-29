@@ -1,30 +1,31 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import { DocumentSnapshot } from 'firebase-functions/lib/providers/firestore'
-import { EventContext } from 'firebase-functions'
+import { QuerySnapshot } from '@google-cloud/firestore'
 
 admin.initializeApp(functions.config().firebase)
 
 const tripsDocRef = functions.firestore.document('trips/{tripId}')
 
 export const incrementTripsDistance = tripsDocRef.onCreate(
-  (event: DocumentSnapshot, context: EventContext) => {
-    const tripsDistanceRef = event.ref.firestore.doc(
-      'stats/' + context.auth!.uid + '/tripsDistance'
-    )
-    return tripsDistanceRef.get().then((documentSnapshot: DocumentSnapshot) => {
-      const currentCount = documentSnapshot.exists
-        ? documentSnapshot.data()!.count
+  (event: DocumentSnapshot, context: functions.EventContext) => {
+    const userRef = event.ref.firestore.collection(
+      'users'
+    ).doc(context.auth!.uid)
+
+    return userRef.get().then((documentSnapshot: DocumentSnapshot) => {
+      const tripsTotalDistance = documentSnapshot.exists
+        ? documentSnapshot.data()!.tripsTotalDistance
         : 0
-      console.log(`currentCount: ${currentCount}`)
-      console.log(`Trips distance ${(event.data() as any).distance}`)
-      return tripsDistanceRef
+      console.log(`tripsTotalDistance: ${tripsTotalDistance}`)
+      console.log(`User id ${(event.data() as any).id}`)
+      return userRef
         .set({
-          count: Number(currentCount) + (event.data() as any).distance,
+          tripsTotalDistance: Number(tripsTotalDistance) + (event.data() as any).tripsTotalDistance,
         })
         .then(() => {
           console.log(
-            `Trips total distance increased to ${Number(currentCount) +
+            `Trips total distance increased to ${Number(tripsTotalDistance) +
               (event.data() as any).distance}`
           )
           return 0
@@ -34,28 +35,28 @@ export const incrementTripsDistance = tripsDocRef.onCreate(
 )
 
 export const updateTripsDistance = tripsDocRef.onUpdate(
-  (event: functions.Change<DocumentSnapshot>, context: EventContext) => {
-    const tripsDistanceRef = event.after.ref.firestore.doc(
-      'stats/' + context.auth!.uid + '/tripsDistance'
-    )
+  (event: functions.Change<DocumentSnapshot>, context: functions.EventContext) => {
+    const userRef = event.after.ref.firestore.collection(
+      'users'
+    ).doc(context.auth!.uid)
 
-    return tripsDistanceRef.get().then((documentSnapshot: DocumentSnapshot) => {
-      const currentCount = documentSnapshot.exists
-        ? documentSnapshot.data()!.count
+    return userRef.get().then((documentSnapshot: DocumentSnapshot) => {
+      const tripsTotalDistance = documentSnapshot.exists
+        ? documentSnapshot.data()!.tripsTotalDistance
         : 0
-      console.log(`currentCount: ${currentCount}`)
-      console.log(`Trips distance ${(event.before.data() as any).distance}`)
-      return tripsDistanceRef
+      console.log(`tripsTotalDistance: ${tripsTotalDistance}`)
+      console.log(`User id ${(event.before.data() as any).id}`)
+      return userRef
         .set({
-          count:
-            Number(currentCount) -
-            (event.before.data() as any).distance +
-            (event.after.data() as any).distance,
+          tripsTotalDistance:
+            Number(tripsTotalDistance) -
+            (event.before.data() as any).tripsTotalDistance +
+            (event.after.data() as any).tripsTotalDistance,
         })
         .then(() => {
           console.log(
-            `Trips total distance update to ${Number(currentCount) +
-              (event.after.data() as any).distance}`
+            `Trips total distance update to ${Number(tripsTotalDistance) +
+              (event.after.data() as any).tripsTotalDistance}`
           )
           return 0
         })
@@ -64,23 +65,25 @@ export const updateTripsDistance = tripsDocRef.onUpdate(
 )
 
 export const decrementTripsDistance = tripsDocRef.onDelete(
-  (event: DocumentSnapshot, context: EventContext) => {
-    const tripsDistanceRef = event.ref.firestore.doc( 'stats/' + context.auth!.uid + '/tripsDistance')
+  (event: DocumentSnapshot, context: functions.EventContext) => {
+    const userRef = event.ref.firestore.collection(
+      'users'
+    ).doc(context.auth!.uid)
 
-    return tripsDistanceRef.get().then((documentSnapshot: DocumentSnapshot) => {
-      const currentCount = documentSnapshot.exists
-        ? documentSnapshot.data()!.count
+    return userRef.get().then((documentSnapshot: DocumentSnapshot) => {
+      const tripsTotalDistance = documentSnapshot.exists
+        ? documentSnapshot.data()!.tripsTotalDistance
         : 0
-      console.log(`currentCount: ${currentCount}`)
-      console.log(`Trips distance ${(event.data() as any).distance}`)
-      return tripsDistanceRef
+      console.log(`tripsTotalDistance: ${tripsTotalDistance}`)
+      console.log(`User id ${(event.data() as any).id}`)
+      return userRef
         .set({
-          count: Number(currentCount) - (event.data() as any).distance,
+          tripsTotalDistance: Number(tripsTotalDistance) - (event.data() as any).tripsTotalDistance,
         })
         .then(() => {
           console.log(
-            `Trips total distance decreased to ${Number(currentCount) -
-              (event.data() as any).distance}`
+            `Trips total distance decreased to ${Number(tripsTotalDistance) -
+              (event.data() as any).tripsTotalDistance}`
           )
           return 0
         })
