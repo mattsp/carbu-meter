@@ -10,14 +10,14 @@ export const incrementTripsDistance = tripsDocRef.onCreate(
   (event: DocumentSnapshot) => {
     const userRef = event.ref.firestore.collection(
       'users'
-    ).doc((event.data() as any).id)
+    ).doc((event.data() as any).userRef)
 
     return userRef.get().then((documentSnapshot: DocumentSnapshot) => {
       const tripsTotalDistance = documentSnapshot.exists
         ? documentSnapshot.data()!.tripsTotalDistance
         : 0
       console.log(`tripsTotalDistance: ${tripsTotalDistance}`)
-      console.log(`User id ${(event.data() as any).id}`)
+      console.log(`User id ${(event.data() as any).userRef}`)
       return userRef
         .set({
           tripsTotalDistance: Number(tripsTotalDistance) + (event.data() as any).tripsTotalDistance,
@@ -37,14 +37,14 @@ export const updateTripsDistance = tripsDocRef.onUpdate(
   (event: functions.Change<DocumentSnapshot>) => {
     const userRef = event.after.ref.firestore.collection(
       'users'
-    ).doc((event.after.data() as any).id)
+    ).doc((event.after.data() as any).userRef)
 
     return userRef.get().then((documentSnapshot: DocumentSnapshot) => {
       const tripsTotalDistance = documentSnapshot.exists
         ? documentSnapshot.data()!.tripsTotalDistance
         : 0
       console.log(`tripsTotalDistance: ${tripsTotalDistance}`)
-      console.log(`User id ${(event.before.data() as any).id}`)
+      console.log(`User id ${(event.before.data() as any).userRef}`)
       return userRef
         .set({
           tripsTotalDistance:
@@ -67,14 +67,14 @@ export const decrementTripsDistance = tripsDocRef.onDelete(
   (event: DocumentSnapshot) => {
     const userRef = event.ref.firestore.collection(
       'users'
-    ).doc((event.data() as any).id)
+    ).doc((event.data() as any).userRef)
 
     return userRef.get().then((documentSnapshot: DocumentSnapshot) => {
       const tripsTotalDistance = documentSnapshot.exists
         ? documentSnapshot.data()!.tripsTotalDistance
         : 0
       console.log(`tripsTotalDistance: ${tripsTotalDistance}`)
-      console.log(`User id ${(event.data() as any).id}`)
+      console.log(`User id ${(event.data() as any).userRef}`)
       return userRef
         .set({
           tripsTotalDistance: Number(tripsTotalDistance) - (event.data() as any).tripsTotalDistance,
