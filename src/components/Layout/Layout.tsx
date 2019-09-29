@@ -9,13 +9,13 @@ import {
 } from 'react-router-dom'
 import routes, { getRouteByPath } from '../../routes'
 import Footer from '../Footer/Footer'
-import Header from '../Header/Header'
 import { withStyles } from '@material-ui/styles'
 import { StyledComponentProps } from '@material-ui/core'
 import PrivateRoute from '../PriavteRoute/PrivateRoute'
 import { IUser } from '../../store/user/types'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import HeaderContainer from '../../containers/HeaderContainer'
 
 interface IProps extends RouteComponentProps, StyledComponentProps {
   user?: IUser
@@ -49,7 +49,7 @@ const Layout = ({ location, user, rememberUser, classes = {} }: IProps) => {
   return (
     <Fragment>
       {activeRoute && activeRoute.showHeader === true && (
-        <Header title={title} />
+        <HeaderContainer title={title} />
       )}
       <Container component="main" maxWidth={false} className={classes.content}>
         <Typography className={classes.absoluteItem} component="div">

@@ -13,6 +13,9 @@ import {
   SIGN_IN_USER_REQUEST,
   SIGN_IN_USER_SUCCESS,
   SIGN_IN_USER_FAILURE,
+  SIGN_OUT_USER_FAILURE,
+  SIGN_OUT_USER_SUCCESS,
+  SIGN_OUT_USER_REQUEST,
 } from './types'
 import { setRememberUserPreference } from '../preference/actions'
 
@@ -117,4 +120,37 @@ export const singInUser = (
       dispatch(singInUserFailure(new Error(error.code)))
       throw error
     })
+}
+
+function singOutUserRequest() {
+  return {
+    type: SIGN_OUT_USER_REQUEST,
+  }
+}
+
+function singOutUserSuccess(
+): UserActionTypes {
+  return {
+    type: SIGN_OUT_USER_SUCCESS,
+  }
+}
+
+function singOutUserFailure(error: Error) {
+  return {
+    error: true,
+    payload: error,
+    type: SIGN_OUT_USER_FAILURE,
+  }
+}
+
+
+export const signOutUser = (): ThunkAction<Promise<any>, AppState, null, Action<any>> => async (dispatch: any) => {
+  dispatch(singOutUserRequest())
+  return firebase
+  .auth().signOut().then(()=>{
+    dispatch(singOutUserSuccess())
+  }).catch((error: firebase.auth.Error) => {
+    dispatch(singOutUserFailure(new Error(error.code)))
+    throw error
+  })
 }

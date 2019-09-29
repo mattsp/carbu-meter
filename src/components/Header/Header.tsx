@@ -8,8 +8,7 @@ import { Theme, IconButton, Badge, Menu, MenuItem } from '@material-ui/core'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import MoreIcon from '@material-ui/icons/MoreVert'
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import { RouteComponentProps, withRouter } from 'react-router'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,10 +33,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-interface IProps {
+interface IProps extends RouteComponentProps {
   title?: string
+  signOutUser: () => Promise<void>
 }
-const Header = ({ title }: IProps) => {
+const Header = ({ title, signOutUser, history }: IProps) => {
   const { t } = useTranslation()
   const classes = useStyles()
 
@@ -56,7 +56,9 @@ const Header = ({ title }: IProps) => {
   }
 
   function handleMenuClose() {
-    firebase.auth().signOut()
+    signOutUser().then(() => {
+      history.push('/trips')
+    })
     setAnchorEl(null)
     handleMobileMenuClose()
   }
@@ -158,4 +160,4 @@ const Header = ({ title }: IProps) => {
   )
 }
 
-export default Header
+export default withRouter(Header)

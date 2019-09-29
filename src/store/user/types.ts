@@ -1,5 +1,3 @@
-
-
 export interface IUser {
   id?: string
   userName?: string
@@ -10,8 +8,8 @@ export interface IUser {
 }
 
 export interface IUserState {
-  user?: IUser,
-  rememberUser?: boolean,
+  user?: IUser
+  rememberUser?: boolean
   isLoading: boolean
 }
 
@@ -53,6 +51,23 @@ interface ISignInUserFailureAction {
   error: true
 }
 
+export const SIGN_OUT_USER_REQUEST = 'SIGN_OUT_USER_REQUEST'
+export const SIGN_OUT_USER_SUCCESS = 'SIGN_OUT_USER_SUCCESS'
+export const SIGN_OUT_USER_FAILURE = 'SIGN_OUT_USER_FAILURE'
+interface ISignOutUserRequestAction {
+  type: typeof SIGN_OUT_USER_REQUEST
+}
+
+interface ISignOutUserSuccessAction {
+  type: typeof SIGN_OUT_USER_SUCCESS
+}
+
+interface ISignOutUserFailureAction {
+  type: typeof SIGN_OUT_USER_FAILURE
+  payload: Error
+  error: true
+}
+
 export type UserActionTypes =
   | ICreateUserRequestAction
   | ICreateUserSuccessAction
@@ -60,3 +75,6 @@ export type UserActionTypes =
   | ISignInUserRequestAction
   | ISignInUserSuccessAction
   | ISignInUserFailureAction
+  | ISignOutUserRequestAction
+  | ISignOutUserSuccessAction
+  | ISignOutUserFailureAction
