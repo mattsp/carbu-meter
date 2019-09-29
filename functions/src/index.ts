@@ -7,10 +7,10 @@ admin.initializeApp(functions.config().firebase)
 const tripsDocRef = functions.firestore.document('trips/{tripId}')
 
 export const incrementTripsDistance = tripsDocRef.onCreate(
-  (event: DocumentSnapshot, context: functions.EventContext) => {
+  (event: DocumentSnapshot) => {
     const userRef = event.ref.firestore.collection(
       'users'
-    ).doc(context.auth!.uid)
+    ).doc((event.data() as any).id)
 
     return userRef.get().then((documentSnapshot: DocumentSnapshot) => {
       const tripsTotalDistance = documentSnapshot.exists
@@ -34,10 +34,10 @@ export const incrementTripsDistance = tripsDocRef.onCreate(
 )
 
 export const updateTripsDistance = tripsDocRef.onUpdate(
-  (event: functions.Change<DocumentSnapshot>, context: functions.EventContext) => {
+  (event: functions.Change<DocumentSnapshot>) => {
     const userRef = event.after.ref.firestore.collection(
       'users'
-    ).doc(context.auth!.uid)
+    ).doc((event.after.data() as any).id)
 
     return userRef.get().then((documentSnapshot: DocumentSnapshot) => {
       const tripsTotalDistance = documentSnapshot.exists
@@ -64,10 +64,10 @@ export const updateTripsDistance = tripsDocRef.onUpdate(
 )
 
 export const decrementTripsDistance = tripsDocRef.onDelete(
-  (event: DocumentSnapshot, context: functions.EventContext) => {
+  (event: DocumentSnapshot) => {
     const userRef = event.ref.firestore.collection(
       'users'
-    ).doc(context.auth!.uid)
+    ).doc((event.data() as any).id)
 
     return userRef.get().then((documentSnapshot: DocumentSnapshot) => {
       const tripsTotalDistance = documentSnapshot.exists

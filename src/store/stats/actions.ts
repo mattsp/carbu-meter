@@ -50,8 +50,9 @@ export const fetchTotalTripsDistance = (): ThunkAction<
       .catch(error => {
         dispatch(fetchTotalTripsDistanceFailure(error))
       })
+  } else {
+    dispatch(fetchTotalTripsDistanceSuccess(totalTripsDistance!))
   }
-  dispatch(fetchTotalTripsDistanceSuccess(totalTripsDistance!))
 }
 
 export function updateTotalTripsDistance(
