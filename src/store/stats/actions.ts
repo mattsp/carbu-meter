@@ -39,8 +39,9 @@ export const fetchTotalTripsDistance = (): ThunkAction<
 > => async (dispatch: any, getState: () => AppState) => {
   dispatch(fetchTotalTripsDistanceRequest())
   const totalTripsDistance = getState().stats.totalTripsDistance
+  const userId = localStorage.getItem('authUser')
   if (totalTripsDistance === undefined) {
-    db.doc('stats/tripsDistance')
+    db.collection('stats/' +  userId + '/tripsDistance')
       .get()
       .then((documentSnapshot: any) => {
         const data = documentSnapshot.data().count
