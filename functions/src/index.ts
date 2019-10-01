@@ -20,7 +20,7 @@ export const incrementTripsDistance = tripsDocRef.onCreate(
       console.log(`User id ${(event.data() as any).userRef}`)
       return userRef
         .set({
-          tripsTotalDistance: Number(tripsTotalDistance) + (event.data() as any).tripsTotalDistance,
+          tripsTotalDistance: Number(tripsTotalDistance) + (event.data() as any).distance,
         })
         .then(() => {
           console.log(
@@ -49,8 +49,8 @@ export const updateTripsDistance = tripsDocRef.onUpdate(
         .set({
           tripsTotalDistance:
             Number(tripsTotalDistance) -
-            (event.before.data() as any).tripsTotalDistance +
-            (event.after.data() as any).tripsTotalDistance,
+            (event.before.data() as any).distance +
+            (event.after.data() as any).distance,
         })
         .then(() => {
           console.log(
@@ -77,12 +77,12 @@ export const decrementTripsDistance = tripsDocRef.onDelete(
       console.log(`User id ${(event.data() as any).userRef}`)
       return userRef
         .set({
-          tripsTotalDistance: Number(tripsTotalDistance) - (event.data() as any).tripsTotalDistance,
+          tripsTotalDistance: Number(tripsTotalDistance) - (event.data() as any).distance,
         })
         .then(() => {
           console.log(
             `Trips total distance decreased to ${Number(tripsTotalDistance) -
-              (event.data() as any).tripsTotalDistance}`
+              (event.data() as any).distance}`
           )
           return 0
         })
