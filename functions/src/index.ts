@@ -21,7 +21,7 @@ export const incrementTripsDistance = tripsDocRef.onCreate(
       return userRef
         .set({
           tripsTotalDistance: Number(tripsTotalDistance) + (event.data() as any).distance,
-        })
+        }, { merge: true })
         .then(() => {
           console.log(
             `Trips total distance increased to ${Number(tripsTotalDistance) +
@@ -51,7 +51,7 @@ export const updateTripsDistance = tripsDocRef.onUpdate(
             Number(tripsTotalDistance) -
             (event.before.data() as any).distance +
             (event.after.data() as any).distance,
-        })
+        }, { merge: true })
         .then(() => {
           console.log(
             `Trips total distance update to ${Number(tripsTotalDistance) +
@@ -78,7 +78,7 @@ export const decrementTripsDistance = tripsDocRef.onDelete(
       return userRef
         .set({
           tripsTotalDistance: Number(tripsTotalDistance) - (event.data() as any).distance,
-        })
+        }, { merge: true })
         .then(() => {
           console.log(
             `Trips total distance decreased to ${Number(tripsTotalDistance) -
