@@ -41,7 +41,8 @@ export const fetchTotalTripsDistance = (): ThunkAction<
   const totalTripsDistance = getState().stats.totalTripsDistance
   const userId = localStorage.getItem('authUser')
   if (totalTripsDistance === undefined) {
-    db.collection('users').doc(userId!)
+    db.collection('users')
+      .doc(userId!)
       .get()
       .then((documentSnapshot: any) => {
         const data = documentSnapshot.data().tripsTotalDistance
@@ -66,6 +67,19 @@ export function updateTotalTripsDistance(
         return {
           payload:
             totalTripsDistance - previousTripsDistance + newTripsDistance,
+          type: UPDATE_TOTAL_TRIPS_DISTANCE,
+        }
+      })()
+    )
+  }
+}
+
+export function resetTotalDistance() {
+  return (dispatch: any) => {
+    dispatch(
+      (() => {
+        return {
+          payload: undefined,
           type: UPDATE_TOTAL_TRIPS_DISTANCE,
         }
       })()

@@ -18,6 +18,7 @@ import {
   SIGN_OUT_USER_REQUEST,
 } from './types'
 import { setRememberUserPreference } from '../preference/actions'
+import { resetTotalDistance } from '../stats/actions'
 
 function createUserRequest() {
   return {
@@ -25,9 +26,7 @@ function createUserRequest() {
   }
 }
 
-function createUserSuccess(
-  user: IUser
-): UserActionTypes {
+function createUserSuccess(user: IUser): UserActionTypes {
   return {
     payload: user,
     type: CREATE_USER_SUCCESS,
@@ -43,33 +42,41 @@ function createUserFailure(error: Error) {
 }
 
 const writeUserData = (userId: string, user: IUser) => {
-  return db.collection('users').doc(userId)
-      .set({
-        id: userId,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-      })
+  return db
+    .collection('users')
+    .doc(userId)
+    .set({
+      id: userId,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+    })
 }
 
 const getUserData = (userId: string) => {
-  return db.collection('users').doc(userId)
-      .get()
+  return db
+    .collection('users')
+    .doc(userId)
+    .get()
 }
 
 export const createUser = (
   user: IUser
-): ThunkAction<Promise<any>, AppState, null, Action<any>> => async (dispatch: any) => {
+): ThunkAction<Promise<any>, AppState, null, Action<any>> => async (
+  dispatch: any
+) => {
   dispatch(createUserRequest())
   firebase
     .auth()
     .createUserWithEmailAndPassword(user.email, user.password)
     .then((data: firebase.auth.UserCredential) => {
-      return writeUserData(data!.user!.uid, user).then(() => {
-        dispatch(createUserSuccess(user))
-      }).catch((error)=> {
-        dispatch(createUserFailure(error))
-      })
+      return writeUserData(data!.user!.uid, user)
+        .then(() => {
+          dispatch(createUserSuccess(user))
+        })
+        .catch(error => {
+          dispatch(createUserFailure(error))
+        })
     })
     .catch((error: Error) => {
       dispatch(createUserFailure(error))
@@ -82,9 +89,7 @@ function singInUserRequest() {
   }
 }
 
-function singInUserSuccess(
-  user: IUser,
-): UserActionTypes {
+function singInUserSuccess(user: IUser): UserActionTypes {
   return {
     payload: user,
     type: SIGN_IN_USER_SUCCESS,
@@ -101,20 +106,24 @@ function singInUserFailure(error: Error) {
 
 export const singInUser = (
   user: IUser,
-  rememberUser:boolean
-): ThunkAction<Promise<any>, AppState, null, Action<any>> => async (dispatch: any) => {
+  rememberUser: boolean
+): ThunkAction<Promise<any>, AppState, null, Action<any>> => async (
+  dispatch: any
+) => {
   dispatch(singInUserRequest())
   return firebase
     .auth()
     .signInWithEmailAndPassword(user.email, user.password)
     .then((data: firebase.auth.UserCredential) => {
-      return getUserData(data!.user!.uid).then((doc) => {
-        dispatch(singInUserSuccess(doc.data() as IUser))
-        dispatch(setRememberUserPreference(rememberUser))
-      }).catch((error)=> {
-        dispatch(singInUserFailure(error))
-        throw error
-      })
+      return getUserData(data!.user!.uid)
+        .then(doc => {
+          dispatch(singInUserSuccess(doc.data() as IUser))
+          dispatch(setRememberUserPreference(rememberUser))
+        })
+        .catch(error => {
+          dispatch(singInUserFailure(error))
+          throw error
+        })
     })
     .catch((error: firebase.auth.Error) => {
       dispatch(singInUserFailure(new Error(error.code)))
@@ -128,8 +137,7 @@ function singOutUserRequest() {
   }
 }
 
-function singOutUserSuccess(
-): UserActionTypes {
+function singOutUserSuccess(): UserActionTypes {
   return {
     type: SIGN_OUT_USER_SUCCESS,
   }
@@ -143,14 +151,22 @@ function singOutUserFailure(error: Error) {
   }
 }
 
-
-export const signOutUser = (): ThunkAction<Promise<any>, AppState, null, Action<any>> => async (dispatch: any) => {
+export const signOutUser = (): ThunkAction<
+  Promise<any>,
+  AppState,
+  null,
+  Action<any>
+> => async (dispatch: any) => {
   dispatch(singOutUserRequest())
   return firebase
-  .auth().signOut().then(()=>{
-    dispatch(singOutUserSuccess())
-  }).catch((error: firebase.auth.Error) => {
-    dispatch(singOutUserFailure(new Error(error.code)))
-    throw error
-  })
+    .auth()
+    .signOut()
+    .then(() => {
+      dispatch(singOutUserSuccess())
+      dispatch(resetTotalDistance())
+    })
+    .catch((error: firebase.auth.Error) => {
+      dispatch(singOutUserFailure(new Error(error.code)))
+      throw error
+    })
 }

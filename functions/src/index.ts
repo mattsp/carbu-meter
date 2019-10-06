@@ -14,7 +14,7 @@ export const incrementTripsDistance = tripsDocRef.onCreate(
 
     return userRef.get().then((documentSnapshot: DocumentSnapshot) => {
       const tripsTotalDistance = documentSnapshot.exists
-        ? documentSnapshot.data()!.tripsTotalDistance
+        ? documentSnapshot.data()!.tripsTotalDistance || 0
         : 0
       console.log(`tripsTotalDistance: ${tripsTotalDistance}`)
       console.log(`User id ${(event.data() as any).userRef}`)
