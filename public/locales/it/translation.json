@@ -25,9 +25,12 @@
     "alreadyAccount": "hai già un account",
     "rememberMe": "ricordati di me",
     "forgotPassword": "ha dimenticato la password",
+    "requiredField": "campo obbligatorio",
     "auth": {
         "invalid-email": "$t(address) $t(email) non valido",
         "wrong-password": "$t(password) sbagliato",
-        "user-not-found": "utente non trovato"
+        "user-not-found": "utente non trovato",
+        "auth/email-already-in-use": "$t(address) $t(email) e usato",
+        "auth/weak-password": "la vostra $t(password) non e abastanza complesa"
     }
 }

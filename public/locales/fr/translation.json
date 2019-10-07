@@ -25,9 +25,12 @@
     "alreadyAccount": "vous avez déjà un compte",
     "rememberMe": "souviens-toi de moi",
     "forgotPassword": "mot de passe oublié",
+    "requiredField": "champ requis",
     "auth": {
         "invalid-email": "$t(address) $t(email) incorrect",
         "wrong-password": "$t(password) incorrect",
-        "user-not-found": "compte introuvalble"
+        "user-not-found": "compte introuvalble",
+        "auth/email-already-in-use": "$t(address) $t(email) déjà utilisé",
+        "auth/weak-password": "votre $t(password) a un niveau de compléxité trop faible"
     }
 }

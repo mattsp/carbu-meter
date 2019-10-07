@@ -56,6 +56,20 @@ const SignUp = ({ createUser, history }: IProps) => {
     password: '',
   })
 
+  const [firstNameError, setFirstNameError] = useState({
+    error: false,
+    errorMsg: '',
+  })
+  const [lastNameError, setLastNameError] = useState({
+    error: false,
+    errorMsg: '',
+  })
+  const [emailError, setEmailError] = useState({ error: false, errorMsg: '' })
+  const [passwordError, setPasswordError] = useState({
+    error: false,
+    errorMsg: '',
+  })
+
   const handleChange = (name: keyof IUser) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -63,9 +77,83 @@ const SignUp = ({ createUser, history }: IProps) => {
   }
 
   const handleSubmit = () => {
-    createUser(values as IUser).then(()=>{
-      history.push('signIn')
-    })
+    if (
+      !values.firstName ||
+      !values.lastName ||
+      !values.email ||
+      !values.password
+    ) {
+      if (!values.firstName) {
+        setFirstNameError({
+          error: true,
+          errorMsg: t('requiredField'),
+        })
+      } else {
+        setFirstNameError({
+          error: false,
+          errorMsg: '',
+        })
+      }
+      if (!values.lastName) {
+        setLastNameError({
+          error: true,
+          errorMsg: t('requiredField'),
+        })
+      } else {
+        setLastNameError({
+          error: false,
+          errorMsg: '',
+        })
+      }
+      if (!values.email) {
+        setEmailError({
+          error: true,
+          errorMsg: t('requiredField'),
+        })
+      } else {
+        setEmailError({
+          error: false,
+          errorMsg: '',
+        })
+      }
+      if (!values.password) {
+        setPasswordError({
+          error: true,
+          errorMsg: t('requiredField'),
+        })
+      } else {
+        setPasswordError({
+          error: false,
+          errorMsg: '',
+        })
+      }
+    } else {
+      createUser(values as IUser)
+        .then(() => {
+          history.push('signIn')
+        })
+        .catch((error: firebase.auth.Error) => {
+          if (
+            error.code.indexOf('auth/invalid-email') >= 0 ||
+            error.code.indexOf('auth/email-already-in-use') >= 0
+          ) {
+            setEmailError({
+              error: true,
+              errorMsg: t(error.code.replace('/', '.')),
+            })
+          } else {
+            setEmailError({ error: false, errorMsg: '' })
+          }
+          if (error.code.indexOf('auth/weak-password') >= 0) {
+            setPasswordError({
+              error: true,
+              errorMsg: t(error.code.replace('/', '.')),
+            })
+          } else {
+            setPasswordError({ error: false, errorMsg: '' })
+          }
+        })
+    }
   }
 
   const classes = useStyles()
@@ -97,6 +185,8 @@ const SignUp = ({ createUser, history }: IProps) => {
                 label={`${t('firstName')}`}
                 autoFocus
                 onChange={handleChange('firstName')}
+                error={firstNameError.error}
+                helperText={firstNameError.errorMsg}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -110,6 +200,8 @@ const SignUp = ({ createUser, history }: IProps) => {
                 name="lastName"
                 autoComplete="lname"
                 onChange={handleChange('lastName')}
+                error={lastNameError.error}
+                helperText={lastNameError.errorMsg}
               />
             </Grid>
             <Grid item xs={12}>
@@ -123,6 +215,8 @@ const SignUp = ({ createUser, history }: IProps) => {
                 name="email"
                 autoComplete="email"
                 onChange={handleChange('email')}
+                error={emailError.error}
+                helperText={emailError.errorMsg}
               />
             </Grid>
             <Grid item xs={12}>
@@ -136,6 +230,8 @@ const SignUp = ({ createUser, history }: IProps) => {
                 id="password"
                 autoComplete="current-password"
                 onChange={handleChange('password')}
+                error={passwordError.error}
+                helperText={passwordError.errorMsg}
               />
             </Grid>
             <Grid item xs={12}>

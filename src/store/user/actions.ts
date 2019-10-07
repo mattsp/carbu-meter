@@ -76,10 +76,13 @@ export const createUser = (
         })
         .catch(error => {
           dispatch(createUserFailure(error))
+          throw error;
         })
     })
     .catch((error: Error) => {
       dispatch(createUserFailure(error))
+      throw error;
+      
     })
 }
 

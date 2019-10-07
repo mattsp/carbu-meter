@@ -107,6 +107,14 @@ const SignIn = ({ singInUser, history }: IProps) => {
       })
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      event.stopPropagation();
+      onClickSubmitHandler();
+    }
+  }
+
   const classes = useStyles()
   return (
     <Container maxWidth="xs">
@@ -133,6 +141,7 @@ const SignIn = ({ singInUser, history }: IProps) => {
             name="email"
             autoComplete="email"
             autoFocus
+            onKeyDown={handleKeyDown}
             onChange={handleChange('email')}
             error={emailError.error}
             helperText={emailError.errorMsg}
@@ -147,6 +156,7 @@ const SignIn = ({ singInUser, history }: IProps) => {
             type="password"
             id="password"
             autoComplete="current-password"
+            onKeyDown={handleKeyDown}
             onChange={handleChange('password')}
             error={passwordError.error}
             helperText={passwordError.errorMsg}
