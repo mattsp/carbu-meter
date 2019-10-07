@@ -150,7 +150,8 @@ export const editTrip = (
   trip: ITrip
 ): ThunkAction<void, AppState, null, Action<any>> => async (dispatch: any, getState: ()=>AppState) => {
   dispatch(editTripRequest())
-  const { id, ...doc } = trip
+  const userId = localStorage.getItem('authUser')
+  const { id, ...doc } = {...trip, userRef: userId}
   const previousTrip = getState().trip.trips[trip.id];
   db.collection('trips')
     .doc(trip.id)
